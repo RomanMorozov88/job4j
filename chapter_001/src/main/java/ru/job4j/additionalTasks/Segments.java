@@ -1,4 +1,4 @@
-package ru.job4j.zadachi;
+package ru.job4j.additionalTasks;
 
 public class Segments {
     /**

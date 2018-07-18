@@ -1,4 +1,4 @@
-package ru.job4j.zadachi;
+package ru.job4j.additionalTasks;
 
 public class ArrayOfTwo {
     public int[] MergerArrays(int[] arr1, int[] arr2) {
