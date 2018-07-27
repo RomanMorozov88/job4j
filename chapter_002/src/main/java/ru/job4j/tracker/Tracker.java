@@ -108,14 +108,14 @@ public class Tracker {
      */
     public Item[] findAll() {
         Item[] result = new Item[this.position];
-        for (Item item : items) {
             for(int j = 0; j < this.position;) {
-                if (item != null) {
-                    result[j] = item;
-                    j++;
-                } else break;
+                for (Item item : items) {
+                    if (item != null) {
+                        result[j] = item;
+                        j++;
+                    }
+                }
             }
-        }
         return result;
     }
 }
