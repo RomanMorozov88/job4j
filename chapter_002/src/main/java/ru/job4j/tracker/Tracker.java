@@ -40,13 +40,10 @@ public class Tracker {
         for (int i = 0; i < position; i++) {
             if (items[i] != null && items[i].getId().equals(id)) {
                 items[i] = null;
-                for(int j = i; j < position - 1; j++) {
-                    items[j] = items[j + 1];
-                }
+                position--;
+                break;
             }
         }
-        items[position - 1] = null;
-        position--;
     }
 
     /**
@@ -111,8 +108,13 @@ public class Tracker {
      */
     public Item[] findAll() {
         Item[] result = new Item[this.position];
-        for(int i = 0; i < this.position; i++) {
-            result[i] = this.items[i];
+        for (Item item : items) {
+            for(int j = 0; j < this.position;) {
+                if (item != null) {
+                    result[j] = item;
+                    j++;
+                } else break;
+            }
         }
         return result;
     }
