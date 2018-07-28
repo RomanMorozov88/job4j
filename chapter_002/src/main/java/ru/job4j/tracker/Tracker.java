@@ -67,12 +67,18 @@ public class Tracker {
      * @param key имя искомой заявки.
      * @return Найденный item
      */
-    public Item findByName(String key) {
-        Item result = null;
+    public Item[] findByName(String key) {
+        int indx1 = 0;
         for(Item item : items) {
             if (item != null && item.getName().equals(key)) {
-                result = item;
-                break;
+                indx1++;
+            }
+        }
+        Item[] result = new Item[indx1];
+        int indx2 = 0;
+        for(int i =0; i < this.items.length; i++) {
+            if (items[i] != null && items[i].getName().equals(key)) {
+                result[indx2++] = items[i];
             }
         }
         return result;

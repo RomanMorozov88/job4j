@@ -31,11 +31,13 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         Item previous1 = new Item("test1","testDescription",123L);
         Item previous2 = new Item("test2","testDescription2",124L);
+        Item previous3 = new Item("test3","testDescription3",125L);
         tracker.add(previous1);
         tracker.add(previous2);
-        tracker.delete(previous1.getId());
+        tracker.add(previous3);
+        tracker.delete(previous2.getId());
         Item[] result = tracker.findAll();
-        Item[] expect = {previous2};
+        Item[] expect = {previous1, previous3};
         assertThat(result, is(expect));
     }
 
@@ -51,8 +53,11 @@ public class TrackerTest {
     public void whenFindByName() {
         Tracker tracker = new Tracker();
         Item previous = new Item("test1","testDescription",123L);
+        Item previous1 = new Item("test1","testDescription1",125L);
         tracker.add(previous);
-        assertThat(tracker.findByName(previous.getName()), is(previous));
+        tracker.add(previous1);
+        Item[] expect = {previous, previous1};
+        assertThat(tracker.findByName(previous.getName()), is(expect));
     }
 
     @Test
