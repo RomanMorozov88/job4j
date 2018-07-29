@@ -40,8 +40,8 @@ public class Tracker {
         for (int i = 0; i < position; i++) {
             if (items[i] != null && items[i].getId().equals(id)) {
                 items[i] = null;
+                System.arraycopy(items, i+1, items, i, items.length - i - 1);
                 position--;
-                break;
             }
         }
     }
@@ -68,19 +68,14 @@ public class Tracker {
      * @return Найденный item
      */
     public Item[] findByName(String key) {
+        Item[] result = new Item[position];
         int indx1 = 0;
-        for(Item item : items) {
-            if (item != null && item.getName().equals(key)) {
-                indx1++;
-            }
-        }
-        Item[] result = new Item[indx1];
-        int indx2 = 0;
-        for(int i =0; i < this.items.length; i++) {
+        for(int i =0; i < position; i++) {
             if (items[i] != null && items[i].getName().equals(key)) {
-                result[indx2++] = items[i];
+                result[indx1++] = items[i];
             }
         }
+        result = Arrays.copyOf(result, indx1);
         return result;
     }
 
@@ -114,14 +109,9 @@ public class Tracker {
      */
     public Item[] findAll() {
         Item[] result = new Item[this.position];
-            for(int j = 0; j < this.position;) {
-                for (Item item : items) {
-                    if (item != null) {
-                        result[j] = item;
-                        j++;
-                    }
-                }
-            }
+        for(int i = 0; i < this.position; i++) {
+            result[i] = this.items[i];
+        }
         return result;
     }
 }

@@ -53,10 +53,12 @@ public class TrackerTest {
     public void whenFindByName() {
         Tracker tracker = new Tracker();
         Item previous = new Item("test1","testDescription",123L);
-        Item previous1 = new Item("test1","testDescription1",125L);
+        Item previous1 = new Item("test2","testDescription2",124L);
+        Item previous2 = new Item("test1","testDescription1",125L);
         tracker.add(previous);
         tracker.add(previous1);
-        Item[] expect = {previous, previous1};
+        tracker.add(previous2);
+        Item[] expect = {previous, previous2};
         assertThat(tracker.findByName(previous.getName()), is(expect));
     }
 
