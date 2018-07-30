@@ -42,6 +42,7 @@ public class Tracker {
                 items[i] = null;
                 System.arraycopy(items, i+1, items, i, items.length - i - 1);
                 position--;
+                break;
             }
         }
     }
@@ -108,10 +109,6 @@ public class Tracker {
      * @return список всех существующих заявок.
      */
     public Item[] findAll() {
-        Item[] result = new Item[this.position];
-        for(int i = 0; i < this.position; i++) {
-            result[i] = this.items[i];
-        }
-        return result;
+        return Arrays.copyOf(this.items, this.position);
     }
 }
