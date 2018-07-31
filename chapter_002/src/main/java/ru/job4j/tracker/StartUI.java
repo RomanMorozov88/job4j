@@ -75,12 +75,12 @@ public class StartUI {
     }
 
     private void findAllItem() {
-        System.out.println("------------ Список имён уже существующич заявок --------------");
+        System.out.println("------------ Список имён уже существующих заявок --------------");
         if (this.tracker.findAll().length == 0) {
             System.out.println("------------ В хранилище нет ни одной заявки ------------");
         } else {
             for (int i = 0; i < this.tracker.findAll().length; i++) {
-                System.out.println("1." + this.tracker.findAll()[i]);
+                System.out.println("1." + this.tracker.findAll()[i].getName());
             }
         }
     }
