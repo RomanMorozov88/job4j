@@ -36,15 +36,18 @@ public class Tracker {
      * Метод для удаления заявки.
      * @param id id удаляемой заявки.
      */
-    public void delete(String id) {
+    public boolean delete(String id) {
+        boolean result = false;
         for (int i = 0; i < position; i++) {
             if (items[i] != null && items[i].getId().equals(id)) {
                 items[i] = null;
                 System.arraycopy(items, i+1, items, i, items.length - i - 1);
                 position--;
+                result = true;
                 break;
             }
         }
+        return result;
     }
 
     /**
@@ -85,14 +88,17 @@ public class Tracker {
      * @param id id заявки для редактирования.
      * @param item изменения, вносимые в заявку.
      */
-    public void replace(String id, Item item) {
+    public boolean replace(String id, Item item) {
+        boolean result = false;
         item.setId(id);
         for (int i = 0; i < position; i++) {
             if (items[i] != null && items[i].getId().equals(id)) {
                 items[i] = item;
+                result = true;
                 break;
             }
         }
+        return result;
     }
 
     /**
