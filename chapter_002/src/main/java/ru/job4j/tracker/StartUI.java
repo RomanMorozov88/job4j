@@ -113,13 +113,12 @@ public class StartUI {
     private void replaceItem() {
         System.out.println("------------ Редактирование заявки --------------");
         String id = this.input.ask("Введите id заявки :");
-        if (this.tracker.findById(id) != null) {
             String name = this.input.ask("Введите новое имя заявки :");
             String desc = this.input.ask("Введите новое описание заявки :");
             Item item = new Item(name, desc);
-            this.tracker.replace(id, item);
+            if (this.tracker.replace(id, item)) {
             System.out.println("------------ Заявка отредактирована ------------");
-        } else System.out.println("Заявка с id " + id +" не найдена.");
+        } else System.out.println("Заявка для редактирования с id " + id +" не найдена.");
     }
 
     private void findByIdItem() {
@@ -138,7 +137,7 @@ public class StartUI {
         System.out.println("------------ Поиск заявки по имени ------------");
         String name = this.input.ask("Введите имя заявки :");
         Item[] result = this.tracker.findByName(name);
-        if (result.length > 1) {
+        if (result.length > 0) {
             for (int i = 0; i < result.length; i++) {
                 System.out.println(result[i].getName());
                 System.out.println(result[i].getDescription());
