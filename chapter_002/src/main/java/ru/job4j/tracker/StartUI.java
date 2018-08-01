@@ -93,8 +93,7 @@ public class StartUI {
         System.out.println("------------ Добавление новой заявки --------------");
         String name = this.input.ask("Введите имя заявки :");
         String desc = this.input.ask("Введите описание заявки :");
-        long create = System.currentTimeMillis();
-        Item item = new Item(name, desc, create);
+        Item item = new Item(name, desc);
         this.tracker.add(item);
         System.out.println("------------ Новая заявка с getId : " + item.getId() + "-----------");
     }
@@ -117,8 +116,7 @@ public class StartUI {
         if (this.tracker.findById(id) != null) {
             String name = this.input.ask("Введите новое имя заявки :");
             String desc = this.input.ask("Введите новое описание заявки :");
-            long create = this.tracker.findById(id).create;
-            Item item = new Item(name, desc, create);
+            Item item = new Item(name, desc);
             this.tracker.replace(id, item);
             System.out.println("------------ Заявка отредактирована ------------");
         } else System.out.println("Заявка с id " + id +" не найдена.");
