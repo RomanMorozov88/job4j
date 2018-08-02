@@ -118,7 +118,9 @@ public class StartUI {
             Item item = new Item(name, desc);
             if (this.tracker.replace(id, item)) {
             System.out.println("------------ Заявка отредактирована ------------");
-        } else System.out.println("Заявка для редактирования с id " + id +" не найдена.");
+        } else {
+                System.out.println("Заявка для редактирования с id " + id + " не найдена.");
+            }
     }
 
     private void findByIdItem() {
@@ -130,7 +132,9 @@ public class StartUI {
                 System.out.println(result.getDescription());
                 System.out.println(result.getCreate());
                 System.out.println("--------------------------------------------");
-            } else System.out.println("Заявка с id " + id +" не найдена.");
+            } else {
+                System.out.println("Заявка с id " + id + " не найдена.");
+            }
         }
 
     private void findByNameItem() {
@@ -144,7 +148,9 @@ public class StartUI {
                 System.out.println(result[i].getCreate());
                 System.out.println("--------------------------------------------");
             }
-        }else System.out.println("Заявок с таким именем не найдено.");
+        } else {
+            System.out.println("Заявок с таким именем не найдено.");
+        }
     }
 
     private void deleteItem() {
@@ -152,7 +158,9 @@ public class StartUI {
         String id = this.input.ask("Введите id заявки :");
          if (this.tracker.delete(id)) {
              System.out.println("------------ Заявка удалена ------------");
-         } else System.out.println("Заявка с id " + id +" не найдена.");
+         } else {
+             System.out.println("Заявка с id " + id + " не найдена.");
+         }
     }
 
     private void showMenu() {

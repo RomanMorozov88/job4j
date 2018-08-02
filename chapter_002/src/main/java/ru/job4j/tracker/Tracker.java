@@ -42,7 +42,7 @@ public class Tracker {
         for (int i = 0; i < position; i++) {
             if (items[i] != null && items[i].getId().equals(id)) {
                 items[i] = null;
-                System.arraycopy(items, i+1, items, i, items.length - i - 1);
+                System.arraycopy(items, i + 1, items, i, items.length - i - 1);
                 position--;
                 result = true;
                 break;
@@ -75,7 +75,7 @@ public class Tracker {
     public Item[] findByName(String key) {
         Item[] result = new Item[position];
         int indx1 = 0;
-        for(int i =0; i < position; i++) {
+        for (int i = 0; i < position; i++) {
             if (items[i] != null && items[i].getName().equals(key)) {
                 result[indx1++] = items[i];
             }
