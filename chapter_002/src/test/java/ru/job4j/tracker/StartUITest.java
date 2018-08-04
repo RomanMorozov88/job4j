@@ -46,4 +46,49 @@ public class StartUITest {
         // проверяем, что при вызове метода findAll длина возвращаемого массива будет равна нулю.
         assertThat(tracker.findAll().length, is(0));
     }
+
+    @Test
+    public void whenFindID() {
+        // создаём Tracker
+        Tracker tracker = new Tracker();
+        //Напрямую добавляем заявку
+        Item item = tracker.add(new Item("test name", "desc"));
+        //создаём StubInput с последовательностью действий(производим поиск заявки по id)
+        Input input = new StubInput(new String[]{"4", item.getId(), "6"});
+        // создаём StartUI и вызываем метод init()
+        new StartUI(input, tracker).init();
+        assertThat(tracker.findById(item.getId()).getName(), is("test name"));
+    }
+
+    @Test
+    public void whenFindName() {
+        // создаём Tracker
+        Tracker tracker = new Tracker();
+        //Напрямую добавляем заявку
+        Item item1 = tracker.add(new Item("test name", "desc01"));
+        Item item2 = tracker.add(new Item("test name 1", "desc02"));
+        Item item3 = tracker.add(new Item("test name", "desc03"));
+        //создаём StubInput с последовательностью действий(производим поиск заявки по имени)
+        Input input = new StubInput(new String[]{"5", "test name", "6"});
+        // создаём StartUI и вызываем метод init()
+        new StartUI(input, tracker).init();
+        Item[] expect = new Item[]{item1, item3};
+        assertThat(tracker.findByName("test name"), is(expect));
+    }
+
+    @Test
+    public void whenFindAll() {
+        // создаём Tracker
+        Tracker tracker = new Tracker();
+        //Напрямую добавляем заявку
+        Item item1 = tracker.add(new Item("test name 1", "desc01"));
+        Item item2 = tracker.add(new Item("test name 2", "desc02"));
+        Item item3 = tracker.add(new Item("test name 3", "desc03"));
+        //создаём StubInput с последовательностью действий(производим вывод имён всех существующих заявок)
+        Input input = new StubInput(new String[]{"1", "6"});
+        // создаём StartUI и вызываем метод init()
+        new StartUI(input, tracker).init();
+        Item[] expect = new Item[]{item1, item2, item3};
+        assertThat(tracker.findAll(), is(expect));
+    }
 }
