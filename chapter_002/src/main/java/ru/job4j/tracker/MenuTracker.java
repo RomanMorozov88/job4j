@@ -55,6 +55,7 @@ class ExitAction implements UserAction {
     }
     @Override
     public void execute(Input input, Tracker tracker) {
+        System.exit(0);
     }
     @Override
     public String info() {
@@ -114,8 +115,8 @@ public class MenuTracker {
      *
      * @param key ключ операции
      */
-    public void select(String key) {
-        this.actions.get(Integer.valueOf(key)).execute(this.input, this.tracker);
+    public void select(int key) {
+        this.actions.get(key).execute(this.input, this.tracker);
     }
 
     /**
@@ -158,11 +159,15 @@ public class MenuTracker {
         }
         @Override
         public void execute(Input input, Tracker tracker) {
-            System.out.println("------------ Список имён всех заявок. --------------");
-            for (Item item : tracker.findAll()) {
-                System.out.println(String.format("Имя: %s", item.getName()));
-                System.out.println(String.format("id: %s", item.getId()));
-                System.out.println("-----------------------------------");
+            if (tracker.findAll().length == 0) {
+                System.out.println("------------ В хранилище нет ни одной заявки ------------");
+            } else {
+                System.out.println("------------ Список имён всех заявок. --------------");
+                for (Item item : tracker.findAll()) {
+                    System.out.println(String.format("Имя: %s", item.getName()));
+                    System.out.println(String.format("id: %s", item.getId()));
+                    System.out.println("-----------------------------------");
+                }
             }
         }
         @Override
@@ -183,7 +188,11 @@ public class MenuTracker {
            String desc = input.ask("Введите новый текст: ");
            Item item = new Item(name, desc);
            item.setId(id);
-           tracker.replace(id, item);
+            if (tracker.replace(id, item)) {
+                System.out.println("------------ Заявка отредактирована ------------");
+            } else {
+                System.out.println("Заявка для редактирования с id " + id + " не найдена.");
+            }
         }
         @Override
         public String info() {
@@ -198,9 +207,12 @@ public class MenuTracker {
         }
         @Override
         public void execute(Input input, Tracker tracker) {
-            String id =  input.ask("Введите id нужной заявки: ");
-            tracker.delete(id);
-            System.out.println("--------------Заявка удалена.--------------");
+            String id = input.ask("Введите id нужной заявки: ");
+            if (tracker.delete(id)) {
+                System.out.println("------------ Заявка удалена ------------");
+            } else {
+                System.out.println("Заявка с id " + id + " не найдена.");
+            }
         }
         @Override
         public String info() {

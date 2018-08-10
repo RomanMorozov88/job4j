@@ -73,7 +73,7 @@ public class StartUI {
         }
         do {
             menu.show();
-            menu.select(input.ask("Выберите нужный пункт меню: "));
+            menu.select(Integer.valueOf(input.ask("Выберите нужный пункт меню: ")));
         } while (!"y".equals(this.input.ask("Выйти?(y): ")));
     }
 
