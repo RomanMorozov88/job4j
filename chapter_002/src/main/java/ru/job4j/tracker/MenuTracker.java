@@ -11,6 +11,7 @@ class FindByIdAction implements UserAction {
     public void execute(Input input, Tracker tracker) {
         String id =  input.ask("Введите id нужной заявки: ");
         if (tracker.findById(id) != null) {
+            System.out.println("-------------------------");
             System.out.println("имя: " + tracker.findById(id).getName());
             System.out.println("id: " + tracker.findById(id).getId());
             System.out.println("текст: " + tracker.findById(id).getDescription());
@@ -35,8 +36,9 @@ class FindByNameAction implements UserAction {
         if (tracker.findByName(name).length > 0) {
             System.out.println(String.format("Список заявок с именем %s:", name));
             for (Item item : tracker.findByName(name)) {
+                System.out.println("-------------------------");
                 System.out.println(String.format(
-                        "id: %s \n Имя: %s", item.getId(), item.getName())
+                        "Имя: %s \n id: %s", item.getName(), item.getId())
                 );
             }
         } else {
