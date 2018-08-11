@@ -2,66 +2,102 @@ package ru.job4j.tracker;
 
 import java.util.*;
 
+/**
+ * Поиск по id.
+ */
 class FindByIdAction implements UserAction {
+    private int key;
+    private String name;
+    public FindByIdAction(int key, String name) {
+        this.key = key;
+        this.name = name;
+    }
     @Override
     public int key() {
-        return 4;
+        return key;
     }
     @Override
     public void execute(Input input, Tracker tracker) {
         String id =  input.ask("Введите id нужной заявки: ");
         if (tracker.findById(id) != null) {
-            System.out.println("-------------------------");
+            System.out.println("------------------------------------");
             System.out.println("имя: " + tracker.findById(id).getName());
             System.out.println("id: " + tracker.findById(id).getId());
             System.out.println("текст: " + tracker.findById(id).getDescription());
             System.out.println("время создания: " + tracker.findById(id).getCreate());
         } else {
+            System.out.println("------------------------------------");
             System.out.println("Заявка с id " + id + " не найдена.");
+            System.out.println("------------------------------------");
         }
     }
     @Override
     public String info() {
-        return "4. Поиск заявки по id.";
+        return String.format("%d. %s", key, name);
     }
 }
+
+/**
+ * Поиск по имени.
+ */
 class FindByNameAction implements UserAction {
+    private int key;
+    private String name;
+    public FindByNameAction(int key, String name) {
+        this.key = key;
+        this.name = name;
+    }
     @Override
     public int key() {
-        return 5;
+        return key;
     }
     @Override
     public void execute(Input input, Tracker tracker) {
         String name = input.ask("Введите имя нужной заявки: ");
         if (tracker.findByName(name).length > 0) {
-            System.out.println(String.format("Список заявок с именем %s:", name));
+            System.out.println("------------------------------------");
+            System.out.println(String.format("Список заявок с именем %s:\n", name));
             for (Item item : tracker.findByName(name)) {
-                System.out.println("-------------------------");
                 System.out.println(String.format(
                         "Имя: %s \n id: %s", item.getName(), item.getId())
                 );
+                System.out.println("------------------------------------");
             }
         } else {
+            System.out.println("------------------------------------");
             System.out.println("Заявок с таким именем не найдено.");
+            System.out.println("------------------------------------");
         }
     }
     @Override
     public String info() {
-        return "5. Поиск заявки по имени.";
+        return String.format("%d. %s", key, name);
     }
 }
+
+/**
+ * Выход.
+ */
 class ExitAction implements UserAction {
+    private StartUI ui;
+    private int key;
+    private String name;
+    public ExitAction(int key, String name, StartUI ui) {
+        this.key = key;
+        this.name = name;
+        this.ui = ui;
+    }
     @Override
     public int key() {
-        return 6;
+        return key;
     }
     @Override
     public void execute(Input input, Tracker tracker) {
-        System.exit(0);
+        this.ui.exitItem();
     }
     @Override
     public String info() {
-        return "6. Выход.";
+        return String.format("%d. %s", key, name);
     }
 }
 
@@ -102,14 +138,14 @@ public class MenuTracker {
     /**
      * Метод заполняет массив.
      */
-    public void fillActions() {
-        this.actions.add(this.new AddAction());
-        this.actions.add(this.new FindAllAction());
-        this.actions.add(new MenuTracker.EditAction());
-        this.actions.add(new MenuTracker.DeleteAction());
-        this.actions.add(new FindByIdAction());
-        this.actions.add(new FindByNameAction());
-        this.actions.add(new ExitAction());
+    public void fillActions(StartUI ui) {
+        this.actions.add(this.new AddAction(0,"Добавить новую заявку."));
+        this.actions.add(this.new FindAllAction(1, "Показать список всех заявок."));
+        this.actions.add(new MenuTracker.EditAction(2,"Редактирование заявки."));
+        this.actions.add(new MenuTracker.DeleteAction(3,"Удаление заявки."));
+        this.actions.add(new FindByIdAction(4, "Поиск по id."));
+        this.actions.add(new FindByNameAction(5, "Поиск заявки по имени."));
+        this.actions.add(new ExitAction(6, "Выход.", ui));
     }
 
     /**
@@ -132,10 +168,19 @@ public class MenuTracker {
         }
     }
 
+    /**
+     * Добавление новой заявки.
+     */
     private class AddAction implements UserAction {
+        private int key;
+        private String name;
+        public AddAction(int key, String name) {
+            this.key = key;
+            this.name = name;
+        }
         @Override
         public int key() {
-            return 0;
+            return key;
         }
         @Override
         public void execute(Input input, Tracker tracker) {
@@ -150,14 +195,23 @@ public class MenuTracker {
         }
         @Override
         public String info() {
-            return "0. Добавление новой заявки.";
+            return String.format("%d. %s", key, name);
         }
     }
 
+    /**
+     * Вывод имён и id всех имеющихся заявок.
+     */
     public class FindAllAction implements UserAction {
+        private int key;
+        private String name;
+        public FindAllAction(int key, String name) {
+            this.key = key;
+            this.name = name;
+        }
         @Override
         public int key() {
-            return 1;
+            return key;
         }
         @Override
         public void execute(Input input, Tracker tracker) {
@@ -168,20 +222,29 @@ public class MenuTracker {
                 for (Item item : tracker.findAll()) {
                     System.out.println(String.format("Имя: %s", item.getName()));
                     System.out.println(String.format("id: %s", item.getId()));
-                    System.out.println("-----------------------------------");
+                    System.out.println("------------------------------------");
                 }
             }
         }
         @Override
         public String info() {
-            return "1. Показать все существующие заявки.";
+            return String.format("%d. %s", key, name);
         }
     }
 
+    /**
+     * Редактирование заявки.
+     */
     private static class EditAction implements UserAction {
+        private int key;
+        private String name;
+        public EditAction(int key, String name) {
+            this.key = key;
+            this.name = name;
+        }
         @Override
         public int key() {
-            return 2;
+            return key;
         }
         @Override
         public void execute(Input input, Tracker tracker) {
@@ -193,19 +256,30 @@ public class MenuTracker {
             if (tracker.replace(id, item)) {
                 System.out.println("------------ Заявка отредактирована ------------");
             } else {
+                System.out.println("------------------------------------");
                 System.out.println("Заявка для редактирования с id " + id + " не найдена.");
+                System.out.println("------------------------------------");
             }
         }
         @Override
         public String info() {
-            return "2. Редактирование заявки.";
+            return String.format("%d. %s", key, name);
         }
     }
 
+    /**
+     * Удаление заявки.
+     */
     private static class DeleteAction implements UserAction {
+        private int key;
+        private String name;
+        public DeleteAction(int key, String name) {
+            this.key = key;
+            this.name = name;
+        }
         @Override
         public int key() {
-            return 3;
+            return key;
         }
         @Override
         public void execute(Input input, Tracker tracker) {
@@ -213,12 +287,14 @@ public class MenuTracker {
             if (tracker.delete(id)) {
                 System.out.println("------------ Заявка удалена ------------");
             } else {
+                System.out.println("------------------------------------");
                 System.out.println("Заявка с id " + id + " не найдена.");
+                System.out.println("------------------------------------");
             }
         }
         @Override
         public String info() {
-            return "3. Удаление заявки.";
+            return String.format("%d. %s", key, name);
         }
     }
 }

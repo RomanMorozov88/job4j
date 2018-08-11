@@ -52,6 +52,11 @@ public class StartUI {
     private final Tracker tracker;
 
     /**
+     * Переменная для выхода из пррограммы.
+     */
+    private boolean stop = true;
+
+    /**
      * Конструтор инициализирующий поля.
      * @param input ввод данных.
      * @param tracker хранилище заявок.
@@ -67,14 +72,14 @@ public class StartUI {
     public void init() {
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
         List<Integer> range = new ArrayList<>();
-        menu.fillActions();
+        menu.fillActions(this);
         for (int i = 0; i < menu.getActionsLentgh(); i++) {
             range.add(i);
         }
         do {
             menu.show();
             menu.select(Integer.valueOf(input.ask("Выберите нужный пункт меню: ")));
-        } while (!"y".equals(this.input.ask("Выйти?(y): ")));
+        } while (this.stop);
     }
 
     /**
@@ -152,6 +157,13 @@ public class StartUI {
          } else {
              System.out.println("Заявка с id " + id + " не найдена.");
          }
+    }
+
+    /**
+     * Метод для изменения переменной stop.
+     */
+    public void exitItem() {
+        this.stop = false;
     }
 
     private void showMenu() {
