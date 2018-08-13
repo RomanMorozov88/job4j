@@ -15,6 +15,18 @@ public class StartUITest {
     private final PrintStream stdout = System.out;
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
+    private final String separator = System.lineSeparator();
+    private final String menu = new StringBuilder()
+            .append("----------Меню----------").append(separator)
+            .append("0. Добавить новую заявку.").append(separator)
+            .append("1. Показать список всех заявок.").append(separator)
+            .append("2. Редактирование заявки.").append(separator)
+            .append("3. Удаление заявки.").append(separator)
+            .append("4. Поиск по id.").append(separator)
+            .append("5. Поиск заявки по имени.").append(separator)
+            .append("6. Выход.").append(separator)
+            .toString();
+
     @Before
     public void loadOutput() {
         System.out.println("execute before method");
@@ -40,7 +52,19 @@ public class StartUITest {
     public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
         setInput(new String[]{"0", "test name", "desc", "6"});
         // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
-        assertThat(tracker.findAll()[0].getName(), is("test name"));
+        assertThat(
+                new String(this.out.toByteArray()),
+                is (
+                        new StringBuilder()
+                                .append(menu)
+                                .append("------------ Добавление новой заявки. --------------").append(separator)
+                                .append("Имя: test name").append(separator)
+                                .append("id: " + this.tracker.findAll()[0].getId()).append(separator)
+                                .append("Текст: desc").append(separator)
+                                .append(menu)
+                                .toString()
+                )
+        );
     }
 
     @Test
@@ -49,7 +73,16 @@ public class StartUITest {
         Item item = tracker.add(new Item("test name", "desc"));
         setInput(new String[]{"2", item.getId(), "test replace", "заменили заявку", "6"});
         // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
-        assertThat(tracker.findById(item.getId()).getName(), is("test replace"));
+        assertThat(
+                new String(this.out.toByteArray()),
+                is (
+                        new StringBuilder()
+                                .append(menu)
+                                .append("------------ Заявка отредактирована ------------").append(separator)
+                                .append(menu)
+                                .toString()
+                )
+        );
     }
 
     @Test
@@ -58,7 +91,16 @@ public class StartUITest {
         Item item = tracker.add(new Item("test name", "desc"));
         setInput(new String[]{"3", item.getId(), "6"});
         // проверяем, что при вызове метода findAll длина возвращаемого массива будет равна нулю.
-        assertThat(tracker.findAll().length, is(0));
+        assertThat(
+                new String(this.out.toByteArray()),
+                is (
+                        new StringBuilder()
+                                .append(menu)
+                                .append("------------ Заявка удалена ------------").append(separator)
+                                .append(menu)
+                                .toString()
+                )
+        );
     }
 
     @Test
@@ -67,7 +109,20 @@ public class StartUITest {
         Item item = tracker.add(new Item("test name", "desc"));
         setInput(new String[]{"4", item.getId(), "6"});
         // проверяем, что при вызове метода findById выводится наш item.
-        assertThat(tracker.findById(item.getId()).getName(), is("test name"));
+                assertThat(
+                        new String(this.out.toByteArray()),
+                        is (
+                                new StringBuilder()
+                                        .append(menu)
+                                        .append("------------------------------------").append(separator)
+                                        .append("Имя: " + item.getName()).append(separator)
+                                        .append("id: " + item.getId()).append(separator)
+                                        .append("Текст: " + item.getDescription()).append(separator)
+                                        .append("Время создания: " + item.getCreate()).append(separator)
+                                        .append(menu)
+                                        .toString()
+                        )
+                );
     }
 
     @Test
@@ -77,9 +132,24 @@ public class StartUITest {
         Item item2 = tracker.add(new Item("test name 1", "desc02"));
         Item item3 = tracker.add(new Item("test name", "desc03"));
         setInput(new String[]{"5", "test name", "6"});
-        Item[] expect = new Item[]{item1, item3};
         // проверяем, что при вызове метода findByName выводятся наши item`ы с именем test name.
-        assertThat(tracker.findByName("test name"), is(expect));
+        assertThat(
+                new String(this.out.toByteArray()),
+                is (
+                        new StringBuilder()
+                                .append(menu)
+                                .append("------------------------------------").append(separator)
+                                .append("Список заявок с именем test name:\n").append(separator)
+                                .append("Имя: " + item1.getName()).append(separator)
+                                .append("id: " + item1.getId()).append(separator)
+                                .append("------------------------------------").append(separator)
+                                .append("Имя: " + item3.getName()).append(separator)
+                                .append("id: " + item3.getId()).append(separator)
+                                .append("------------------------------------").append(separator)
+                                .append(menu)
+                                .toString()
+                )
+        );
     }
 
     @Test
@@ -89,8 +159,25 @@ public class StartUITest {
         Item item2 = tracker.add(new Item("test name 2", "desc02"));
         Item item3 = tracker.add(new Item("test name 3", "desc03"));
         setInput(new String[]{"1", "6"});
-        Item[] expect = new Item[]{item1, item2, item3};
         // проверяем, что при вызове метода findAll выводятся все существующие item`ы.
-        assertThat(tracker.findAll(), is(expect));
+        assertThat(
+                new String(this.out.toByteArray()),
+                is (
+                        new StringBuilder()
+                        .append(menu)
+                        .append("------------ Список имён всех заявок. --------------").append(separator)
+                        .append("Имя: " + item1.getName()).append(separator)
+                        .append("id: " + item1.getId()).append(separator)
+                        .append("------------------------------------").append(separator)
+                        .append("Имя: " + item2.getName()).append(separator)
+                        .append("id: " + item2.getId()).append(separator)
+                        .append("------------------------------------").append(separator)
+                        .append("Имя: " + item3.getName()).append(separator)
+                        .append("id: " + item3.getId()).append(separator)
+                        .append("------------------------------------").append(separator)
+                        .append(menu)
+                        .toString()
+                )
+        );
     }
 }

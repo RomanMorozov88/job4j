@@ -21,10 +21,10 @@ class FindByIdAction implements UserAction {
         String id =  input.ask("Введите id нужной заявки: ");
         if (tracker.findById(id) != null) {
             System.out.println("------------------------------------");
-            System.out.println("имя: " + tracker.findById(id).getName());
+            System.out.println("Имя: " + tracker.findById(id).getName());
             System.out.println("id: " + tracker.findById(id).getId());
-            System.out.println("текст: " + tracker.findById(id).getDescription());
-            System.out.println("время создания: " + tracker.findById(id).getCreate());
+            System.out.println("Текст: " + tracker.findById(id).getDescription());
+            System.out.println("Время создания: " + tracker.findById(id).getCreate());
         } else {
             System.out.println("------------------------------------");
             System.out.println("Заявка с id " + id + " не найдена.");
@@ -58,9 +58,8 @@ class FindByNameAction implements UserAction {
             System.out.println("------------------------------------");
             System.out.println(String.format("Список заявок с именем %s:\n", name));
             for (Item item : tracker.findByName(name)) {
-                System.out.println(String.format(
-                        "Имя: %s \n id: %s", item.getName(), item.getId())
-                );
+                System.out.println("Имя: " + item.getName());
+                System.out.println("id: " + item.getId());
                 System.out.println("------------------------------------");
             }
         } else {
@@ -161,6 +160,7 @@ public class MenuTracker {
      * Метод выводит на экран меню.
      */
     public void show() {
+        System.out.println("----------Меню----------");
         for (UserAction action : this.actions) {
             if (action != null) {
                 System.out.println(action.info());
@@ -189,9 +189,9 @@ public class MenuTracker {
             String desc = input.ask("Введите текст заявки:");
             Item item = new Item(name, desc);
             tracker.add(item);
-            System.out.println("------------ Имя : " + item.getName());
-            System.out.println("------------ Id : " + item.getId());
-            System.out.println("------------ Текст : " + item.getDescription());
+            System.out.println("Имя: " + item.getName());
+            System.out.println("id: " + item.getId());
+            System.out.println("Текст: " + item.getDescription());
         }
         @Override
         public String info() {
