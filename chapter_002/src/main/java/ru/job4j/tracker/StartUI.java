@@ -71,14 +71,11 @@ public class StartUI {
      */
     public void init() {
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
-        List<Integer> range = new ArrayList<>();
         menu.fillActions(this);
-        for (int i = 0; i < menu.getActionsLentgh(); i++) {
-            range.add(i);
-        }
+        menu.setRange();
         do {
             menu.show();
-            menu.select(input.ask("Выберите нужный пункт меню: ", range));
+            menu.select(input.ask("Выберите нужный пункт меню: ", menu.range));
         } while (this.stop);
     }
 

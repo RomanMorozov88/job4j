@@ -113,6 +113,10 @@ public class MenuTracker {
      * @param хранит ссылку на массив типа UserAction.
      */
     private List<UserAction> actions = new ArrayList<>();
+    /**
+     * @param хранит ссылку на массив типа Integer, содержащий ключи действий.
+     */
+    public List<Integer> range = new ArrayList<>();
 
     /**
      * Конструктор.
@@ -123,6 +127,15 @@ public class MenuTracker {
     public MenuTracker(Input input, Tracker tracker) {
         this.input = input;
         this.tracker = tracker;
+    }
+
+    /**
+     * Метод заполняет массив ключами действий.
+     */
+    public void setRange() {
+        for (int i = 0; i < getActionsLentgh() ; i++) {
+            range.add(this.actions.get(i).key());
+        }
     }
 
     /**
