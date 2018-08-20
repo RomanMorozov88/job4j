@@ -2,7 +2,7 @@ package ru.job4j.tracker;
 
 import java.util.List;
 
-public class ValidateInput extends ConsoleInput {
+public class ValidateInput implements Input {
 
     private final Input input;
 
@@ -15,7 +15,7 @@ public class ValidateInput extends ConsoleInput {
         return this.input.ask(question);
     }
 
-    public int ask(String question, List<Integer> range) {
+    public int ask(String question, int[] range) {
         boolean invalid = true;
         int value = -1;
         do {
@@ -24,12 +24,12 @@ public class ValidateInput extends ConsoleInput {
                 invalid = false;
             } catch (MenuOutException inv1) {
                 System.out.println("-Некорректо введён пункт меню.");
-                System.out.println("-Введите целое число  " + range.get(0) + " до "
-                        + range.get(range.size() - 1) + ".");
+                System.out.println("-Введите целое число  " + range[0] + " до "
+                        + range[range.length - 1] + ".");
             } catch (NumberFormatException inv2) {
                 System.out.println("-Некорректо введён пункт меню.");
-                System.out.println("-Введите целое число  " + range.get(0) + " до "
-                        + range.get(range.size() - 1) + ".");
+                System.out.println("-Введите целое число  " + range[0] + " до "
+                        + range[range.length - 1] + ".");
             }
         } while (invalid) ;
             return value;

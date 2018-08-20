@@ -116,7 +116,7 @@ public class MenuTracker {
     /**
      * @param хранит ссылку на массив типа Integer, содержащий ключи действий.
      */
-    public List<Integer> range = new ArrayList<>();
+    public int[] range = new int[7];
 
     /**
      * Конструктор.
@@ -133,8 +133,8 @@ public class MenuTracker {
      * Метод заполняет массив ключами действий.
      */
     public void setRange() {
-        for (int i = 0; i < getActionsLentgh() ; i++) {
-            range.add(this.actions.get(i).key());
+        for (int i = 0; i < range.length ; i++) {
+            range[i] = this.actions.get(i).key();
         }
     }
 
