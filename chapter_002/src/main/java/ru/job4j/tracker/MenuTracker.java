@@ -133,7 +133,7 @@ public class MenuTracker {
      * Метод заполняет массив ключами действий.
      */
     public void setRange() {
-        for (int i = 0; i < range.length ; i++) {
+        for (int i = 0; i < range.length; i++) {
             range[i] = this.actions.get(i).key();
         }
     }
@@ -151,10 +151,10 @@ public class MenuTracker {
      * Метод заполняет массив.
      */
     public void fillActions(StartUI ui) {
-        this.actions.add(this.new AddAction(0,"Добавить новую заявку."));
+        this.actions.add(this.new AddAction(0, "Добавить новую заявку."));
         this.actions.add(this.new FindAllAction(1, "Показать список всех заявок."));
-        this.actions.add(new MenuTracker.EditAction(2,"Редактирование заявки."));
-        this.actions.add(new MenuTracker.DeleteAction(3,"Удаление заявки."));
+        this.actions.add(new MenuTracker.EditAction(2, "Редактирование заявки."));
+        this.actions.add(new MenuTracker.DeleteAction(3, "Удаление заявки."));
         this.actions.add(new FindByIdAction(4, "Поиск по id."));
         this.actions.add(new FindByNameAction(5, "Поиск заявки по имени."));
         this.actions.add(new ExitAction(6, "Выход.", ui));

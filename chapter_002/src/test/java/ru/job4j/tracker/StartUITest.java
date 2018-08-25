@@ -54,7 +54,7 @@ public class StartUITest {
         // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
         assertThat(
                 new String(this.out.toByteArray()),
-                is (
+                is(
                         new StringBuilder()
                                 .append(menu)
                                 .append("------------ Добавление новой заявки. --------------").append(separator)
@@ -75,7 +75,7 @@ public class StartUITest {
         // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
         assertThat(
                 new String(this.out.toByteArray()),
-                is (
+                is(
                         new StringBuilder()
                                 .append(menu)
                                 .append("------------ Заявка отредактирована ------------").append(separator)
@@ -93,7 +93,7 @@ public class StartUITest {
         // проверяем, что при вызове метода findAll длина возвращаемого массива будет равна нулю.
         assertThat(
                 new String(this.out.toByteArray()),
-                is (
+                is(
                         new StringBuilder()
                                 .append(menu)
                                 .append("------------ Заявка удалена ------------").append(separator)
@@ -111,7 +111,7 @@ public class StartUITest {
         // проверяем, что при вызове метода findById выводится наш item.
                 assertThat(
                         new String(this.out.toByteArray()),
-                        is (
+                        is(
                                 new StringBuilder()
                                         .append(menu)
                                         .append("------------------------------------").append(separator)
@@ -135,7 +135,7 @@ public class StartUITest {
         // проверяем, что при вызове метода findByName выводятся наши item`ы с именем test name.
         assertThat(
                 new String(this.out.toByteArray()),
-                is (
+                is(
                         new StringBuilder()
                                 .append(menu)
                                 .append("------------------------------------").append(separator)
@@ -162,7 +162,7 @@ public class StartUITest {
         // проверяем, что при вызове метода findAll выводятся все существующие item`ы.
         assertThat(
                 new String(this.out.toByteArray()),
-                is (
+                is(
                         new StringBuilder()
                         .append(menu)
                         .append("------------ Список имён всех заявок. --------------").append(separator)

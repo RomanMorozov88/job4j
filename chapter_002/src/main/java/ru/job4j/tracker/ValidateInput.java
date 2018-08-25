@@ -31,7 +31,7 @@ public class ValidateInput implements Input {
                 System.out.println("-Введите целое число  " + range[0] + " до "
                         + range[range.length - 1] + ".");
             }
-        } while (invalid) ;
+        } while (invalid);
             return value;
     }
 }
