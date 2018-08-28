@@ -11,7 +11,6 @@ import org.junit.Before;
 
 public class StartUITest {
 
-    private final Tracker tracker = new Tracker();
     private final PrintStream stdout = System.out;
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
@@ -43,14 +42,15 @@ public class StartUITest {
      * метод для установки input и для запуска StartUI().init().
      * @param items массив, содержащий последовательность ответов пользователя.
      */
-    public void setInput(String[] items) {
+    public void setInput(String[] items, Tracker tracker) {
         Input input = new StubInput(items);
-        new StartUI(input, this.tracker).init();
+        new StartUI(input, tracker).init();
     }
 
     @Test
     public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
-        setInput(new String[]{"0", "test name", "desc", "6"});
+        Tracker tracker = new Tracker();
+        setInput(new String[]{"0", "test name", "desc", "6"}, tracker);
         // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
         assertThat(
                 new String(this.out.toByteArray()),
@@ -59,7 +59,7 @@ public class StartUITest {
                                 .append(menu)
                                 .append("------------ Добавление новой заявки. --------------").append(separator)
                                 .append("Имя: test name").append(separator)
-                                .append("id: " + this.tracker.findAll()[0].getId()).append(separator)
+                                .append("id: " + tracker.findAll()[0].getId()).append(separator)
                                 .append("Текст: desc").append(separator)
                                 .append(menu)
                                 .toString()
@@ -69,9 +69,10 @@ public class StartUITest {
 
     @Test
     public void whenUpdateThenTrackerHasUpdatedValue() {
+        Tracker tracker = new Tracker();
         //Напрямую добавляем заявку
         Item item = tracker.add(new Item("test name", "desc"));
-        setInput(new String[]{"2", item.getId(), "test replace", "заменили заявку", "6"});
+        setInput(new String[]{"2", item.getId(), "test replace", "заменили заявку", "6"}, tracker);
         // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
         assertThat(
                 new String(this.out.toByteArray()),
@@ -87,9 +88,10 @@ public class StartUITest {
 
     @Test
     public void whenDeleteThenTrackerHasNoItem() {
+        Tracker tracker = new Tracker();
         //Напрямую добавляем заявку
         Item item = tracker.add(new Item("test name", "desc"));
-        setInput(new String[]{"3", item.getId(), "6"});
+        setInput(new String[]{"3", item.getId(), "6"}, tracker);
         // проверяем, что при вызове метода findAll длина возвращаемого массива будет равна нулю.
         assertThat(
                 new String(this.out.toByteArray()),
@@ -105,9 +107,10 @@ public class StartUITest {
 
     @Test
     public void whenFindID() {
+        Tracker tracker = new Tracker();
         //Напрямую добавляем заявку
         Item item = tracker.add(new Item("test name", "desc"));
-        setInput(new String[]{"4", item.getId(), "6"});
+        setInput(new String[]{"4", item.getId(), "6"}, tracker);
         // проверяем, что при вызове метода findById выводится наш item.
                 assertThat(
                         new String(this.out.toByteArray()),
@@ -127,11 +130,12 @@ public class StartUITest {
 
     @Test
     public void whenFindName() {
+        Tracker tracker = new Tracker();
         //Напрямую добавляем заявку
         Item item1 = tracker.add(new Item("test name", "desc01"));
         Item item2 = tracker.add(new Item("test name 1", "desc02"));
         Item item3 = tracker.add(new Item("test name", "desc03"));
-        setInput(new String[]{"5", "test name", "6"});
+        setInput(new String[]{"5", "test name", "6"}, tracker);
         // проверяем, что при вызове метода findByName выводятся наши item`ы с именем test name.
         assertThat(
                 new String(this.out.toByteArray()),
@@ -154,11 +158,12 @@ public class StartUITest {
 
     @Test
     public void whenFindAll() {
+        Tracker tracker = new Tracker();
         //Напрямую добавляем заявку
         Item item1 = tracker.add(new Item("test name 1", "desc01"));
         Item item2 = tracker.add(new Item("test name 2", "desc02"));
         Item item3 = tracker.add(new Item("test name 3", "desc03"));
-        setInput(new String[]{"1", "6"});
+        setInput(new String[]{"1", "6"}, tracker);
         // проверяем, что при вызове метода findAll выводятся все существующие item`ы.
         assertThat(
                 new String(this.out.toByteArray()),
