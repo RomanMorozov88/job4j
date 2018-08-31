@@ -38,7 +38,7 @@ class FindByNameAction extends BaseAction {
         String name = input.ask("Введите имя нужной заявки: ");
         if (tracker.findByName(name).length > 0) {
             System.out.println("------------------------------------");
-            System.out.println(String.format("Список заявок с именем %s:\n", name));
+            System.out.println(String.format("Список заявок с именем %s:", name));
             for (Item item : tracker.findByName(name)) {
                 System.out.println("Имя: " + item.getName());
                 System.out.println("id: " + item.getId());
