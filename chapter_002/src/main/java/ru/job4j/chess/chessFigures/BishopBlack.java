@@ -12,10 +12,10 @@ public class BishopBlack extends Figure {
     @Override
     public Cell[] way(Cell source, Cell dest) throws ImpossibleMoveException {
         int size = Math.abs(dest.x - source.x);
-        if (size == 0) {
+        if (size == 0 ||
+                Math.abs(dest.y - source.y) == 0 ) {
             throw new ImpossibleMoveException("Impossible way.");
         }
-
         Cell[] steps = new Cell[size];
         int directX = source.x < dest.x ? 1 : -1;
         int directY = source.y < dest.y ? 1 : -1;
@@ -23,11 +23,8 @@ public class BishopBlack extends Figure {
         int deltaY = source.y;
 
         for (int i = 0; i < size; i++) {
-            if ((Math.abs(dest.x - deltaX) == size - i) &&
-                    (Math.abs(dest.y - deltaY) == size - i)) {
                 steps[i] = Cell.findCell(deltaX += directX, deltaY += directY);
-            } else throw new ImpossibleMoveException("Impossible way.");
-        }
+            }
         return steps;
     }
 
