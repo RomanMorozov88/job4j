@@ -11,7 +11,7 @@ public class ConvertList2Array {
          * Если количество строк больше длины list- то в каждой строке будет по одному элементу.
          */
         if (rows > list.size()) {
-           cells = 1;
+            cells = 1;
         } else {
             cells = (list.size() / rows) + (list.size() % rows);
         }
@@ -19,7 +19,7 @@ public class ConvertList2Array {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cells; j++) {
                 if (listIndex > list.size() - 1) {
-                    array[i][j] = 0;
+                    break;
                 } else {
                     array[i][j] = list.get(listIndex);
                 }
