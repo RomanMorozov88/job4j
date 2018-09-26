@@ -36,7 +36,7 @@ class FindByNameAction extends BaseAction {
     @Override
     public void execute(Input input, Tracker tracker) {
         String name = input.ask("Введите имя нужной заявки: ");
-        if (tracker.findByName(name).length > 0) {
+        if (tracker.findByName(name).size() > 0) {
             System.out.println("------------------------------------");
             System.out.println(String.format("Список заявок с именем %s:", name));
             for (Item item : tracker.findByName(name)) {
@@ -83,7 +83,7 @@ public class MenuTracker {
     /**
      * @param хранит ссылку на массив типа Integer, содержащий ключи действий.
      */
-    public int[] range = new int[7];
+    public List<Integer> range = new ArrayList<>();
 
     /**
      * Конструктор.
@@ -100,8 +100,8 @@ public class MenuTracker {
      * Метод заполняет массив ключами действий.
      */
     public void setRange() {
-        for (int i = 0; i < range.length; i++) {
-            range[i] = this.actions.get(i).key();
+        for (UserAction i : actions) {
+            range.add(i.key());
         }
     }
 
@@ -177,7 +177,7 @@ public class MenuTracker {
         }
         @Override
         public void execute(Input input, Tracker tracker) {
-            if (tracker.findAll().length == 0) {
+            if (tracker.findAll().size() == 0) {
                 System.out.println("------------ В хранилище нет ни одной заявки ------------");
             } else {
                 System.out.println("------------ Список имён всех заявок. --------------");

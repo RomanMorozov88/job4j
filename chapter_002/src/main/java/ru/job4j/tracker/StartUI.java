@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.List;
+
 /**
  * @version $Id$
  * @since 0.1
@@ -91,12 +93,12 @@ public class StartUI {
 
     private void findAllItem() {
         System.out.println("------------ Список имён уже существующих заявок --------------");
-        Item[] result = this.tracker.findAll();
-        if (result.length == 0) {
+        List<Item> result = this.tracker.findAll();
+        if (result.size() == 0) {
             System.out.println("------------ В хранилище нет ни одной заявки ------------");
         } else {
-            for (int i = 0; i < result.length; i++) {
-                System.out.println("1." + result[i].getName());
+            for (int i = 0; i < result.size(); i++) {
+                System.out.println("1." + result.get(i).getName());
             }
         }
     }
@@ -131,12 +133,12 @@ public class StartUI {
     private void findByNameItem() {
         System.out.println("------------ Поиск заявки по имени ------------");
         String name = this.input.ask("Введите имя заявки :");
-        Item[] result = this.tracker.findByName(name);
-        if (result.length > 0) {
-            for (int i = 0; i < result.length; i++) {
-                System.out.println(result[i].getName());
-                System.out.println(result[i].getDescription());
-                System.out.println(result[i].getCreate());
+        List<Item> result = this.tracker.findByName(name);
+        if (result.size() > 0) {
+            for (int i = 0; i < result.size(); i++) {
+                System.out.println(result.get(i).getName());
+                System.out.println(result.get(i).getDescription());
+                System.out.println(result.get(i).getCreate());
                 System.out.println("--------------------------------------------");
             }
         } else {

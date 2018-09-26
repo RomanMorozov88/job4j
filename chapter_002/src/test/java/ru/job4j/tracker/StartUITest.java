@@ -58,7 +58,7 @@ public class StartUITest {
                                 .append(menu)
                                 .append("------------ Добавление новой заявки. --------------").append(separator)
                                 .append("Имя: test name").append(separator)
-                                .append("id: " + tracker.findAll()[0].getId()).append(separator)
+                                .append("id: " + tracker.findAll().get(0).getId()).append(separator)
                                 .append("Текст: desc").append(separator)
                                 .append(menu)
                                 .toString()

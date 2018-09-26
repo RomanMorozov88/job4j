@@ -15,7 +15,7 @@ public class ValidateInput implements Input {
         return this.input.ask(question);
     }
 
-    public int ask(String question, int[] range) {
+    public int ask(String question, List<Integer> range) {
         boolean invalid = true;
         int value = -1;
         do {
@@ -24,12 +24,12 @@ public class ValidateInput implements Input {
                 invalid = false;
             } catch (MenuOutException inv1) {
                 System.out.println("-Некорректо введён пункт меню.");
-                System.out.println("-Введите целое число  " + range[0] + " до "
-                        + range[range.length - 1] + ".");
+                System.out.println("-Введите целое число  " + range.get(0) + " до "
+                        + range.get(range.size() - 1) + ".");
             } catch (NumberFormatException inv2) {
                 System.out.println("-Некорректо введён пункт меню.");
-                System.out.println("-Введите целое число  " + range[0] + " до "
-                        + range[range.length - 1] + ".");
+                System.out.println("-Введите целое число  " + range.get(0) + " до "
+                        + range.get(range.size() - 1) + ".");
             }
         } while (invalid);
             return value;
