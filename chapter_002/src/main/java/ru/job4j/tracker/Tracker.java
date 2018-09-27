@@ -35,7 +35,7 @@ public class Tracker {
     public boolean delete(String id) {
         boolean result = false;
         for (Item i : items) {
-            if (i != null && i.getId().equals(id)) {
+            if (i.getId().equals(id)) {
                 items.remove(i);
                 result = true;
                 break;
@@ -51,9 +51,9 @@ public class Tracker {
      */
     public Item findById(String id) {
         Item result = null;
-        for (Item item : items) {
-            if (item != null && item.getId().equals(id)) {
-                result = item;
+        for (Item i : items) {
+            if (i.getId().equals(id)) {
+                result = i;
                 break;
             }
         }
@@ -68,7 +68,7 @@ public class Tracker {
     public List<Item> findByName(String key) {
         List<Item> result = new ArrayList<>();
         for (Item i : items) {
-            if (i != null && i.getName().equals(key)) {
+            if (i.getName().equals(key)) {
                 result.add(i);
             }
         }
@@ -84,10 +84,9 @@ public class Tracker {
         boolean result = false;
         item.setId(id);
         for (Item i : items) {
-            if (i != null && i.getId().equals(id)) {
+            if (i.getId().equals(id)) {
                 item.setCreate(i.getCreate());
-                items.remove(i);
-                items.add(item);
+                items.set(items.indexOf(i), item);
                 result = true;
                 break;
             }
@@ -101,8 +100,7 @@ public class Tracker {
      * @return Уникальный ключ.
      */
     private String generateId() {
-        Random rnd = new Random();
-        return String.valueOf(rnd.nextInt((100 - 1) + 1) + 1);
+        return String.valueOf(RN.nextInt(101));
     }
 
     /**
