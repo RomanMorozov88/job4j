@@ -1,4 +1,4 @@
-package ru.job4j.sortingUsers;
+package ru.job4j.sortingusers;
 
 import org.junit.Test;
 

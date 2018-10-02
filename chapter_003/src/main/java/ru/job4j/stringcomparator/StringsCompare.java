@@ -1,4 +1,4 @@
-package ru.job4j.stringComparator;
+package ru.job4j.stringcomparator;
 
 import java.util.Comparator;
 

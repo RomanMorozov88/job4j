@@ -1,4 +1,4 @@
-package ru.job4j.userConvertMap;
+package ru.job4j.userconvertmap;
 
 import org.junit.Test;
 
@@ -12,12 +12,12 @@ public class UserConvertTest {
     @Test
     public void whenHashMapHaveUserA() {
         UserConvert list = new UserConvert();
-        User A = new User("A", "Aa");
-        User B = new User("B", "Bb");
+        User a = new User("A", "Aa");
+        User b = new User("B", "Bb");
         List<User> userList = new ArrayList<>();
-        userList.add(A);
-        userList.add(B);
-        boolean result = list.process(userList).containsValue(A);
+        userList.add(a);
+        userList.add(b);
+        boolean result = list.process(userList).containsValue(a);
         boolean expect = true;
         assertThat(result, is(expect));
     }
@@ -25,13 +25,13 @@ public class UserConvertTest {
     @Test
     public void whenHashMapHave3Elements() {
         UserConvert list = new UserConvert();
-        User A = new User("A", "Aa");
-        User B = new User("B", "Bb");
-        User C = new User("C", "Cc");
+        User a = new User("A", "Aa");
+        User b = new User("B", "Bb");
+        User c = new User("C", "Cc");
         List<User> userList = new ArrayList<>();
-        userList.add(A);
-        userList.add(B);
-        userList.add(C);
+        userList.add(a);
+        userList.add(b);
+        userList.add(c);
         int result = list.process(userList).size();
         int expect = 3;
         assertThat(result, is(expect));

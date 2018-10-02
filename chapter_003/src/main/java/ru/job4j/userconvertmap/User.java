@@ -1,4 +1,4 @@
-package ru.job4j.userConvertMap;
+package ru.job4j.userconvertmap;
 
 import java.util.Random;
 
