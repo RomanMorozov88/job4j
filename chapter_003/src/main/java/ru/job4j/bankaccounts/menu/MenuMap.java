@@ -165,7 +165,8 @@ public class MenuMap {
                 } else {
                     System.out.println("------------ Пользователь не найден. --------------");
                 }
-            } catch (NumberFormatException e) {
+            } catch (IncorrectDataException inv) {
+                System.out.println("       **********");
                 System.out.println("Неверно введены данные.");
             }
         }
@@ -194,7 +195,8 @@ public class MenuMap {
                 } else {
                     System.out.println("------------ Пользователь не найден. --------------");
                 }
-            } catch (NumberFormatException e) {
+            } catch (IncorrectDataException inv) {
+                System.out.println("       **********");
                 System.out.println("Неверно введены данные.");
             }
         }

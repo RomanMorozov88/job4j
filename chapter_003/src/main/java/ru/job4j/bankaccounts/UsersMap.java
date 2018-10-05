@@ -1,5 +1,7 @@
 package ru.job4j.bankaccounts;
 
+import ru.job4j.bankaccounts.menu.IncorrectDataException;
+
 import java.util.*;
 
 public class UsersMap {
@@ -115,8 +117,10 @@ public class UsersMap {
         boolean result = false;
         Account account1 = this.findAccount(srcPassport, srcRequisite);
         Account account2 = this.findAccount(desPassport, desRequisite);
-        if (srcPassport != desPassport && srcRequisite != desRequisite
-                && (account1.getValue() - amount) >= 0) {
+        if (account1 == null || account2 == null || account1.equals(account2)) {
+            throw new IncorrectDataException("...");
+        }
+        if ((account1.getValue() - amount) >= 0) {
             account1.editValue(-amount);
             account2.editValue(amount);
             result = true;
@@ -132,17 +136,24 @@ public class UsersMap {
      * @param amount сколько
      * @return
      */
-    public boolean transferMoney(String srcPassport, int srcRequisite,
+    /*public boolean transferMoney(String srcPassport, int srcRequisite,
                                  int desRequisite, double amount) {
         boolean result = false;
         Account account1 = this.findAccount(srcPassport, srcRequisite);
         Account account2 = this.findAccount(srcPassport, desRequisite);
+        if (account1 == null || account2 == null || account1.equals(account2)) {
+            throw new IncorrectDataException("...");
+        }
         if ((account1.getValue() - amount) >= 0) {
             account1.editValue(-amount);
             account2.editValue(amount);
             result = true;
         }
         return result;
+    }*/
+    public boolean transferMoney(String srcPassport, int srcRequisite,
+                                 int desRequisite, double amount) {
+        return this.transferMoney(srcPassport, srcRequisite, srcPassport, desRequisite, amount);
     }
 
     /**
