@@ -167,8 +167,10 @@ public class StartUITest {
         UsersMap usersmap = new UsersMap();
         User user1 = new User("name1", "test1");
         User user2 = new User("name2", "test2");
-        usersmap.addUser(user1);
+        User user3 = new User("name3", "test3");
         usersmap.addUser(user2);
+        usersmap.addUser(user1);
+        usersmap.addUser(user3);
         setInput(new String[]{"0", "8"}, usersmap);
         assertThat(
                 new String(this.out.toByteArray()),
@@ -178,6 +180,7 @@ public class StartUITest {
                                 .append("------------ Список пользователей. --------------").append(separator)
                                 .append("name1").append(separator)
                                 .append("name2").append(separator)
+                                .append("name3").append(separator)
                                 .append("-----------------------------------------").append(separator)
                                 .append(menu)
                                 .toString()

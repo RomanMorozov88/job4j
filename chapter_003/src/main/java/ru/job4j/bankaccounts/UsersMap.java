@@ -12,7 +12,7 @@ public class UsersMap {
     /**
      * Map, содержащий список аккаунтов с ключом типа User.
      */
-    private HashMap<User, List<Account>> UsersAccounts = new HashMap<>();
+    private HashMap<User, List<Account>> usersAccounts = new HashMap<>();
     /**
      * Список аккаунтов.
      */
@@ -24,7 +24,7 @@ public class UsersMap {
      * @param user входящий объект.
      */
     public void addUser(User user) {
-        this.UsersAccounts.putIfAbsent(user, accountsList);
+        this.usersAccounts.putIfAbsent(user, accountsList);
     }
 
     /**
@@ -38,7 +38,7 @@ public class UsersMap {
         User userResult = this.findUser(user.getPassport());
         if (userResult != null
                 && userResult.equals(user)) {
-            this.UsersAccounts.remove(userResult);
+            this.usersAccounts.remove(userResult);
             result = true;
         }
         return result;
@@ -55,7 +55,7 @@ public class UsersMap {
         boolean result = false;
         User user = this.findUser(passport);
         if (user != null) {
-            this.UsersAccounts.get(user).add(account);
+            this.usersAccounts.get(user).add(account);
             result = true;
         }
         return result;
@@ -70,7 +70,7 @@ public class UsersMap {
      */
     public boolean deleteAccountFromUser(String passport, int requisites) {
         boolean result = false;
-        List<Account> userlist = this.UsersAccounts.get(this.findUser(passport));
+        List<Account> userlist = this.usersAccounts.get(this.findUser(passport));
         if (userlist.size() != 0) {
             for (int i = 0; i < userlist.size(); i++) {
                 if (userlist.get(i).getRequisites() == requisites) {
@@ -89,7 +89,7 @@ public class UsersMap {
      * @return
      */
     public List<Account> getUserAccounts(String passport) {
-        return this.UsersAccounts.get(this.findUser(passport));
+        return this.usersAccounts.get(this.findUser(passport));
     }
 
     /**
@@ -98,7 +98,14 @@ public class UsersMap {
      * @return
      */
     public Set<User> getUsers() {
-        return this.UsersAccounts.keySet();
+        Set<User> result = new TreeSet<>(new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+        result.addAll(this.usersAccounts.keySet());
+        return result;
     }
 
     /**
@@ -169,7 +176,7 @@ public class UsersMap {
      */
     public User findUser(String passport) {
         User result = null;
-        for (User u : this.UsersAccounts.keySet()) {
+        for (User u : this.usersAccounts.keySet()) {
             if (u.getPassport().equals(passport)) {
                 result = u;
             }
