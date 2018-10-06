@@ -18,8 +18,8 @@ public class ChangeTest {
     @Test
     public void whenChangeIsFiftyAndTenAndFive() {
         Change change = new Change();
-        int[] result = change.changes(100, 35);
-        int[]expect = {50, 10, 5};
+        int[] result = change.changes(100, 33);
+        int[]expect = {50, 10, 5, 2};
         assertThat(result, is(expect));
     }
 
@@ -32,10 +32,10 @@ public class ChangeTest {
     }
 
     @Test
-    public void whenIncorrectBanknote() {
+    public void whenChangeIsOne() {
         Change change = new Change();
-        int[] result = change.changes(40, 35);
-        int[]expect = {-1};
+        int[] result = change.changes(40, 39);
+        int[]expect = {1};
         assertThat(result, is(expect));
     }
 
@@ -44,6 +44,22 @@ public class ChangeTest {
         Change change = new Change();
         int[] result = change.changes(10, 35);
         int[]expect = {-1};
+        assertThat(result, is(expect));
+    }
+
+    @Test
+    public void whenChangeNinetyNine() {
+        Change change = new Change();
+        int[] result = change.changes(100, 1);
+        int[]expect = {50, 10, 10, 10, 10, 5, 2, 2};
+        assertThat(result, is(expect));
+    }
+
+    @Test
+    public void whenChangeIsTwoAndOne() {
+        Change change = new Change();
+        int[] result = change.changes(50, 47);
+        int[]expect = {2, 1};
         assertThat(result, is(expect));
     }
 }
