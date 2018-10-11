@@ -8,7 +8,7 @@ import static org.junit.Assert.assertThat;
 public class ArrayOfTwoTest {
 
     @Test
-    public void ArrOnePlusArrTwo() {
+    public void SummOfTwoArraysOne() {
         ArrayOfTwo sln = new ArrayOfTwo();
         int[] arr1 = new int[]{3, 8};
         int[] arr2 = new int[]{1, 9};
@@ -18,7 +18,7 @@ public class ArrayOfTwoTest {
     }
 
     @Test
-    public void ArrOnePlusArrTwoSecond() {
+    public void SummOfTwoArraysSecond() {
         ArrayOfTwo sln = new ArrayOfTwo();
         int[] arr1 = new int[]{1, 2, 3};
         int[] arr2 = new int[]{2, 4, 7, 8};
