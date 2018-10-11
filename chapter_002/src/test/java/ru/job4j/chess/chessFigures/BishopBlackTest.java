@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 public class BishopBlackTest {
     @Test
-    public void BishopWay01() {
+    public void bishopWay01() {
         Board board = new Board();
         BishopBlack figure = new BishopBlack(Cell.G1);
         board.add(figure);
@@ -22,7 +22,7 @@ public class BishopBlackTest {
     }
 
     @Test
-    public void BishopWay02() {
+    public void bishopWay02() {
         Board board = new Board();
         BishopBlack figure = new BishopBlack(Cell.A8);
         board.add(figure);
@@ -32,7 +32,7 @@ public class BishopBlackTest {
     }
 
     @Test
-    public void BishopMoveCorrect() {
+    public void bishopMoveCorrect() {
         Board board = new Board();
         BishopBlack figure = new BishopBlack(Cell.B1);
         board.add(figure);
@@ -46,13 +46,13 @@ public class BishopBlackTest {
      */
 
     @Test(expected = FigureNotFoundException.class)
-    public void BishopNotFound() {
+    public void bishopNotFound() {
         Board board = new Board();
         board.move(Cell.B2, Cell.H7);
     }
 
     @Test(expected = OccupiedWayException.class)
-    public void BishopOccupatedCell() {
+    public void bishopOccupatedCell() {
         Board board = new Board();
         BishopBlack figure = new BishopBlack(Cell.C6);
         BishopBlack figure2 = new BishopBlack(Cell.E4);
@@ -62,7 +62,7 @@ public class BishopBlackTest {
     }
 
     @Test
-    public void BishopImpossibleMove() {
+    public void bishopImpossibleMove() {
         String testString = "Impossible way.";
         try {
             Board board = new Board();
