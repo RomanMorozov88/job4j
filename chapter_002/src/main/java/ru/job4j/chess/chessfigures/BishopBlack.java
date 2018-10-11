@@ -23,7 +23,7 @@ public class BishopBlack extends Figure {
         int deltaY = source.y;
 
         for (int i = 0; i < sizeX; i++) {
-            steps[i] = Cell.findCell(deltaX += directX, deltaY += directY);
+            steps[i] = Cell.findCell(deltaX = deltaX + directX, deltaY = deltaY + directY);
         }
         return steps;
     }
