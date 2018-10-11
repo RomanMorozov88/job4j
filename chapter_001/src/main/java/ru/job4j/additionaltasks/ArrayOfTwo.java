@@ -1,7 +1,7 @@
 package ru.job4j.additionaltasks;
 
 public class ArrayOfTwo {
-    public int[] MergerArrays(int[] arr1, int[] arr2) {
+    public int[] mergerArrays(int[] arr1, int[] arr2) {
         int[] result = new int[arr1.length + arr2.length];
 
         int ind1 = 0;
