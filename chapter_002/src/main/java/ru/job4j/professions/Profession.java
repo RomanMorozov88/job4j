@@ -11,6 +11,7 @@ public class Profession {
     public String getName() {
         return this.name;
     }
+
     public String getProfession() {
         return this.profession;
     }

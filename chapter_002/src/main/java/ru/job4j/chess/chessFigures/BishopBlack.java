@@ -5,7 +5,7 @@ import ru.job4j.chess.chessExceptions.ImpossibleMoveException;
 
 public class BishopBlack extends Figure {
 
-    public BishopBlack (Cell position) {
+    public BishopBlack(Cell position) {
         super(position);
     }
 
@@ -23,8 +23,8 @@ public class BishopBlack extends Figure {
         int deltaY = source.y;
 
         for (int i = 0; i < sizeX; i++) {
-                steps[i] = Cell.findCell(deltaX += directX, deltaY += directY);
-            }
+            steps[i] = Cell.findCell(deltaX += directX, deltaY += directY);
+        }
         return steps;
     }
 

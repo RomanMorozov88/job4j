@@ -3,8 +3,10 @@ package ru.job4j.paint;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -29,11 +31,12 @@ public class PaintTest {
         System.setOut(this.stdout);
         System.out.println("execute after method");
     }
+
     @Test
     public void whenDrawSquare() {
-            new Paint().draw(new Square());
-            assertThat(
-                    new String(this.out.toByteArray()),
+        new Paint().draw(new Square());
+        assertThat(
+                new String(this.out.toByteArray()),
                 is(
                         new StringBuilder()
                                 .append("+++++++" + System.lineSeparator())
@@ -47,17 +50,17 @@ public class PaintTest {
     }
 
     @Test
-        public void whenDrawTriangle() {
-            new Paint().draw(new Triangle());
-            assertThat(
-                    new String(this.out.toByteArray()),
+    public void whenDrawTriangle() {
+        new Paint().draw(new Triangle());
+        assertThat(
+                new String(this.out.toByteArray()),
                 is(
                         new StringBuilder()
-                        .append("   +" + System.lineSeparator())
-                        .append("  + +" + System.lineSeparator())
-                        .append(" +   +" + System.lineSeparator())
-                        .append("+++++++")
-                        .append(System.lineSeparator())
+                                .append("   +" + System.lineSeparator())
+                                .append("  + +" + System.lineSeparator())
+                                .append(" +   +" + System.lineSeparator())
+                                .append("+++++++")
+                                .append(System.lineSeparator())
                                 .toString()
                 )
         );

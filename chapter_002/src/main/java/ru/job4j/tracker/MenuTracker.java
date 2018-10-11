@@ -9,9 +9,10 @@ class FindByIdAction extends BaseAction {
     public FindByIdAction(int key, String name) {
         super(key, name);
     }
+
     @Override
     public void execute(Input input, Tracker tracker) {
-        String id =  input.ask("Введите id нужной заявки: ");
+        String id = input.ask("Введите id нужной заявки: ");
         if (tracker.findById(id) != null) {
             System.out.println("------------------------------------");
             System.out.println("Имя: " + tracker.findById(id).getName());
@@ -33,6 +34,7 @@ class FindByNameAction extends BaseAction {
     public FindByNameAction(int key, String name) {
         super(key, name);
     }
+
     @Override
     public void execute(Input input, Tracker tracker) {
         String name = input.ask("Введите имя нужной заявки: ");
@@ -57,10 +59,12 @@ class FindByNameAction extends BaseAction {
  */
 class ExitAction extends BaseAction {
     private StartUI ui;
+
     public ExitAction(int key, String name, StartUI ui) {
         super(key, name);
         this.ui = ui;
     }
+
     @Override
     public void execute(Input input, Tracker tracker) {
         this.ui.exitItem();
@@ -155,6 +159,7 @@ public class MenuTracker {
         public AddAction(int key, String name) {
             super(key, name);
         }
+
         @Override
         public void execute(Input input, Tracker tracker) {
             System.out.println("------------ Добавление новой заявки. --------------");
@@ -175,6 +180,7 @@ public class MenuTracker {
         public FindAllAction(int key, String name) {
             super(key, name);
         }
+
         @Override
         public void execute(Input input, Tracker tracker) {
             if (tracker.findAll().size() == 0) {
@@ -197,13 +203,14 @@ public class MenuTracker {
         public EditAction(int key, String name) {
             super(key, name);
         }
+
         @Override
         public void execute(Input input, Tracker tracker) {
-           String id =  input.ask("Введите id нужной заявки: ");
-           String name = input.ask("Введите новое имя: ");
-           String desc = input.ask("Введите новый текст: ");
-           Item item = new Item(name, desc);
-           item.setId(id);
+            String id = input.ask("Введите id нужной заявки: ");
+            String name = input.ask("Введите новое имя: ");
+            String desc = input.ask("Введите новый текст: ");
+            Item item = new Item(name, desc);
+            item.setId(id);
             if (tracker.replace(id, item)) {
                 System.out.println("------------ Заявка отредактирована ------------");
             } else {
@@ -221,6 +228,7 @@ public class MenuTracker {
         public DeleteAction(int key, String name) {
             super(key, name);
         }
+
         @Override
         public void execute(Input input, Tracker tracker) {
             String id = input.ask("Введите id нужной заявки: ");

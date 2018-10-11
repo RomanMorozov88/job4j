@@ -7,14 +7,14 @@ public class ArrayOfTwo {
         int ind1 = 0;
         int ind2 = 0;
 
-        for(int i = 0; i < result.length; i++) {
-            if(ind1 >= arr1.length){
+        for (int i = 0; i < result.length; i++) {
+            if (ind1 >= arr1.length) {
                 result[i] = arr2[ind2++];
-            }else if(ind2 >= arr2.length){
+            } else if (ind2 >= arr2.length) {
                 result[i] = arr1[ind1++];
-            }else if( arr1[ind1]<arr2[ind2]){
+            } else if (arr1[ind1] < arr2[ind2]) {
                 result[i] = arr1[ind1++];
-            }else{
+            } else {
                 result[i] = arr2[ind2++];
             }
         }

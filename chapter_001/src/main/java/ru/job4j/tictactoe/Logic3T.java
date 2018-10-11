@@ -6,8 +6,9 @@ public class Logic3T {
     public Logic3T(Figure3T[][] table) {
         this.table = table;
     }
+
     /**
-     *  Проверка наличия победных комбинаций для X.
+     * Проверка наличия победных комбинаций для X.
      */
     public boolean isWinnerX() {
         boolean result = false;
@@ -15,13 +16,13 @@ public class Logic3T {
          *  Проверка победной комбинации X по горизонтали.
          */
         for (int i = 0; i < table.length; i++) {
-                if (table[i][0].hasMarkX() && table[i][1].hasMarkX() && table[i][2].hasMarkX()) {
-                    result = true;
-                }
+            if (table[i][0].hasMarkX() && table[i][1].hasMarkX() && table[i][2].hasMarkX()) {
+                result = true;
             }
-            if (result) {
+        }
+        if (result) {
             return result;
-            }
+        }
         /**
          *  Проверка победной комбинации X по вертикали.
          */
@@ -43,8 +44,9 @@ public class Logic3T {
         }
         return result;
     }
+
     /**
-     *  Проверка наличия победных комбинаций для O.
+     * Проверка наличия победных комбинаций для O.
      */
     public boolean isWinnerO() {
         boolean result = false;
@@ -80,14 +82,15 @@ public class Logic3T {
         }
         return result;
     }
+
     /**
-     *  Проверка, есть ли на поле пустые клетки.
+     * Проверка, есть ли на поле пустые клетки.
      */
     public boolean hasGap() {
         boolean result = true;
         for (int i = 0; i < table.length; i++) {
             for (int j = 0; j < table[i].length; j++) {
-                if (table[i][j].hasMarkO()  || table[i][j].hasMarkX()) {
+                if (table[i][j].hasMarkO() || table[i][j].hasMarkX()) {
                     result = false;
                 } else {
                     result = true;

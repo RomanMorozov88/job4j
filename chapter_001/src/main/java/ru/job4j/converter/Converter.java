@@ -7,6 +7,7 @@ public class Converter {
 
     /**
      * Конвертируем рубли в евро.
+     *
      * @param value Рубли.
      * @return Евро.
      * 1 евро = 70 рублей.
@@ -17,6 +18,7 @@ public class Converter {
 
     /**
      * Конвертируем рубли в доллары.
+     *
      * @param value Рубли.
      * @return Доллары
      * 1 доллар = 60 рублей.
@@ -27,6 +29,7 @@ public class Converter {
 
     /**
      * Конвертируем рубли в доллары.
+     *
      * @param value Доллары.
      * @return Рубли.
      * 1 доллар = 60 рублей.
@@ -37,6 +40,7 @@ public class Converter {
 
     /**
      * Конвертируем рубли в евро.
+     *
      * @param value Евро.
      * @return Рубли.
      * 1 евро = 70 рублей.

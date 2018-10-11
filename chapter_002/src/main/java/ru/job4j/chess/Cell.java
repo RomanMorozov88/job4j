@@ -20,18 +20,19 @@ public enum Cell {
 
     /**
      * Метод, необходимый для работы метода way() фигур.
+     *
      * @param x
      * @param y
      * @return возвращает ячейку с данными координатами.
      */
     public static Cell findCell(int x, int y) {
         Cell result = null;
-            for (Cell cell : Cell.values()) {
-                if (cell.x == x && cell.y == y) {
-                    result = cell;
-                    break;
-                }
+        for (Cell cell : Cell.values()) {
+            if (cell.x == x && cell.y == y) {
+                result = cell;
+                break;
             }
+        }
         return result;
     }
 }

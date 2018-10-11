@@ -36,7 +36,7 @@ public class ValidateInputTest {
     @Test
     public void whenInvalidInput() {
         ValidateInput input = new ValidateInput(
-                new StubInput(new String[] {"invalid", "1"})
+                new StubInput(new String[]{"invalid", "1"})
         );
         List<Integer> answer = new ArrayList<>();
         answer.add(1);
@@ -45,11 +45,11 @@ public class ValidateInputTest {
                 this.mem.toString(),
                 is(
                         new StringBuilder()
-                        .append("-Некорректо введён пункт меню.")
-                        .append(System.lineSeparator())
-                        .append("-Введите целое число  1 до 1.")
-                        .append(System.lineSeparator())
-                        .toString()
+                                .append("-Некорректо введён пункт меню.")
+                                .append(System.lineSeparator())
+                                .append("-Введите целое число  1 до 1.")
+                                .append(System.lineSeparator())
+                                .toString()
                 )
         );
     }

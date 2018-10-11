@@ -32,6 +32,6 @@ public class ValidateInput implements Input {
                         + range.get(range.size() - 1) + ".");
             }
         } while (invalid);
-            return value;
+        return value;
     }
 }

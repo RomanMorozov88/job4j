@@ -4,7 +4,7 @@ import ru.job4j.chess.*;
 import ru.job4j.chess.chessExceptions.ImpossibleMoveException;
 
 public class PawnBlack extends Figure {
-    
+
     public PawnBlack(Cell position) {
         super(position);
     }

@@ -1,7 +1,9 @@
 package ru.job4j.loop;
 
 import org.junit.Test;
+
 import java.util.StringJoiner;
+
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 

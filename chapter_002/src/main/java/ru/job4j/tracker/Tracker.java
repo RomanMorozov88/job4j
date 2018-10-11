@@ -19,6 +19,7 @@ public class Tracker {
 
     /**
      * Метод реализаущий добавление заявки в хранилище
+     *
      * @param item новая заявка
      */
     public Item add(Item item) {
@@ -30,6 +31,7 @@ public class Tracker {
 
     /**
      * Метод для удаления заявки.
+     *
      * @param id id удаляемой заявки.
      */
     public boolean delete(String id) {
@@ -46,6 +48,7 @@ public class Tracker {
 
     /**
      * Метод реализует поиск по id.
+     *
      * @param id id искомой заявки.
      * @return Найденный item
      */
@@ -62,6 +65,7 @@ public class Tracker {
 
     /**
      * Метод реализует поиск по имени.
+     *
      * @param key имя искомой заявки.
      * @return Найденный item
      */
@@ -76,8 +80,7 @@ public class Tracker {
     }
 
     /**
-     *
-     * @param id id заявки для редактирования.
+     * @param id   id заявки для редактирования.
      * @param item изменения, вносимые в заявку.
      */
     public boolean replace(String id, Item item) {
@@ -97,6 +100,7 @@ public class Tracker {
     /**
      * Метод генерирует уникальный ключ для заявки.
      * Так как у заявки нет уникальности полей, имени и описание. Для идентификации нам нужен уникальный ключ.
+     *
      * @return Уникальный ключ.
      */
     private String generateId() {
@@ -105,6 +109,7 @@ public class Tracker {
 
     /**
      * Метод для установки времени создания заявки.
+     *
      * @return время создания в миллисекундах.
      */
     private long setTimeCreate() {
@@ -113,6 +118,7 @@ public class Tracker {
 
     /**
      * Метод для вывода списка всех существующих заявок.
+     *
      * @return список всех существующих заявок.
      */
     public List<Item> findAll() {

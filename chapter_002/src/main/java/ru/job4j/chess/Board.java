@@ -1,4 +1,5 @@
 package ru.job4j.chess;
+
 import ru.job4j.chess.chessExceptions.*;
 import ru.job4j.chess.chessFigures.*;
 
@@ -18,7 +19,7 @@ public class Board {
         }
         Cell[] path = this.figures[index].way(source, dest);
         for (int i = 0; i < path.length; i++) {
-            if(path[i] != null && this.existFigure(path[i]) > -1) {
+            if (path[i] != null && this.existFigure(path[i]) > -1) {
                 throw new OccupiedWayException("Occupated.");
             }
         }
@@ -28,6 +29,7 @@ public class Board {
 
     /**
      * Метод для проверки- занята ли данная ячейка фигурой.
+     *
      * @param source - ячейка для проверки.
      * @return возвращает индекс фигуры, занимающей ячейку
      * (или возвращает -1 если ячейка не занята)
