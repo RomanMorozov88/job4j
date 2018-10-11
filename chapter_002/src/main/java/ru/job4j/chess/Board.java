@@ -1,7 +1,7 @@
 package ru.job4j.chess;
 
-import ru.job4j.chess.chessExceptions.*;
-import ru.job4j.chess.chessFigures.*;
+import ru.job4j.chess.chessexceptions.*;
+import ru.job4j.chess.chessfigures.*;
 
 public class Board {
 

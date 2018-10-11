@@ -1,7 +1,7 @@
-package ru.job4j.chess.chessFigures;
+package ru.job4j.chess.chessfigures;
 
 import ru.job4j.chess.Cell;
-import ru.job4j.chess.chessExceptions.ImpossibleMoveException;
+import ru.job4j.chess.chessexceptions.ImpossibleMoveException;
 
 public abstract class Figure {
 

@@ -1,9 +1,9 @@
-package ru.job4j.chess.chessFigures;
+package ru.job4j.chess.chessfigures;
 
 import org.junit.Test;
 import ru.job4j.chess.Board;
 import ru.job4j.chess.Cell;
-import ru.job4j.chess.chessExceptions.*;
+import ru.job4j.chess.chessexceptions.*;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.Matchers.is;

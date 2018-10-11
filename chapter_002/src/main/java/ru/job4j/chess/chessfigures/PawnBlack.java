@@ -1,7 +1,7 @@
-package ru.job4j.chess.chessFigures;
+package ru.job4j.chess.chessfigures;
 
 import ru.job4j.chess.*;
-import ru.job4j.chess.chessExceptions.ImpossibleMoveException;
+import ru.job4j.chess.chessexceptions.ImpossibleMoveException;
 
 public class PawnBlack extends Figure {
 
@@ -14,7 +14,9 @@ public class PawnBlack extends Figure {
         Cell[] steps = new Cell[1];
         if (source.y == dest.y - 1 && source.x == dest.x) {
             steps[0] = dest;
-        } else throw new ImpossibleMoveException("Impossible way.");
+        } else {
+            throw new ImpossibleMoveException("Impossible way.");
+        }
         return steps;
     }
 
