@@ -1,4 +1,4 @@
-package ru.job4j.additionalTasks;
+package ru.job4j.additionaltasks;
 
 public class Segments {
     /**

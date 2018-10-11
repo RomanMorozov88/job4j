@@ -1,4 +1,4 @@
-package ru.job4j.additionalTasks.changeMachine;
+package ru.job4j.additionaltasks.changemachine;
 
 import org.junit.Test;
 
