@@ -1,6 +1,7 @@
 package ru.job4j.tracker;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 /**
  * @version $Id$
@@ -47,32 +48,15 @@ public class Tracker {
     }
 
     /**
-     * Метод реализует поиск по id.
-     *
-     * @param id id искомой заявки.
-     * @return Найденный item
+     * Метод для поиска.
+     * @param key
+     * @param predicate
+     * @return
      */
-    public Item findById(String id) {
-        Item result = null;
-        for (Item i : items) {
-            if (i.getId().equals(id)) {
-                result = i;
-                break;
-            }
-        }
-        return result;
-    }
-
-    /**
-     * Метод реализует поиск по имени.
-     *
-     * @param key имя искомой заявки.
-     * @return Найденный item
-     */
-    public List<Item> findByName(String key) {
+    public List<Item> find(String key, Predicate<Item> predicate) {
         List<Item> result = new ArrayList<>();
         for (Item i : items) {
-            if (i.getName().equals(key)) {
+            if (predicate.test(i)) {
                 result.add(i);
             }
         }

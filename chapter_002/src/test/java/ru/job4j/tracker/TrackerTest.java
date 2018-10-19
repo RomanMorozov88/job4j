@@ -50,7 +50,9 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         Item previous = new Item("test1", "testDescription", 123L);
         tracker.add(previous);
-        assertThat(tracker.findById(previous.getId()), is(previous));
+        Item result = tracker.find(previous.getName(),
+                item -> item.getId().equals(previous.getId())).get(0);
+        assertThat(result, is(previous));
     }
 
     @Test
@@ -63,7 +65,8 @@ public class TrackerTest {
         tracker.add(previous1);
         tracker.add(previous2);
         List<Item> expect = Arrays.asList(previous, previous2);
-        assertThat(tracker.findByName(previous.getName()), is(expect));
+        assertThat(tracker.find(previous.getName(),
+                item -> item.getName().equals(previous.getName())), is(expect));
     }
 
     @Test
@@ -79,6 +82,8 @@ public class TrackerTest {
         // Обновляем заявку в трекере.
         tracker.replace(previous.getId(), next);
         // Проверяем, что заявка с таким id имеет новые имя test2.
-        assertThat(tracker.findById(previous.getId()).getName(), is("test2"));
+        String result = tracker.find(previous.getName(),
+                item -> item.getId().equals(previous.getId())).get(0).getName();
+        assertThat(result, is("test2"));
     }
 }

@@ -14,12 +14,15 @@ class FindByIdAction extends BaseAction {
     @Override
     public void execute(Input input, Tracker tracker) {
         String id = input.ask("Введите id нужной заявки: ");
-        if (tracker.findById(id) != null) {
+        List<Item> findById = tracker.find(id, item -> item.getId().equals(id));
+        if (findById.size() > 0) {
             System.out.println("------------------------------------");
-            System.out.println("Имя: " + tracker.findById(id).getName());
-            System.out.println("id: " + tracker.findById(id).getId());
-            System.out.println("Текст: " + tracker.findById(id).getDescription());
-            System.out.println("Время создания: " + tracker.findById(id).getCreate());
+            System.out.println(String.format("Список заявок с id %s:", id));
+            for (Item item : findById) {
+                System.out.println("Имя: " + item.getName());
+                System.out.println("id: " + item.getId());
+                System.out.println("------------------------------------");
+            }
         } else {
             System.out.println("------------------------------------");
             System.out.println("Заявка с id " + id + " не найдена.");
@@ -39,10 +42,11 @@ class FindByNameAction extends BaseAction {
     @Override
     public void execute(Input input, Tracker tracker) {
         String name = input.ask("Введите имя нужной заявки: ");
-        if (tracker.findByName(name).size() > 0) {
+        List<Item> findByName = tracker.find(name, item -> item.getName().equals(name));
+        if (findByName.size() > 0) {
             System.out.println("------------------------------------");
             System.out.println(String.format("Список заявок с именем %s:", name));
-            for (Item item : tracker.findByName(name)) {
+            for (Item item : findByName) {
                 System.out.println("Имя: " + item.getName());
                 System.out.println("id: " + item.getId());
                 System.out.println("------------------------------------");
