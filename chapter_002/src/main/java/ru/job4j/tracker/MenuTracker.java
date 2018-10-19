@@ -21,6 +21,8 @@ class FindByIdAction extends BaseAction {
             for (Item item : findById) {
                 System.out.println("Имя: " + item.getName());
                 System.out.println("id: " + item.getId());
+                System.out.println("Текст: " + item.getDescription());
+                System.out.println("Время создания: " + item.getCreate());
                 System.out.println("------------------------------------");
             }
         } else {
