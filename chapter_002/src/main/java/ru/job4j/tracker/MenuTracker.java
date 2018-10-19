@@ -1,6 +1,7 @@
 package ru.job4j.tracker;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * Поиск по id.
@@ -143,11 +144,11 @@ public class MenuTracker {
     /**
      * Метод выводит на экран меню.
      */
-    public void show() {
-        System.out.println("----------Меню----------");
+    public void show(Consumer<String> consumer) {
+        consumer.accept("----------Меню----------");
         for (UserAction action : this.actions) {
             if (action != null) {
-                System.out.println(action.info());
+                consumer.accept(action.info());
             }
         }
     }
