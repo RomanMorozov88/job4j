@@ -10,13 +10,14 @@ public class PawnBlack extends Figure {
     }
 
     @Override
-    public Cell[] way(Cell source, Cell dest) throws ImpossibleMoveException {
+    public boolean wayCheck(Cell source, Cell dest) {
+        return source.y == dest.y - 1 && source.x == dest.x;
+    }
+
+    @Override
+    public Cell[] arraySteps(Cell source, Cell dest) {
         Cell[] steps = new Cell[1];
-        if (source.y == dest.y - 1 && source.x == dest.x) {
-            steps[0] = dest;
-        } else {
-            throw new ImpossibleMoveException("Impossible way.");
-        }
+        steps[0] = dest;
         return steps;
     }
 

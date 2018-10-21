@@ -26,7 +26,7 @@ public class BishopBlackTest {
         Board board = new Board();
         BishopBlack figure = new BishopBlack(Cell.A8);
         board.add(figure);
-        Cell[] way = figure.way(Cell.A8, Cell.E4);
+        Cell[] way = figure.way(Cell.A8, Cell.E4, figure::wayCheck, figure::arraySteps);
         Cell[] expected = new Cell[]{Cell.B7, Cell.C6, Cell.D5, Cell.E4};
         assertThat(way, is(expected));
     }

@@ -12,12 +12,15 @@ public class Board {
         this.figures[count++] = figure;
     }
 
-    public boolean move(Cell source, Cell dest) throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
+    public boolean move(Cell source, Cell dest)
+            throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
         int index = this.existFigure(source);
         if (index == -1) {
             throw new FigureNotFoundException("Not found.");
         }
-        Cell[] path = this.figures[index].way(source, dest);
+        //для каждой фигуры вызывается через лямбду соответствующие ей методы правил хода.
+        Cell[] path = this.figures[index].way(source, dest,
+                this.figures[index]::wayCheck, this.figures[index]::arraySteps);
         for (int i = 0; i < path.length; i++) {
             if (path[i] != null && this.existFigure(path[i]) > -1) {
                 throw new OccupiedWayException("Occupated.");
