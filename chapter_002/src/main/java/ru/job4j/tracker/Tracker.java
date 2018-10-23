@@ -1,6 +1,7 @@
 package ru.job4j.tracker;
 
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
@@ -49,36 +50,19 @@ public class Tracker {
 
     /**
      * Метод для поиска.
-     * @param key
+     *
      * @param predicate
      * @return
      */
-    public List<Item> find(String key, Predicate<Item> predicate) {
-        List<Item> result = new ArrayList<>();
+    public boolean find(Predicate<Item> predicate, Consumer<Item> consumer) {
+        boolean check = false;
         for (Item i : items) {
             if (predicate.test(i)) {
-                result.add(i);
+                consumer.accept(i);
+                check = true;
             }
         }
-        return result;
-    }
-
-    /**
-     * @param id   id заявки для редактирования.
-     * @param item изменения, вносимые в заявку.
-     */
-    public boolean replace(String id, Item item) {
-        boolean result = false;
-        item.setId(id);
-        for (Item i : items) {
-            if (i.getId().equals(id)) {
-                item.setCreate(i.getCreate());
-                items.set(items.indexOf(i), item);
-                result = true;
-                break;
-            }
-        }
-        return result;
+        return check;
     }
 
     /**

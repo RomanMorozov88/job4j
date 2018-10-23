@@ -14,17 +14,12 @@ class FindByIdAction extends BaseAction {
     @Override
     public void execute(Input input, Tracker tracker) {
         String id = input.ask("Введите id нужной заявки: ");
-        List<Item> findById = tracker.find(id, item -> item.getId().equals(id));
-        if (findById.size() > 0) {
+        if (tracker.find(item -> item.getId().equals(id),
+                item -> {
+                    MenuTracker.infoNameId(item, System.out::println);
+                    MenuTracker.infoDescCreate(item, System.out::println);
+                })) {
             System.out.println("------------------------------------");
-            System.out.println(String.format("Список заявок с id %s:", id));
-            for (Item item : findById) {
-                System.out.println("Имя: " + item.getName());
-                System.out.println("id: " + item.getId());
-                System.out.println("Текст: " + item.getDescription());
-                System.out.println("Время создания: " + item.getCreate());
-                System.out.println("------------------------------------");
-            }
         } else {
             System.out.println("------------------------------------");
             System.out.println("Заявка с id " + id + " не найдена.");
@@ -44,15 +39,8 @@ class FindByNameAction extends BaseAction {
     @Override
     public void execute(Input input, Tracker tracker) {
         String name = input.ask("Введите имя нужной заявки: ");
-        List<Item> findByName = tracker.find(name, item -> item.getName().equals(name));
-        if (findByName.size() > 0) {
-            System.out.println("------------------------------------");
-            System.out.println(String.format("Список заявок с именем %s:", name));
-            for (Item item : findByName) {
-                System.out.println("Имя: " + item.getName());
-                System.out.println("id: " + item.getId());
-                System.out.println("------------------------------------");
-            }
+        if (tracker.find(item -> item.getName().equals(name),
+                item -> MenuTracker.infoNameId(item, System.out::println))) {
         } else {
             System.out.println("------------------------------------");
             System.out.println("Заявок с таким именем не найдено.");
@@ -114,6 +102,27 @@ public class MenuTracker {
         for (UserAction i : actions) {
             range.add(i.key());
         }
+    }
+
+    /**
+     * Вывод имени и id искомой заявки.
+     * @param item
+     * @param consumer
+     */
+    public static void infoNameId(Item item, Consumer consumer) {
+        consumer.accept("Имя: " + item.getName());
+        consumer.accept("id: " + item.getId());
+        consumer.accept("------------------------------------");
+    }
+
+    /**
+     * Вывод описания и времени создания искомой заявки.
+     * @param item
+     * @param consumer
+     */
+    public static void infoDescCreate(Item item, Consumer consumer) {
+        consumer.accept("Текст: " + item.getDescription());
+        consumer.accept("Время создания: " + item.getCreate());
     }
 
     /**
@@ -195,8 +204,7 @@ public class MenuTracker {
             } else {
                 System.out.println("------------ Список имён всех заявок. --------------");
                 for (Item item : tracker.findAll()) {
-                    System.out.println(String.format("Имя: %s", item.getName()));
-                    System.out.println(String.format("id: %s", item.getId()));
+                    MenuTracker.infoNameId(item, System.out::println);
                     System.out.println("------------------------------------");
                 }
             }
@@ -216,9 +224,10 @@ public class MenuTracker {
             String id = input.ask("Введите id нужной заявки: ");
             String name = input.ask("Введите новое имя: ");
             String desc = input.ask("Введите новый текст: ");
-            Item item = new Item(name, desc);
-            item.setId(id);
-            if (tracker.replace(id, item)) {
+            if (tracker.find(item -> item.getId().equals(id), item -> {
+                item.name = name;
+                item.description = desc;
+            })) {
                 System.out.println("------------ Заявка отредактирована ------------");
             } else {
                 System.out.println("------------------------------------");

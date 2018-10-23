@@ -44,46 +44,4 @@ public class TrackerTest {
         List<Item> expect = Arrays.asList(previous1, previous3);
         assertThat(result, is(expect));
     }
-
-    @Test
-    public void whenFindById() {
-        Tracker tracker = new Tracker();
-        Item previous = new Item("test1", "testDescription", 123L);
-        tracker.add(previous);
-        Item result = tracker.find(previous.getName(),
-                item -> item.getId().equals(previous.getId())).get(0);
-        assertThat(result, is(previous));
-    }
-
-    @Test
-    public void whenFindByName() {
-        Tracker tracker = new Tracker();
-        Item previous = new Item("test1", "testDescription", 123L);
-        Item previous1 = new Item("test2", "testDescription2", 124L);
-        Item previous2 = new Item("test1", "testDescription1", 125L);
-        tracker.add(previous);
-        tracker.add(previous1);
-        tracker.add(previous2);
-        List<Item> expect = Arrays.asList(previous, previous2);
-        assertThat(tracker.find(previous.getName(),
-                item -> item.getName().equals(previous.getName())), is(expect));
-    }
-
-    @Test
-    public void whenReplaceNameThenReturnNewName() {
-        Tracker tracker = new Tracker();
-        Item previous = new Item("test1", "testDescription", 123L);
-        // Добавляем заявку в трекер. Теперь в объект проинициализирован id.
-        tracker.add(previous);
-        // Создаем новую заявку.
-        Item next = new Item("test2", "testDescription2", 1234L);
-        // Проставляем старый id из previous, который был сгенерирован выше.
-        next.setId(previous.getId());
-        // Обновляем заявку в трекере.
-        tracker.replace(previous.getId(), next);
-        // Проверяем, что заявка с таким id имеет новые имя test2.
-        String result = tracker.find(previous.getName(),
-                item -> item.getId().equals(previous.getId())).get(0).getName();
-        assertThat(result, is("test2"));
-    }
 }
