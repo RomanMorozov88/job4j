@@ -5,9 +5,8 @@ import java.util.*;
 public class UserConvert {
     public HashMap<Integer, User> process(List<User> list) {
         HashMap<Integer, User> result = new HashMap<>();
-        for (User i : list) {
-            result.put(i.id, i);
-        }
+        list.stream()
+                .forEach(x -> result.put(x.id, x));
         return result;
     }
 }

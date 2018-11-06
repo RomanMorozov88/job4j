@@ -3,6 +3,7 @@ package ru.job4j.bankaccounts;
 import ru.job4j.bankaccounts.menu.IncorrectDataException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Класс, содержащий методы для работы со списком пользователей и их аккаунтов.
@@ -98,12 +99,7 @@ public class UsersMap {
      * @return
      */
     public Set<User> getUsers() {
-        Set<User> result = new TreeSet<>(new Comparator<User>() {
-            @Override
-            public int compare(User o1, User o2) {
-                return o1.getName().compareTo(o2.getName());
-            }
-        });
+        Set<User> result = new TreeSet<>(Comparator.comparing(User::getName));
         result.addAll(this.usersAccounts.keySet());
         return result;
     }
@@ -157,14 +153,11 @@ public class UsersMap {
      * @return
      */
     public Account findAccount(String passport, int requisites) {
-        Account result = null;
         List<Account> list = this.getUserAccounts(passport);
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getRequisites() == requisites) {
-                result = list.get(i);
-                break;
-            }
-        }
+        Account result = list.stream()
+                .filter(x -> x.getRequisites() == requisites)
+                .findFirst()
+                .orElse(null);
         return result;
     }
 
@@ -175,12 +168,10 @@ public class UsersMap {
      * @return
      */
     public User findUser(String passport) {
-        User result = null;
-        for (User u : this.usersAccounts.keySet()) {
-            if (u.getPassport().equals(passport)) {
-                result = u;
-            }
-        }
+        User result = this.usersAccounts.keySet().stream()
+                .filter(x -> x.getPassport().equals(passport))
+                .findFirst()
+                .orElse(null);
         return result;
     }
 }
