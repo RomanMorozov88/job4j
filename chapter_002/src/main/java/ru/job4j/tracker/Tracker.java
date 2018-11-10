@@ -1,8 +1,8 @@
 package ru.job4j.tracker;
 
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * @version $Id$
@@ -54,15 +54,10 @@ public class Tracker {
      * @param predicate
      * @return
      */
-    public boolean find(Predicate<Item> predicate, Consumer<Item> consumer) {
-        boolean check = false;
-        for (Item i : items) {
-            if (predicate.test(i)) {
-                consumer.accept(i);
-                check = true;
-            }
-        }
-        return check;
+    public List<Item> find(Predicate<Item> predicate) {
+        return this.items.stream()
+                .filter(x -> predicate.test(x))
+                .collect(Collectors.toList());
     }
 
     /**
