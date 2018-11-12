@@ -3,6 +3,8 @@ package ru.job4j.chess;
 import ru.job4j.chess.chessexceptions.*;
 import ru.job4j.chess.chessfigures.*;
 
+import java.util.Arrays;
+
 public class Board {
 
     Figure[] figures = new Figure[32];
@@ -21,10 +23,9 @@ public class Board {
         //для каждой фигуры вызывается через лямбду соответствующие ей методы правил хода.
         Cell[] path = this.figures[index].way(source, dest,
                 this.figures[index]::wayCheck, this.figures[index]::arraySteps);
-        for (int i = 0; i < path.length; i++) {
-            if (path[i] != null && this.existFigure(path[i]) > -1) {
-                throw new OccupiedWayException("Occupated.");
-            }
+        if (Arrays.stream(path)
+                .anyMatch(x -> x != null && this.existFigure(x) > -1)) {
+            throw new OccupiedWayException("Occupated.");
         }
         figures[index] = figures[index].copy(dest);
         return true;

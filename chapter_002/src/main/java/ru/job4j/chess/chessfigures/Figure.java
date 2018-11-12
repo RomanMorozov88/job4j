@@ -22,14 +22,17 @@ public abstract class Figure {
      * @return - возвращает массив, содержащий в себе все ячейки, через которые должна пройти фигура.
      * @throws ImpossibleMoveException
      */
-    public Cell[] way(Cell source, Cell dest, BiPredicate<Cell, Cell> predicate, BiFunction<Cell, Cell, Cell[]> function)
-            throws ImpossibleMoveException{
+    public Cell[] way(Cell source, Cell dest, BiPredicate<Cell, Cell> predicate,
+                      BiFunction<Cell, Cell, Cell[]> function)
+            throws ImpossibleMoveException {
         if (!predicate.test(source, dest)) {
             throw new ImpossibleMoveException("Impossible way.");
         }
         return function.apply(source, dest);
     }
+
     public abstract boolean wayCheck(Cell source, Cell dest);
+
     public abstract Cell[] arraySteps(Cell source, Cell dest);
 
     public abstract Figure copy(Cell dest);

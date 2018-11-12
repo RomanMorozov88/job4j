@@ -1,5 +1,7 @@
 package ru.job4j.chess;
 
+import java.util.Arrays;
+
 public enum Cell {
     A1(0, 0), A2(0, 1), A3(0, 2), A4(0, 3), A5(0, 4), A6(0, 5), A7(0, 6), A8(0, 7),
     B1(1, 0), B2(1, 1), B3(1, 2), B4(1, 3), B5(1, 4), B6(1, 5), B7(1, 6), B8(1, 7),
@@ -21,18 +23,14 @@ public enum Cell {
     /**
      * Метод, необходимый для работы метода way() фигур.
      *
-     * @param x
-     * @param y
+     * @param xInput
+     * @param yInput
      * @return возвращает ячейку с данными координатами.
      */
-    public static Cell findCell(int x, int y) {
-        Cell result = null;
-        for (Cell cell : Cell.values()) {
-            if (cell.x == x && cell.y == y) {
-                result = cell;
-                break;
-            }
-        }
-        return result;
+    public static Cell findCell(int xInput, int yInput) {
+        return Arrays.stream(Cell.values())
+                .filter(cell -> cell.x == xInput && cell.y == yInput)
+                .findFirst()
+                .orElse(null);
     }
 }

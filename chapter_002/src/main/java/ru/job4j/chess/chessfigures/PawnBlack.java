@@ -1,7 +1,6 @@
 package ru.job4j.chess.chessfigures;
 
 import ru.job4j.chess.*;
-import ru.job4j.chess.chessexceptions.ImpossibleMoveException;
 
 public class PawnBlack extends Figure {
 
