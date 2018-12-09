@@ -50,15 +50,17 @@ public class SortingDeptsTest {
         assertThat(
                 new String(this.out.toByteArray()),
                 is(
-                        "K2" + separator +
-                                "K2\\SK1" + separator +
-                                "K2\\SK1\\SSK2" + separator +
-                                "K2\\SK1\\SSK1" + separator +
-                                "K1" + separator +
-                                "K1\\SK2" + separator +
-                                "K1\\SK1" + separator +
-                                "K1\\SK1\\SSK2" + separator +
-                                "K1\\SK1\\SSK1" + separator
+                        "K2"
+                                + separator
+                                + "K2\\SK1" + separator
+                                + "K2\\SK1\\SSK2" + separator
+                                + "K2\\SK1\\SSK1"
+                                + separator
+                                + "K1" + separator
+                                + "K1\\SK2" + separator
+                                + "K1\\SK1" + separator
+                                + "K1\\SK1\\SSK2" + separator
+                                + "K1\\SK1\\SSK1" + separator
                 )
         );
     }
@@ -82,15 +84,15 @@ public class SortingDeptsTest {
         assertThat(
                 new String(this.out.toByteArray()),
                 is(
-                        "K2" + separator +
-                                "K2\\SK1" + separator +
-                                "K2\\SK1\\SSK1" + separator +
-                                "K2\\SK1\\SSK2" + separator +
-                                "K1" + separator +
-                                "K1\\SK1" + separator +
-                                "K1\\SK1\\SSK1" + separator +
-                                "K1\\SK1\\SSK2" + separator +
-                                "K1\\SK2" + separator
+                        "K2" + separator
+                                + "K2\\SK1" + separator
+                                + "K2\\SK1\\SSK1" + separator
+                                + "K2\\SK1\\SSK2" + separator
+                                + "K1" + separator
+                                + "K1\\SK1" + separator
+                                + "K1\\SK1\\SSK1" + separator
+                                + "K1\\SK1\\SSK2" + separator
+                                + "K1\\SK2" + separator
                 )
         );
     }
@@ -114,15 +116,15 @@ public class SortingDeptsTest {
         assertThat(
                 new String(this.out.toByteArray()),
                 is(
-                        "K1" + separator +
-                                "K1\\SK1" + separator +
-                                "K1\\SK1\\SSK1" + separator +
-                                "K1\\SK1\\SSK2" + separator +
-                                "K1\\SK2" + separator +
-                                "K2" + separator +
-                                "K2\\SK1" + separator +
-                                "K2\\SK1\\SSK1" + separator +
-                                "K2\\SK1\\SSK2" + separator
+                        "K1" + separator
+                                + "K1\\SK1" + separator
+                                + "K1\\SK1\\SSK1" + separator
+                                + "K1\\SK1\\SSK2" + separator
+                                + "K1\\SK2" + separator
+                                + "K2" + separator
+                                + "K2\\SK1" + separator
+                                + "K2\\SK1\\SSK1" + separator
+                                + "K2\\SK1\\SSK2" + separator
                 )
         );
     }
@@ -141,18 +143,19 @@ public class SortingDeptsTest {
         assertThat(
                 new String(this.out.toByteArray()),
                 is(
-                        "K1" + separator +
-                                "K1\\SK1" + separator +
-                                "K1\\SK1\\SSK1" + separator +
-                                "K1\\SK1\\SSK2" + separator +
-                                "K1\\SK2" + separator +
-                                "K2" + separator +
-                                "K2\\SK1" + separator +
-                                "K2\\SK1\\SSK1" + separator +
-                                "K2\\SK1\\SSK2" + separator
+                        "K1" + separator
+                                + "K1\\SK1" + separator
+                                + "K1\\SK1\\SSK1" + separator
+                                + "K1\\SK1\\SSK2" + separator
+                                + "K1\\SK2" + separator
+                                + "K2" + separator
+                                + "K2\\SK1" + separator
+                                + "K2\\SK1\\SSK1" + separator
+                                + "K2\\SK1\\SSK2" + separator
                 )
         );
     }
+
     /**
      * Сортировка по убыванию входящего списка.
      */
@@ -166,18 +169,21 @@ public class SortingDeptsTest {
         assertThat(
                 new String(this.out.toByteArray()),
                 is(
-                        "K2" + separator +
-                                "K2\\SK1" + separator +
-                                "K2\\SK1\\SSK2" + separator +
-                                "K2\\SK1\\SSK1" + separator +
-                                "K1" + separator +
-                                "K1\\SK2" + separator +
-                                "K1\\SK1" + separator +
-                                "K1\\SK1\\SSK2" + separator +
-                                "K1\\SK1\\SSK1" + separator
+                        "K2"
+                                + separator
+                                + "K2\\SK1" + separator
+                                + "K2\\SK1\\SSK2" + separator
+                                + "K2\\SK1\\SSK1"
+                                + separator
+                                + "K1" + separator
+                                + "K1\\SK2" + separator
+                                + "K1\\SK1" + separator
+                                + "K1\\SK1\\SSK2" + separator
+                                + "K1\\SK1\\SSK1" + separator
                 )
         );
     }
+
     /**
      * Сортировка по убыванию только главных отделов входящего списка.
      */
@@ -191,15 +197,15 @@ public class SortingDeptsTest {
         assertThat(
                 new String(this.out.toByteArray()),
                 is(
-                        "K2" + separator +
-                                "K2\\SK1" + separator +
-                                "K2\\SK1\\SSK1" + separator +
-                                "K2\\SK1\\SSK2" + separator +
-                                "K1" + separator +
-                                "K1\\SK1" + separator +
-                                "K1\\SK1\\SSK1" + separator +
-                                "K1\\SK1\\SSK2" + separator +
-                                "K1\\SK2" + separator
+                        "K2" + separator
+                                + "K2\\SK1" + separator
+                                + "K2\\SK1\\SSK1" + separator
+                                + "K2\\SK1\\SSK2" + separator
+                                + "K1" + separator
+                                + "K1\\SK1" + separator
+                                + "K1\\SK1\\SSK1" + separator
+                                + "K1\\SK1\\SSK2" + separator
+                                + "K1\\SK2" + separator
                 )
         );
     }
