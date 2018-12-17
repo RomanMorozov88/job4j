@@ -14,7 +14,7 @@ public class PriorityQueue {
      */
     public void put(Task task) {
         //TODO добавить вставку в связанный список.
-        int index = this.tasks.size();
+        var index = this.tasks.size();
         if (this.tasks.isEmpty()) {
             this.tasks.add(task);
         } else {
