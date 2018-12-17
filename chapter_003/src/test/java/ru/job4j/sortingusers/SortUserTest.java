@@ -10,10 +10,13 @@ import static org.junit.Assert.assertThat;
 public class SortUserTest {
     @Test
     public void whenListSortTreeSet() {
-        List<User> a1 = new ArrayList<>();
-        a1.add(new User("Vanya", 25));
-        a1.add(new User("Sasha", 22));
-        a1.add(new User("Artem", 23));
+
+        List<User> a1 = List.of(
+                new User("Vanya", 25),
+                new User("Sasha", 22),
+                new User("Artem", 23)
+
+        );
 
         TreeSet<User> result = (TreeSet<User>) new SortUser().sort(a1);
         //Проверяем, что последний элемент в result- это первый элемент во вхожящем листе.
@@ -26,17 +29,22 @@ public class SortUserTest {
         User u2 = new User("Николай", 22);
         User u3 = new User("Артём", 20);
         User u4 = new User("Артём", 25);
-        List<User> a1 = new ArrayList<>();
-        a1.add(u1);
-        a1.add(u2);
-        a1.add(u3);
-        a1.add(u4);
+
+        List<User> a1 = List.of(
+                u1,
+                u2,
+                u3,
+                u4
+        );
+
         List<User> result = new SortUser().sortByAllFields(a1);
-        List<User> expect = new ArrayList<>();
-        expect.add(u3);
-        expect.add(u4);
-        expect.add(u1);
-        expect.add(u2);
+        List<User> expect = List.of(
+                u3,
+                u4,
+                u1,
+                u2
+        );
+
         assertThat(result, is(expect));
     }
 
@@ -46,17 +54,22 @@ public class SortUserTest {
         User u2 = new User("Николай", 22);
         User u3 = new User("Артём", 20);
         User u4 = new User("Артём", 25);
-        List<User> a1 = new ArrayList<>();
-        a1.add(u1);
-        a1.add(u2);
-        a1.add(u3);
-        a1.add(u4);
+
+        List<User> a1 = List.of(
+                u1,
+                u2,
+                u3,
+                u4
+        );
+
         List<User> result = new SortUser().sortNameLength(a1);
-        List<User> expect = new ArrayList<>();
-        expect.add(u1);
-        expect.add(u3);
-        expect.add(u4);
-        expect.add(u2);
+        List<User> expect = List.of(
+                u1,
+                u3,
+                u4,
+                u2
+        );
+
         assertThat(result, is(expect));
     }
 }

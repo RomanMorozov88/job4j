@@ -14,9 +14,10 @@ public class UserConvertTest {
         UserConvert list = new UserConvert();
         User a = new User("A", "Aa");
         User b = new User("B", "Bb");
-        List<User> userList = new ArrayList<>();
-        userList.add(a);
-        userList.add(b);
+        List<User> userList = List.of(
+                a,
+                b
+        );
         boolean result = list.process(userList).containsValue(a);
         boolean expect = true;
         assertThat(result, is(expect));
@@ -28,10 +29,11 @@ public class UserConvertTest {
         User a = new User("A", "Aa");
         User b = new User("B", "Bb");
         User c = new User("C", "Cc");
-        List<User> userList = new ArrayList<>();
-        userList.add(a);
-        userList.add(b);
-        userList.add(c);
+        List<User> userList = List.of(
+                a,
+                b,
+                c
+        );
         int result = list.process(userList).size();
         int expect = 3;
         assertThat(result, is(expect));
