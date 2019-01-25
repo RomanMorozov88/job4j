@@ -2,6 +2,7 @@ package ru.job4j.generic.simplearray;
 
 import org.junit.Test;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -70,5 +71,51 @@ public class SimpleArrayTest {
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is("Five"));
         assertThat(it.hasNext(), is(false));
+    }
+
+    //Проверяем на исключение ConcurrentModificationException.
+    @Test(expected = ConcurrentModificationException.class)
+    public void getConcurrentModificationException() {
+        SimpleArray<Integer> saTest = new SimpleArray<>(5);
+        saTest.add(1);
+        saTest.add(2);
+        saTest.add(3);
+        saTest.add(4);
+        saTest.add(5);
+
+        Iterator<Integer> itTest = saTest.iterator();
+
+        while (itTest.hasNext()) {
+            //Если находим тройку то пытаемся во время итерации добавить новый элемент.
+            //Должны поймать ConcurrentModificationException.
+            if (itTest.next() == 3) {
+                saTest.add(33);
+            }
+        }
+    }
+
+    //Косвенно проверяем, что при заполнении хранилище расширяется.
+    //Косвенно- что бы не прописывать методы для вывода длины внутреннего массива
+    //и не менять его модификатор доступа.
+    @Test
+    public void sizeModMethodTest() {
+        SimpleArray<String> saTest = new SimpleArray<>(2);
+        saTest.add("One");
+        saTest.add("Two");
+        //Тут происходит расширение хранилища до 4 (2 * 2).
+        saTest.add("Three");
+        saTest.add("Four");
+        //Тут происходит расширение хранилища до 8 (4 * 2).
+        saTest.add("Five");
+
+        Iterator<String> itTest = saTest.iterator();
+
+        //Все пять элементов на месте.
+        assertThat(itTest.next(), is("One"));
+        assertThat(itTest.next(), is("Two"));
+        assertThat(itTest.next(), is("Three"));
+        assertThat(itTest.next(), is("Four"));
+        assertThat(itTest.next(), is("Five"));
+        assertThat(itTest.hasNext(), is(false));
     }
 }

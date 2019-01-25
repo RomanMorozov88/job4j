@@ -1,10 +1,12 @@
 package ru.job4j.generic.simplearray;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * В этом задании необходимо сделать универсальную обертку над массивом.
+ * Итератор должен реализовывать fail-fast поведение
  *
  * @param <T>
  */
@@ -12,8 +14,12 @@ public class SimpleArray<T> implements Iterable<T> {
 
     //Внутреннй массив.
     private Object[] workArray;
+
     //Счётчик.
     private int index = 0;
+
+    //Счётчик изменений.
+    private int modCount = 0;
 
     /**
      * Конструктор.
@@ -25,16 +31,30 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     /**
+     * Конструктор без входящего параметра.
+     * Создаём внутренний массив длиной 10.
+     */
+    public SimpleArray() {
+        this.workArray = new Object[10];
+    }
+
+    /**
      * Добавлени элемента.
      *
      * @param model
      */
     public void add(T model) {
+        //Проверяем- нет ли переполнения.
+        //Если есть- расширяем workArray.
+        this.sizeMod();
         this.workArray[index++] = model;
+        //Изменяем счётчик modCount, так как меняется количество элементов во внутреннем массиве workArray.
+        modCount++;
     }
 
     /**
      * Замена элемента.
+     * В этом методе нет изменения modCount т.к. количество элементов не изменяется.
      *
      * @param index - положение заменяемого элемента.
      * @param model - новый элемент.
@@ -64,6 +84,9 @@ public class SimpleArray<T> implements Iterable<T> {
 
         //Сбрасываем последний элемент.
         this.workArray[this.workArray.length - 1] = null;
+
+        //Изменяем счётчик modCount, так как меняется количество элементов во внутреннем массиве workArray.
+        modCount++;
     }
 
     /**
@@ -85,8 +108,26 @@ public class SimpleArray<T> implements Iterable<T> {
      * @param input - вводимый индекс.
      */
     private void check(int input) {
-        if (input > index) {
+        if (input >= index) {
             throw new IndexOutException("Wrong index value.");
+        }
+    }
+
+    /**
+     * Метод для расширения внутреннего массива workArray
+     * при его переполнении.
+     * Длину массива увеличиваем в два раза.
+     *
+     * @return
+     */
+    private void sizeMod() {
+        if (this.index == this.workArray.length) {
+            //Буферный массив с новой длиной.
+            Object[] workArrayBuffer = new Object[this.workArray.length * 2];
+            //Копируем все элементы в буферный массив.
+            System.arraycopy(this.workArray, 0, workArrayBuffer, 0, this.index);
+            //Обновляем workArray.
+            this.workArray = workArrayBuffer;
         }
     }
 
@@ -99,7 +140,12 @@ public class SimpleArray<T> implements Iterable<T> {
     public Iterator<T> iterator() {
         return new Iterator<T>() {
 
+            //Счётчик для итератора.
             int indexIterator = 0;
+
+            //Принимаем текущее на момент создания итератора значение
+            //счётчика изменений modCount.
+            int expectedModCount = modCount;
 
             @Override
             public boolean hasNext() {
@@ -108,10 +154,19 @@ public class SimpleArray<T> implements Iterable<T> {
 
             @Override
             public T next() {
+                this.checkForComodification();
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
                 return (T) workArray[indexIterator++];
+            }
+
+            /**
+             * Метод, проверяющий, что во время итерации не произошло изменений хранилища.
+             */
+            final void checkForComodification() {
+                if (modCount != expectedModCount)
+                    throw new ConcurrentModificationException();
             }
         };
     }
