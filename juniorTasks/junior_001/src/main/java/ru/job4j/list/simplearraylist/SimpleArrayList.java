@@ -1,12 +1,20 @@
 package ru.job4j.list.simplearraylist;
 
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
  * Класс SimpleArrayList.
  */
-public class SimpleArrayList<E> {
+public class SimpleArrayList<E> implements Iterable<E> {
 
     private int size;
+
     private Node<E> first;
+
+    //Счётчик изменений.
+    private int modCount = 0;
 
     /**
      * Метод вставляет в начало списка данные.
@@ -16,6 +24,7 @@ public class SimpleArrayList<E> {
         newLink.next = this.first;
         this.first = newLink;
         this.size++;
+        this.modCount++;
     }
 
     /**
@@ -27,23 +36,13 @@ public class SimpleArrayList<E> {
         //Если список пуст или после первого элемента ничего нет-
         //возвращаем null.
         if (this.first == null) {
-            //Сбрасываем первый элемент.
-            this.first = null;
             return null;
-            //Если следующего элемента нет- возвращаем значегие первого элемента и обнуляем его.
-        } else if (this.first.next == null) {
-            result = this.first.date;
-            this.first = null;
-            this.size--;
-            return result;
         }
-        //Присваиваем первому элементу значение следующего за ним элемента
-        //тем самым избавившись от старого значения.
+        result = this.first.date;
         this.first = this.first.next;
-        //Уменьшаем размер.
         this.size--;
-        //Возвращаем значение текущего(обновлённого) первого элемента.
-        return this.first.date;
+        this.modCount++;
+        return result;
     }
 
     /**
@@ -75,5 +74,54 @@ public class SimpleArrayList<E> {
         Node(E date) {
             this.date = date;
         }
+    }
+
+    /**
+     * Итератор.
+     *
+     * @return
+     */
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
+
+            //Счётчик для итератора.
+            int indexIterator = 0;
+
+            //Принимаем текущее на момент создания итератора значение
+            //modCount.
+            int expectedModCount = modCount;
+
+            //Буфер
+            Node<E> result = first;
+
+            @Override
+            public boolean hasNext() {
+                return indexIterator < size;
+            }
+
+            @Override
+            public E next() {
+                this.checkForComodification();
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                //Присваиваем значение текущего элемента.
+                E resultE = result.date;
+                //Обновляем буфер для следующего обращения.
+                result = result.next;
+                //Меняем счётчик.
+                indexIterator++;
+                return resultE;
+            }
+
+            /**
+             * Метод, проверяющий, что во время итерации не произошло изменений хранилища.
+             */
+            final void checkForComodification() {
+                if (modCount != expectedModCount)
+                    throw new ConcurrentModificationException();
+            }
+        };
     }
 }
