@@ -5,7 +5,6 @@ import java.util.NoSuchElementException;
 
 /**
  * Итератор возвращающий только четные цифры.
- *
  */
 public class EvenIterator implements Iterator<Integer> {
 

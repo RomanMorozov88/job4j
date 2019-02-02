@@ -14,7 +14,7 @@ public class StoreTest {
     private UserStore us;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         rs = new RoleStore(4);
         us = new UserStore(4);
     }

@@ -119,8 +119,9 @@ public class SimpleArrayList<E> implements Iterable<E> {
              * Метод, проверяющий, что во время итерации не произошло изменений хранилища.
              */
             final void checkForComodification() {
-                if (modCount != expectedModCount)
+                if (modCount != expectedModCount) {
                     throw new ConcurrentModificationException();
+                }
             }
         };
     }

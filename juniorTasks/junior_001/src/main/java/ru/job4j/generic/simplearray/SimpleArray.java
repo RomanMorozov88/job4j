@@ -165,8 +165,9 @@ public class SimpleArray<T> implements Iterable<T> {
              * Метод, проверяющий, что во время итерации не произошло изменений хранилища.
              */
             final void checkForComodification() {
-                if (modCount != expectedModCount)
+                if (modCount != expectedModCount) {
                     throw new ConcurrentModificationException();
+                }
             }
         };
     }
