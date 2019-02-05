@@ -17,7 +17,7 @@ public class SimpleSet<T> implements Iterable {
     private SimpleArray<T> innerList;
 
     /**
-     *Конструктор.
+     * Конструктор.
      */
     public SimpleSet() {
         this.innerList = new SimpleArray<>();
@@ -25,24 +25,34 @@ public class SimpleSet<T> implements Iterable {
 
     /**
      * Метод добавления элемента в список.
+     *
      * @param t
      */
     public void add(T t) {
-        //Переменная с помощью которой проверяем- имеется ли уже в списке
-        //объект равный t.
+        if (this.dublicateCheck(t)) {
+            this.innerList.add(t);
+        }
+    }
+
+    /**
+     * Метод для проверки наличия дубликатов.
+     *
+     * @param t - кандидат на добавление в список.
+     * @return true - если совпадений нет.
+     */
+    private boolean dublicateCheck(T t) {
         boolean check = true;
         for (T x : innerList) {
             if (x.equals(t)) {
                 check = false;
             }
         }
-        if (check) {
-            this.innerList.add(t);
-        }
+        return check;
     }
 
     /**
      * Итератор.
+     *
      * @return - возвращает итераор внутреннего листа.
      */
     @Override
