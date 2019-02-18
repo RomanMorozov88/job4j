@@ -52,4 +52,32 @@ public class TreeTest {
             System.out.println(itr.next());
         }
     }
+
+    @Test
+    public void isBinaryFirstTest() {
+        Tree<Integer> tree = new Tree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(1, 4);
+        tree.add(4, 5);
+        tree.add(5, 6);
+        assertThat(
+                tree.isBinary(),
+                is(false)
+        );
+    }
+
+    @Test
+    public void isBinarySecondTest() {
+        Tree<Integer> tree = new Tree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(2, 4);
+        tree.add(2, 5);
+        tree.add(3, 6);
+        assertThat(
+                tree.isBinary(),
+                is(true)
+        );
+    }
 }
