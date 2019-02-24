@@ -8,28 +8,26 @@ import java.util.*;
 public class Analize {
 
     public Info diff(List<User> previous, List<User> current) {
-
         Info result = new Info();
-
         //Счётчик совпадений id.
         int meetCounter = 0;
-
-        //С помощью двух for`ов пробегаемся каждым элементом одного списка
-        //по каждому элементу другого.
-        for (User uOne : previous) {
-            for (User uTwo : current) {
-                //Проверяем совпадения по id.
-                if (uOne.id == uTwo.id) {
-                    if (!uOne.name.equals(uTwo.name)) {
-                        //Если id совпадают, но name разные-
-                        //считатем, что такой объект был отредактирован.
-                        result.changed++;
-                    }
-                    meetCounter++;
+        //Карта, которую вводим для того, что бы избавиться от квадратичной временной сложности.
+        HashMap<Integer, User> checkMap = new HashMap<>();
+        for(User u : previous) {
+            checkMap.put(u.id, u);
+        }
+        for(User u : current) {
+            //Проверяем совпадения по id.
+            User buffer = checkMap.get(u.id);
+            if (buffer != null) {
+                if (!buffer.name.equals(u.name)) {
+                    //Если id совпадают, но name разные-
+                    //считатем, что такой объект был отредактирован.
+                    result.changed++;
                 }
+                meetCounter++;
             }
         }
-
         //Определяем количесвто удалённых элементов.
         result.deleted = previous.size() - meetCounter;
         //Определяем количество добавленных элементов.
