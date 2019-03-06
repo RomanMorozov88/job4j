@@ -26,19 +26,18 @@ public class CutAbuse {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 OutputStreamWriter writer = new OutputStreamWriter(out)
         ) {
-            String buffer = reader.readLine();
-
-            while (buffer != null) {
-                //Проверяем, есть ли в текущем значении buffer какое-либо слово из abuse.
-                for (String forDelete : abuse) {
-                    //Если есть- заменяем это слово на пустую строку.
-                    buffer = buffer.replaceAll(forDelete, "");
-                }
-                //Записываем в выходящий поток.
-                writer.write(buffer);
-                //Обновляем buffer.
-                buffer = reader.readLine();
-            }
+            reader
+                    .lines()
+                    .forEach(x -> {
+                        for (String forDelete : abuse) {
+                            x = x.replaceAll(forDelete, "");
+                        }
+                        try {
+                            writer.write(x);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
         }
     }
 }
