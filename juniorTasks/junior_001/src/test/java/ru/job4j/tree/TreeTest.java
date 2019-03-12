@@ -48,7 +48,7 @@ public class TreeTest {
 
         Iterator<Integer> itr = tree.iterator();
 
-        while(itr.hasNext()) {
+        while (itr.hasNext()) {
             System.out.println(itr.next());
         }
     }

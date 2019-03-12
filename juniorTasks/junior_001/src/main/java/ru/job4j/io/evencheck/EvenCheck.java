@@ -24,17 +24,15 @@ public class EvenCheck {
      */
     public static boolean isNumber(InputStream in) throws IOException {
         //Оборачивем в try-with-resources входящий поток in.
-        try (in) {
-            Scanner scanner = new Scanner(in);
-            //Проверяем, что имеется int значение.
-            if (scanner.hasNextInt()) {
-                //Проверяем, что это значение чётное.
-                if (scanner.nextInt() % 2 == 0) {
-                    return true;
-                }
+        Scanner scanner = new Scanner(in);
+        //Проверяем, что имеется int значение.
+        if (scanner.hasNextInt()) {
+            //Проверяем, что это значение чётное.
+            if (scanner.nextInt() % 2 == 0) {
+                return true;
             }
-            return false;
-            //Закрываем блок try.
         }
+        return false;
+        //Закрываем блок try.
     }
 }

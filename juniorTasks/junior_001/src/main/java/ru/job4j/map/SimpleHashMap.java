@@ -70,8 +70,8 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node> {
      */
     public V get(K key) {
         int index = indexOf(key);
-        return this.innerTable[index] != null && this.innerTable[index].getKey().equals(key) ?
-                (V) this.innerTable[index].getValue() : null;
+        return this.innerTable[index] != null && this.innerTable[index].getKey().equals(key)
+                ? (V) this.innerTable[index].getValue() : null;
     }
 
     /**
@@ -120,7 +120,7 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node> {
 
             for (int i = 0; i < oldCapacity; i++) {
                 Node<K, V> nodeBuffer = this.innerTable[i];
-                if(nodeBuffer != null) {
+                if (nodeBuffer != null) {
                     //Перекидываем элемент из старого массива в новый,
                     //обновляем индекс(с учётом новой длины массива.)
                     innerTableBuffer[indexOf(nodeBuffer.getKey())] = nodeBuffer;
@@ -200,10 +200,10 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node> {
 
         @Override
         public String toString() {
-            return "Node{" +
-                    "key= " + key +
-                    ", value= " + value +
-                    '}';
+            return "Node{"
+                    + "key= "
+                    + key + ", value= " + value
+                    + '}';
         }
     }
 }

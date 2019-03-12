@@ -9,8 +9,8 @@ public class UserTest {
 
     @Test
     public void map() {
-        User u1 = new User("One", 1, new GregorianCalendar(2017, 1 , 25));
-        User u2 = new User("One", 1, new GregorianCalendar(2017, 1 , 25));
+        User u1 = new User("One", 1, new GregorianCalendar(2017, 1, 25));
+        User u2 = new User("One", 1, new GregorianCalendar(2017, 1, 25));
 
         Map<String, User> map = new HashMap<>();
         map.put(u1.name, u1);

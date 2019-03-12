@@ -37,8 +37,7 @@ public class Chat {
      */
     public void mainMethod(InputStream in) throws IOException {
 
-        try (in;
-             FileWriter logWriter = new FileWriter(this.log, true);
+        try (FileWriter logWriter = new FileWriter(this.log, true);
              RandomAccessFile raf = new RandomAccessFile(this.answerFile, "r")
         ) {
             Scanner scanner = new Scanner(in);

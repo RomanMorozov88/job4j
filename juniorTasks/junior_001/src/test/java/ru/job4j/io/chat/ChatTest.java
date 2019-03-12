@@ -52,13 +52,13 @@ public class ChatTest {
 
     @Test
     public void chatRun() throws IOException {
-        String inputString = "старт" + System.lineSeparator() +
-                "раз" + System.lineSeparator() +
-                "стоп" + System.lineSeparator() +
-                "два" + System.lineSeparator() +
-                "продолжить" + System.lineSeparator() +
-                "три" + System.lineSeparator() +
-                "закончить";
+        String inputString = "старт" + System.lineSeparator()
+                + "раз" + System.lineSeparator()
+                + "стоп" + System.lineSeparator()
+                + "два" + System.lineSeparator()
+                + "продолжить" + System.lineSeparator()
+                + "три" + System.lineSeparator()
+                + "закончить";
         ByteArrayInputStream bIn = new ByteArrayInputStream(inputString.getBytes());
         chat.mainMethod(bIn);
 
@@ -67,17 +67,17 @@ public class ChatTest {
         while ((buffer = logReader.readLine()) != null) {
             logResult += buffer + System.lineSeparator();
         }
-        String expected = "-INPUTPHRASE: старт" + System.lineSeparator() +
-                "-ANSWERPHRASE: Test." + System.lineSeparator() +
-                "-INPUTPHRASE: раз" + System.lineSeparator() +
-                "-ANSWERPHRASE: Test." + System.lineSeparator() +
-                "-INPUTPHRASE: стоп" + System.lineSeparator() +
-                "-INPUTPHRASE: два" + System.lineSeparator() +
-                "-INPUTPHRASE: продолжить" + System.lineSeparator() +
-                "-ANSWERPHRASE: Test." + System.lineSeparator() +
-                "-INPUTPHRASE: три" + System.lineSeparator() +
-                "-ANSWERPHRASE: Test." + System.lineSeparator() +
-                "-ERXITPHRASE: закончить" + System.lineSeparator();
+        String expected = "-INPUTPHRASE: старт" + System.lineSeparator()
+                + "-ANSWERPHRASE: Test." + System.lineSeparator()
+                + "-INPUTPHRASE: раз" + System.lineSeparator()
+                + "-ANSWERPHRASE: Test." + System.lineSeparator()
+                + "-INPUTPHRASE: стоп" + System.lineSeparator()
+                + "-INPUTPHRASE: два" + System.lineSeparator()
+                + "-INPUTPHRASE: продолжить" + System.lineSeparator()
+                + "-ANSWERPHRASE: Test." + System.lineSeparator()
+                + "-INPUTPHRASE: три" + System.lineSeparator()
+                + "-ANSWERPHRASE: Test." + System.lineSeparator()
+                + "-ERXITPHRASE: закончить" + System.lineSeparator();
         assertThat(logResult, is(expected));
     }
 }

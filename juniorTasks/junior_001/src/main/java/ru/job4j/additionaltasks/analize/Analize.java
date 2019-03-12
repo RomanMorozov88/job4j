@@ -13,10 +13,10 @@ public class Analize {
         int meetCounter = 0;
         //Карта, которую вводим для того, что бы избавиться от квадратичной временной сложности.
         HashMap<Integer, User> checkMap = new HashMap<>();
-        for(User u : previous) {
+        for (User u : previous) {
             checkMap.put(u.id, u);
         }
-        for(User u : current) {
+        for (User u : current) {
             //Проверяем совпадения по id.
             User buffer = checkMap.get(u.id);
             if (buffer != null) {
