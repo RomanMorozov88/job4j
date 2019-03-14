@@ -1,29 +1,29 @@
 package ru.job4j.io.chat;
 
+import com.sun.scenario.Settings;
+
 import java.io.*;
 import java.util.*;
 import java.util.function.Consumer;
 
 public class Chat {
 
-    private String stopWord = "стоп";
-    private String continueWord = "продолжить";
-    private String exitWord = "закончить";
+    private final String STOPWORD = "стоп";
+    private final String CONTINUEWORD = "продолжить";
+    private final String EXITWORD = "закончить";
     private boolean switchValue = true;
     private Consumer textingOut = System.out::println;
 
-    private File answerFile =
-            new File("juniorTasks\\junior_001\\src\\main\\java\\ru\\job4j\\io\\chat\\answers.txt");
-    private File log =
-            new File("juniorTasks\\junior_001\\src\\main\\java\\ru\\job4j\\io\\chat\\log.txt");
+    private File answerFile = new File(this.getPathFromPropertise("Answers_Path"));
+    private File log = new File(this.getPathFromPropertise("Log_Path"));
 
-    public Chat() {
+    public Chat() throws IOException {
     }
 
     /**
      * Коснтруктор для теста.
      */
-    public Chat(File newLog, File newAnswers) {
+    public Chat(File newLog, File newAnswers) throws IOException {
         this.answerFile = newAnswers;
         this.log = newLog;
     }
@@ -42,11 +42,11 @@ public class Chat {
         ) {
             Scanner scanner = new Scanner(in);
             List<Integer> positionsOfDots = this.setIndexOfDots();
-            String inputString = scanner.nextLine();
+            String messageFromUser = scanner.nextLine();
 
-            while (!inputString.equals(this.exitWord)) {
-                this.switcher(inputString);
-                logWriter.write("-INPUTPHRASE: " + inputString + System.lineSeparator());
+            while (!messageFromUser.equals(this.EXITWORD)) {
+                this.switcher(messageFromUser);
+                logWriter.write("-INPUTPHRASE: " + messageFromUser + System.lineSeparator());
                 if (this.switchValue) {
                     raf.seek(this.randomPoint(positionsOfDots));
                     String answer = raf.readLine();
@@ -54,9 +54,9 @@ public class Chat {
                     logWriter.write("-ANSWERPHRASE: " + answer + System.lineSeparator());
                     this.textingOut.accept(answer);
                 }
-                inputString = scanner.nextLine();
+                messageFromUser = scanner.nextLine();
             }
-            logWriter.write("-ERXITPHRASE: " + inputString + System.lineSeparator());
+            logWriter.write("-ERXITPHRASE: " + messageFromUser + System.lineSeparator());
         }
     }
 
@@ -67,9 +67,9 @@ public class Chat {
      * @param string
      */
     private void switcher(String string) {
-        if (string.equals(this.stopWord)) {
+        if (this.STOPWORD.equals(string)) {
             this.switchValue = false;
-        } else if (string.equals(this.continueWord)) {
+        } else if (this.CONTINUEWORD.equals(string)) {
             this.switchValue = true;
         }
     }
@@ -112,5 +112,21 @@ public class Chat {
         }
         indexs.add(0);
         return indexs;
+    }
+
+    /**
+     * Получаем пути для файлов ответов и лога
+     * из consoleChat.properties.
+     * @param key
+     * @return
+     * @throws IOException
+     */
+    private String getPathFromPropertise(String key) throws IOException {
+        Properties prs = new Properties();
+        ClassLoader loader = Settings.class.getClassLoader();
+        try (InputStream in = loader.getResourceAsStream("chatSettings/consoleChat.properties")) {
+            prs.load(in);
+        }
+        return prs.getProperty(key);
     }
 }
