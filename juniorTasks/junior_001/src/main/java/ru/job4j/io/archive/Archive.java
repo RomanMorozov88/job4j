@@ -80,11 +80,12 @@ public class Archive {
      * @return
      */
     public boolean checkExt(File file, List<String> exts) {
+        boolean result = true;
         for (String ext : exts) {
             if (Search.getFileExt(file).equals(ext)) {
-                return false;
+                result = false;
             }
         }
-        return true;
+        return result;
     }
 }

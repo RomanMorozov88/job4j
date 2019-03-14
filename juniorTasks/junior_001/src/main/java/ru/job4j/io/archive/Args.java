@@ -53,11 +53,11 @@ public class Args {
         int indexOfDot = result.lastIndexOf('.');
         if (indexOfDot != -1) {
             String buffer = result.substring(indexOfDot);
-            if (buffer.equals(".zip")) {
-                return result;
+            if (!buffer.equals(".zip")) {
+                result = null;
             }
         }
-        return null;
+        return result;
     }
 
     /**
@@ -68,11 +68,12 @@ public class Args {
      * Пред-последним: -o.
      */
     public boolean argsCheck() {
+        boolean result = true;
         if (!this.workArgs[0].equals("-d")
                 || !this.workArgs[2].equals("-e")
                 || !this.workArgs[argsLength - 2].equals("-o")) {
-            return false;
+            result = false;
         }
-        return true;
+        return result;
     }
 }
