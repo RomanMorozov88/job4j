@@ -1,5 +1,7 @@
 package ru.job4j.io.archive;
 
+import ru.job4j.io.search.Search;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -32,7 +34,6 @@ public class MainArchive {
         List<String> exts = checkInit.excule();
 
         File startFile = new File(checkInit.directory());
-        String cutName = startFile.getParent();
 
         if (!startFile.exists()) {
             consumer.accept("Такого фаила\\директории не найдено.");
@@ -50,12 +51,14 @@ public class MainArchive {
         try (ZipOutputStream out = new ZipOutputStream(
                 new FileOutputStream(checkInit.output()))) {
             if (startFile.isFile()) {
-                if (archive.checkExt(startFile, exts)) {
-                    archive.addInArchive(startFile, out,
-                            startFile.getPath().substring(cutName.length() + 1));
+                String startFilesExt = Search.getFileExt(startFile);
+                for (String ext : exts) {
+                    if (ext.equals(startFilesExt)) {
+                        archive.pack(startFile, out);
+                    }
                 }
             } else {
-                archive.pack(startFile, cutName, out);
+                archive.pack(startFile, out);
             }
         }
         consumer.accept("Архив создан.");

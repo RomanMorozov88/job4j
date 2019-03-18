@@ -30,26 +30,19 @@ public class Archive {
      * Переборка файлов.
      * Предполагаем, что начинаем работу с директории. Иначе- отдельно пропишем в main`e
      * соответствующую конструкцию.
+     * Внутри метода используем вызов метода из класса Search.
      *
      * @param startFile директория, с которой начинаем архивирование.
-     * @param cutName   имя с сохранением иерархии в рамках стартовой директории.
      * @param outZip    выходящий ZipOutputStream.
      * @throws IOException
      */
-    public void pack(File startFile, String cutName,
+    public void pack(File startFile,
                      ZipOutputStream outZip) throws IOException {
-
-        for (File f : startFile.listFiles()) {
+        List<File> result = Search.files(startFile.getPath(), this.exts);
+        String cutName = startFile.getParent();
+        for (File f : result) {
             String nameForArchive = f.getPath().substring(cutName.length() + 1);
-            if (f.isDirectory()) {
-                if (f.listFiles().length > 0) {
-                    pack(f, cutName, outZip);
-                }
-            } else {
-                if (checkExt(f, this.exts)) {
-                    addInArchive(f, outZip, nameForArchive);
-                }
-            }
+            addInArchive(f, outZip, nameForArchive);
         }
     }
 
@@ -70,22 +63,5 @@ public class Archive {
             }
             out.closeEntry();
         }
-    }
-
-    /**
-     * Метод для проверки расширения фаила.
-     * Используем метод getFileExt() класса Search.
-     * @param file входящий фаил.
-     * @param exts список запрещённых для архивирования расширений.
-     * @return
-     */
-    public boolean checkExt(File file, List<String> exts) {
-        boolean result = true;
-        for (String ext : exts) {
-            if (Search.getFileExt(file).equals(ext)) {
-                result = false;
-            }
-        }
-        return result;
     }
 }
