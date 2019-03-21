@@ -24,19 +24,21 @@ public class SearchFiles {
 
     private File outLog;
 
-    public SearchFiles() {
+    public SearchFiles(String logPath) {
+        this.outLog = new File(logPath);
     }
 
     /**
      * Начинаем поиск от начальной директории.
      * Проверяем оп одному из доступных предикейтов
      * и если всё подходит- закидываем имя файла в текстовый лог.
+     *
      * @param predicate
      * @throws IOException
      */
     public void mainSearchMethod(File startDirectory,
                                  String searchingName,
-                                 BiPredicate predicate) throws IOException {
+                                 BiPredicate<File, String> predicate) throws IOException {
         try (FileWriter logWriter = new FileWriter(this.outLog, true)) {
             for (File f : startDirectory.listFiles()) {
                 if (f.isDirectory()) {
@@ -53,14 +55,6 @@ public class SearchFiles {
     }
 
     /**
-     * Устанавливаем свой log со списком имён найденых фаилов.
-     * @param newLog
-     */
-    public void setNewLog(String newLog) {
-        this.outLog = new File(newLog);
-    }
-
-    /**
      * Метод для удаления уже существующего лога
      * во избежание накопления лишней\дублирующейся информации.
      */
@@ -74,7 +68,7 @@ public class SearchFiles {
      * Поиск по имени(полное имя или только имя
      * с указанием расширения (или без).
      */
-    BiPredicate<File, String> searchByName = (f, s) -> {
+    public static boolean searchByName(File f, String s) {
         boolean result = false;
         String fullFileName = f.getPath();
         String fileName = f.getName();
@@ -83,14 +77,14 @@ public class SearchFiles {
             result = true;
         }
         return result;
-    };
+    }
 
     /**
      * Под поиском по маске подразумеваем
      * поиск по такому шаблону: *.(некое расширение).
      * например *.txt
      */
-    BiPredicate<File, String> searchByMask = (f, s) -> {
+    public static boolean searchByMask(File f, String s) {
         boolean result = false;
         String fileName = f.getName();
         s = s.substring(1);
@@ -98,15 +92,15 @@ public class SearchFiles {
             result = true;
         }
         return result;
-    };
+    }
 
     /**
      * Поиск по регулярному выражению.
      * Где входящая строка уже была задана как образец.
      */
-    BiPredicate<File, String> searchByRegex = (f, s) -> {
+    public static boolean searchByRegex(File f, String s) {
         Pattern pattern = Pattern.compile(s);
         Matcher matcher = pattern.matcher(f.getPath());
         return matcher.matches();
-    };
+    }
 }

@@ -2,6 +2,8 @@ package ru.job4j.additionaltasks.fileslist;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 
@@ -20,29 +22,24 @@ public class RunSearchByMain {
             checkInit.help();
         }
 
-        SearchFiles runSearch = new SearchFiles();
-
-        BiPredicate workPredicate = null;
-
-        switch (checkInit.getFromArgsArray(4)) {
-            case "-m":
-                workPredicate = runSearch.searchByMask;
-                break;
-            case "-f":
-                workPredicate = runSearch.searchByName;
-                break;
-            case "-r":
-                workPredicate = runSearch.searchByRegex;
-                break;
-        }
+        SearchFiles runSearch = new SearchFiles(checkInit.getFromArgsArray(6));
+        runSearch.clearingLog();
 
         File startDir = new File(checkInit.getFromArgsArray(1));
 
-        runSearch.setNewLog(checkInit.getFromArgsArray(6));
-        runSearch.clearingLog();
+        Map<String, BiPredicate<File, String>> predicateChoiceMap = new HashMap<>();
+        predicateChoiceMap.put("-f", SearchFiles::searchByName);
+        predicateChoiceMap.put("-m", SearchFiles::searchByMask);
+        predicateChoiceMap.put("-r", SearchFiles::searchByRegex);
 
-        runSearch.mainSearchMethod(startDir, checkInit.getFromArgsArray(3), workPredicate);
+        runSearch.mainSearchMethod(startDir, checkInit.getFromArgsArray(3),
+                predicateChoiceMap.getOrDefault(
+                        checkInit.getFromArgsArray(4),
+                        (f, s) -> {
+                            throw new UnsupportedOperationException("Ошибка с выбором метода поиска.");
+                        }
+                ));
 
-       consumer.accept("Done");
+        consumer.accept("Done");
     }
 }

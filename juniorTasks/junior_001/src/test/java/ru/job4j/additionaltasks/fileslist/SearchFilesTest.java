@@ -1,84 +1,69 @@
 package ru.job4j.additionaltasks.fileslist;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.function.BiPredicate;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 public class SearchFilesTest {
 
-    String path = System.getProperty("java.io.tmpdir");
-
-    SearchFiles searchTest;
-    String testRequest;
-    File testFile;
-
-    @Before
-    public void setUp() throws IOException {
-        searchTest = new SearchFiles();
-        testFile = new File(path + "\\Searching.txt");
+    private boolean testSearchFiles(String s, BiPredicate<File, String> predicate) throws IOException {
+        String path = System.getProperty("java.io.tmpdir");
+        String testRequest = s;
+        File testFile = new File(path + "\\Searching.txt");
         testFile.createNewFile();
-    }
-
-    @After
-    public void setOut() {
-        testFile.delete();
+        return predicate.test(testFile, testRequest);
     }
 
     @Test
-    public void WhenUseSearchByNamePredicateGetTrue() {
-        testRequest = "Searching";
-        boolean result = searchTest.searchByName.test(testFile, testRequest);
+    public void whenUseSearchByNamePredicateGetTrue() throws IOException {
+        boolean result = testSearchFiles("Searching", SearchFiles::searchByName);
         assertThat(result, is(true));
     }
 
     @Test
-    public void WhenUseSearchByNamePredicateGetFalse() {
-        testRequest = "Somethingelse";
-        boolean result = searchTest.searchByName.test(testFile, testRequest);
+    public void whenUseSearchByNamePredicateGetFalse() throws IOException {
+        boolean result = testSearchFiles("Somethingelse", SearchFiles::searchByName);
         assertThat(result, is(false));
     }
 
     @Test
-    public void WhenUseSearchByMaskPredicateGetTrue() {
-        testRequest = "*.txt";
-        boolean result = searchTest.searchByMask.test(testFile, testRequest);
+    public void whenUseSearchByMaskPredicateGetTrue() throws IOException {
+        boolean result = testSearchFiles("*.txt", SearchFiles::searchByMask);
         assertThat(result, is(true));
     }
 
     @Test
-    public void WhenUseSearchByMaskPredicateGetFalse() {
-        testRequest = "*.html";
-        boolean result = searchTest.searchByMask.test(testFile, testRequest);
+    public void whenUseSearchByMaskPredicateGetFalse() throws IOException {
+        boolean result = testSearchFiles("*.html", SearchFiles::searchByMask);
         assertThat(result, is(false));
     }
 
     @Test
-    public void WhenUseSearchByRegexPredicateGetTrue() {
-        testRequest = ".+ching.+";
-        boolean result = searchTest.searchByRegex.test(testFile, testRequest);
+    public void whenUseSearchByRegexPredicateGetTrue() throws IOException {
+        boolean result = testSearchFiles(".+ching.+", SearchFiles::searchByRegex);
         assertThat(result, is(true));
     }
 
     @Test
-    public void WhenUseSearchByRegexPredicateGetFalse() {
-        testRequest = ".+wrong[a-z]+";
-        boolean result = searchTest.searchByRegex.test(testFile, testRequest);
+    public void whenUseSearchByRegexPredicateGetFalse() throws IOException {
+        boolean result = testSearchFiles(".+wrong[a-z]+", SearchFiles::searchByRegex);
         assertThat(result, is(false));
     }
 
     @Test
-    public void WhenRunMainMethod() throws IOException {
-        searchTest.setNewLog(path + "\\logTest.txt");
+    public void whenRunMainMethod() throws IOException {
 
+        String path = System.getProperty("java.io.tmpdir");
         String zeroDir = path + "\\zeroDir";
+
+        SearchFiles searchTest = new SearchFiles(path + "\\logTest.txt");
 
         File startDir = new File(zeroDir);
         startDir.mkdir();
@@ -91,16 +76,16 @@ public class SearchFilesTest {
         fileTwo.createNewFile();
 
         searchTest.clearingLog();
-        searchTest.mainSearchMethod(startDir, "*.txt", searchTest.searchByMask);
+        searchTest.mainSearchMethod(startDir, "*.txt", SearchFiles::searchByMask);
 
         BufferedReader logReader = new BufferedReader(new FileReader(path + "\\logTest.txt"));
-        String logResult = "";
+        StringBuilder logResult = new StringBuilder();
         String buffer;
         while ((buffer = logReader.readLine()) != null) {
-            logResult = logResult + buffer + System.lineSeparator();
+            logResult.append(buffer).append(System.lineSeparator());
         }
         String logExpected = "testOne.txt" + System.lineSeparator();
-        assertThat(logResult, is(logExpected));
+        assertThat(logResult.toString(), is(logExpected));
         startDir.deleteOnExit();
     }
 }
