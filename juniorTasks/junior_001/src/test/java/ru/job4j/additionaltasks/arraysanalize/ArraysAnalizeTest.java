@@ -25,7 +25,7 @@ public class ArraysAnalizeTest {
         Integer[] left = new Integer[]{1, 3, 2};
         Integer[] right = new Integer[]{1, 2, 3};
         boolean result = support(left, right);
-        assertThat(result, is(false));
+        assertThat(result, is(true));
     }
 
     @Test
