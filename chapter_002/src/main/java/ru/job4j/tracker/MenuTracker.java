@@ -12,12 +12,9 @@ class FindByIdAction extends BaseAction {
     }
 
     @Override
-    public void execute(Input input, Tracker tracker, Consumer consumer) {
+    public void execute(Input input, ITracker tracker, Consumer consumer) {
         String id = input.ask("Введите id нужной заявки: ");
-        Item result = tracker.find(item -> item.getId().equals(id))
-                .stream()
-                .findFirst()
-                .orElse(null);
+        Item result = tracker.findById(id);
         if (result != null) {
             consumer.accept("------------------------------------");
             consumer.accept("Заявка с id " + id + ":");
@@ -39,17 +36,15 @@ class FindByNameAction extends BaseAction {
     }
 
     @Override
-    public void execute(Input input, Tracker tracker, Consumer consumer) {
+    public void execute(Input input, ITracker tracker, Consumer consumer) {
         String name = input.ask("Введите имя нужной заявки: ");
-        List<Item> result = tracker.find(item -> item.getName().equals(name));
+        List<Item> result = tracker.findByName(name);
         if (result.size() != 0) {
             consumer.accept("------------------------------------");
             consumer.accept("Список заявок с именем " + name + ":");
             result
                     .stream()
-                    .forEach(x -> {
-                        MenuTracker.infoNameId(x, System.out::println);
-                    });
+                    .forEach(x -> MenuTracker.infoNameId(x, System.out::println));
         } else {
             consumer.accept("------------------------------------");
             consumer.accept("Заявок с таким именем не найдено.");
@@ -70,7 +65,7 @@ class ExitAction extends BaseAction {
     }
 
     @Override
-    public void execute(Input input, Tracker tracker, Consumer consumer) {
+    public void execute(Input input, ITracker tracker, Consumer consumer) {
         this.ui.exitItem();
     }
 }
@@ -84,7 +79,7 @@ public class MenuTracker {
     /**
      * @param хранит ссылку на объект .
      */
-    private Tracker tracker;
+    private ITracker tracker;
     /**
      * @param хранит ссылку на массив типа UserAction.
      */
@@ -100,7 +95,7 @@ public class MenuTracker {
      * @param input   объект типа Input
      * @param tracker объект типа Tracker
      */
-    public MenuTracker(Input input, Tracker tracker) {
+    public MenuTracker(Input input, ITracker tracker) {
         this.input = input;
         this.tracker = tracker;
     }
@@ -179,7 +174,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker, Consumer consumer) {
+        public void execute(Input input, ITracker tracker, Consumer consumer) {
             consumer.accept("------------ Добавление новой заявки. --------------");
             String name = input.ask("Введите имя заявки:");
             String desc = input.ask("Введите текст заявки:");
@@ -200,7 +195,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker, Consumer consumer) {
+        public void execute(Input input, ITracker tracker, Consumer consumer) {
             List<Item> result = tracker.findAll();
             if (result.size() == 0) {
                 consumer.accept("------------ В хранилище нет ни одной заявки ------------");
@@ -224,17 +219,11 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker, Consumer consumer) {
+        public void execute(Input input, ITracker tracker, Consumer consumer) {
             String id = input.ask("Введите id нужной заявки: ");
             String name = input.ask("Введите новое имя: ");
             String desc = input.ask("Введите новый текст: ");
-            Item result = tracker.find(item -> item.getId().equals(id))
-                    .stream()
-                    .findFirst()
-                    .orElse(null);
-            if (result != null) {
-                result.name = name;
-                result.description = desc;
+            if (tracker.replace(id, name, desc)) {
                 consumer.accept("------------ Заявка отредактирована ------------");
             } else {
                 consumer.accept("------------------------------------");
@@ -253,7 +242,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker, Consumer consumer) {
+        public void execute(Input input, ITracker tracker, Consumer consumer) {
             String id = input.ask("Введите id нужной заявки: ");
             if (tracker.delete(id)) {
                 consumer.accept("------------ Заявка удалена ------------");
