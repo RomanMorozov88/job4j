@@ -27,12 +27,12 @@ public class Tracker implements ITracker {
     }
 
     @Override
-    public boolean replace(String id, String new_name, String new_description) {
+    public boolean replace(String id, String newname, String newdescription) {
         boolean result = false;
         Item buffer = this.findById(id);
         if (buffer != null) {
-            buffer.setName(new_name);
-            buffer.setDescription(new_description);
+            buffer.setName(newname);
+            buffer.setDescription(newdescription);
             result = true;
         }
         return result;

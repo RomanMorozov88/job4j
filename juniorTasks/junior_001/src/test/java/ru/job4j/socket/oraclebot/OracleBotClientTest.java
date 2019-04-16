@@ -18,7 +18,7 @@ public class OracleBotClientTest {
     private String input;
     private String excepted;
 
-    private final String LS = System.lineSeparator();
+    private final String ls = System.lineSeparator();
 
     private void testClient(String input, String excepted) throws IOException {
         Socket socket = mock(Socket.class);
@@ -40,12 +40,12 @@ public class OracleBotClientTest {
     //Клиент успевает отправить одну фразу - её наличие в исходящем потоке и подтверждаем.
     @Test
     public void whenGotAdios() throws IOException {
-        input = Joiner.on(LS).join(
+        input = Joiner.on(ls).join(
                 "Adios!",
                 "",
                 ""
         );
-        excepted = Joiner.on(LS).join(
+        excepted = Joiner.on(ls).join(
                 "Hello, oracle",
                 ""
         );

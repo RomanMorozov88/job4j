@@ -27,16 +27,17 @@ public class OracleBotClient {
                 Scanner console = new Scanner(System.in)
         ) {
 
-            String str = null;
+            String str = in.readLine();
             boolean interrupt = false;
 
             out.println("Hello, oracle");
             do {
-                while (!(str = in.readLine()).isEmpty()) {
+                while (!str.isEmpty()) {
                     if ("Adios!".equals(str)) {
                         interrupt = true;
                     }
                     System.out.println(str);
+                    str = in.readLine();
                 }
                 if (interrupt) {
                     break;

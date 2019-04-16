@@ -59,13 +59,13 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     }
 
     @Override
-    public boolean replace(String id, String new_name, String new_description) {
+    public boolean replace(String id, String newname, String newdescription) {
         int check = 0;
         try (
                 PreparedStatement statement = this.connection.prepareStatement(
                         "UPDATE items SET item_name = ?, item_description = ? WHERE item_id = ?;")) {
-            statement.setString(1, new_name);
-            statement.setString(2, new_description);
+            statement.setString(1, newname);
+            statement.setString(2, newdescription);
             statement.setString(3, id);
             check = statement.executeUpdate();
         } catch (SQLException e) {
@@ -84,7 +84,6 @@ public class TrackerSQL implements ITracker, AutoCloseable {
             check = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
         }
         return check != 0;
     }

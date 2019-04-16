@@ -17,10 +17,10 @@ public interface ITracker {
      * Возвращает true если редактирование прошло удачно.
      *
      * @param id какую заявку хотим отредактировать.
-     * @param new_name новое имя.
-     * @param new_description новое наполнение.
+     * @param newname новое имя.
+     * @param newdescription новое наполнение.
      */
-    boolean replace(String id, String new_name, String new_description);
+    boolean replace(String id, String newname, String newdescription);
 
     /**
      * Метод для удаления заявки.

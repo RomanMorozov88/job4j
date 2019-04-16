@@ -8,9 +8,9 @@ import java.util.function.Consumer;
 
 public class Chat {
 
-    private final String STOPWORD = "стоп";
-    private final String CONTINUEWORD = "продолжить";
-    private final String EXITWORD = "закончить";
+    private final String stopword = "стоп";
+    private final String continueword = "продолжить";
+    private final String exitword = "закончить";
     private boolean switchValue = true;
     private Consumer textingOut = System.out::println;
 
@@ -44,7 +44,7 @@ public class Chat {
             List<Integer> positionsOfDots = this.setIndexOfDots();
             String messageFromUser = scanner.nextLine();
 
-            while (!messageFromUser.equals(this.EXITWORD)) {
+            while (!messageFromUser.equals(this.exitword)) {
                 this.switcher(messageFromUser);
                 logWriter.write("-INPUTPHRASE: " + messageFromUser + System.lineSeparator());
                 if (this.switchValue) {
@@ -67,9 +67,9 @@ public class Chat {
      * @param string
      */
     private void switcher(String string) {
-        if (this.STOPWORD.equals(string)) {
+        if (this.stopword.equals(string)) {
             this.switchValue = false;
-        } else if (this.CONTINUEWORD.equals(string)) {
+        } else if (this.continueword.equals(string)) {
             this.switchValue = true;
         }
     }

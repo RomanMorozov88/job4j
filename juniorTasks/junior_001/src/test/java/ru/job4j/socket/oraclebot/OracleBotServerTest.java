@@ -18,9 +18,9 @@ public class OracleBotServerTest {
     private String input;
     private String excepted;
 
-    private final String LS = System.lineSeparator();
+    private final String ls = System.lineSeparator();
 
-    private void testServer(String input, String excepted , AnswersVault answersVault) throws IOException {
+    private void testServer(String input, String excepted, AnswersVault answersVault) throws IOException {
         Socket socket = mock(Socket.class);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -38,17 +38,17 @@ public class OracleBotServerTest {
     @Test
     public void whenSayExitThenAdios() throws IOException {
         input = "exit";
-        excepted = Joiner.on(LS).join("Adios!", "", "");
+        excepted = Joiner.on(ls).join("Adios!", "", "");
         testServer(input, excepted, new AnswersVault());
     }
 
     @Test
     public void whenSayHelloThenBackHelloFriend() throws IOException {
-        input = Joiner.on(LS).join(
+        input = Joiner.on(ls).join(
                 "Hello, oracle",
                 "exit"
         );
-        excepted = Joiner.on(LS).join(
+        excepted = Joiner.on(ls).join(
                 "Hello, dear friend, I'm a oracle.",
                 "",
                 "Adios!",
@@ -63,11 +63,11 @@ public class OracleBotServerTest {
         AnswersVault testVault = mock(AnswersVault.class);
         when(testVault.getAnswer()).thenReturn("Yes.");
 
-        input = Joiner.on(LS).join(
+        input = Joiner.on(ls).join(
                 "some text",
                 "exit"
         );
-        excepted = Joiner.on(LS).join(
+        excepted = Joiner.on(ls).join(
                 "Yes.",
                 "",
                 "Adios!",

@@ -18,7 +18,7 @@ public class ConfigTest {
     }
 
     @Test
-    public void WhenPutAndEditThenGetValue() throws IOException {
+    public void whenPutAndEditThenGetValue() throws IOException {
         File testFile = setUp();
         Config config = new Config(testFile.getPath());
         config.put("One", "First Value");
@@ -31,7 +31,7 @@ public class ConfigTest {
     }
 
     @Test
-    public void WhenPutAndGetDefaultValue() throws IOException {
+    public void whenPutAndGetDefaultValue() throws IOException {
         File testFile = setUp();
         Config config = new Config(testFile.getPath());
         String result = config.get("Two");
