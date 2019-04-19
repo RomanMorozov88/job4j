@@ -21,6 +21,22 @@ public class ArraysAnalizeTest {
     }
 
     @Test
+    public void whenBothIntegersArraysHaveDoubleFirst() {
+        Integer[] left = new Integer[]{1, 1, 3};
+        Integer[] right = new Integer[]{1, 3, 3};
+        boolean result = support(left, right);
+        assertThat(result, is(false));
+    }
+
+    @Test
+    public void whenBothIntegersArraysHaveDoubleSecond() {
+        Integer[] left = new Integer[]{1, 2, 1, 3};
+        Integer[] right = new Integer[]{2, 1, 1, 3};
+        boolean result = support(left, right);
+        assertThat(result, is(true));
+    }
+
+    @Test
     public void whenBothIntegersArraysIsNotEquals() {
         Integer[] left = new Integer[]{1, 3, 2};
         Integer[] right = new Integer[]{1, 2, 3};
