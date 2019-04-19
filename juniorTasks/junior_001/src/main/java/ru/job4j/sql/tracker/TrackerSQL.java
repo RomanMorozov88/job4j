@@ -22,6 +22,13 @@ public class TrackerSQL implements ITracker, AutoCloseable {
 
     private Connection connection;
 
+    public TrackerSQL() {
+    }
+
+    public TrackerSQL(Connection connection) {
+        this.connection = connection;
+    }
+
     public boolean init() {
         try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream(
                 "trackerprops/app.properties")) {
