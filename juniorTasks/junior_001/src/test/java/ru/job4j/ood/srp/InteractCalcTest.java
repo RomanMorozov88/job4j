@@ -120,4 +120,28 @@ public class InteractCalcTest {
                 )
         );
     }
+
+    @Test
+    public void whenCosSqrt() {
+        String testString = new StringBuilder()
+                .append("cos0").append(separator)
+                .append("+ 3").append(separator)
+                .append("sqrt").append(separator)
+                .append(" sin 90").append(separator)
+                .append("stop").append(separator)
+                .toString();
+        setUp(testString);
+        Assert.assertThat(
+                new String(this.out.toByteArray()),
+                Is.is(
+                        new StringBuilder()
+                                .append("1.0").append(separator)
+                                .append("4.0").append(separator)
+                                .append("2.0").append(separator)
+                                .append("1.0").append(separator)
+                                .append("There is no mathematical expression.").append(separator)
+                                .toString()
+                )
+        );
+    }
 }
