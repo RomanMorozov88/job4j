@@ -2,15 +2,17 @@ package ru.job4j.ood.controllquality;
 
 import java.time.LocalDate;
 
-public class Food {
+abstract public class Food {
 
     private String name;
     private double price;
     private int disscount = 0;
     private LocalDate createDate;
     private LocalDate expaireDate;
+    protected boolean canReproduct = false;
+    protected boolean processed = false;
 
-    public Food(String name, double price, LocalDate createDate, LocalDate expaireDate) {
+    protected Food(String name, double price, LocalDate createDate, LocalDate expaireDate) {
         this.name = name;
         this.price = price;
         this.createDate = createDate;
@@ -39,6 +41,14 @@ public class Food {
 
     public int getDiscount() {
         return this.disscount;
+    }
+
+    public boolean getCanReproduct() {
+        return this.canReproduct;
+    }
+
+    public boolean getProcessed() {
+        return this.processed;
     }
 
     public double getFinallyPrice() {
