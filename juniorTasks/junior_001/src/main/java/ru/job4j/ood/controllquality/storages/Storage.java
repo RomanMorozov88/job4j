@@ -18,5 +18,9 @@ abstract public class Storage {
         return this.racks;
     }
 
+    public void clearRacks() {
+        this.racks.clear();
+    }
+
     abstract public boolean addIfConditionPassed(double percentLeft, Food food);
 }

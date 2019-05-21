@@ -34,7 +34,6 @@ public class ControllQualityTest {
         assertThat(resultSize, is(2));
         resultSize = resultList.get(2).getRacks().size();
         assertThat(resultSize, is(1));
-
     }
 
     @Test
@@ -49,6 +48,7 @@ public class ControllQualityTest {
         int foodTestDiscount = foodTest.getDiscount();
         assertThat(foodTestDiscount, is(0));
     }
+
     @Test
     public void whenAddInShopSecond() {
         Storage testShop = new Shop();
@@ -72,6 +72,7 @@ public class ControllQualityTest {
         boolean result = testWarehouse.addIfConditionPassed(testPercentLeft, foodTest);
         assertThat(result, is(true));
     }
+
     @Test
     public void whenAddInTrash() {
         Storage testTrash = new Trash();
@@ -141,5 +142,43 @@ public class ControllQualityTest {
                 LocalDate.of(2019, 8, 1));
         result = testWarehouse.addIfConditionPassed(testPercentLeft, milkTest);
         assertThat(result, is(false));
+    }
+
+    @Test
+    public void whenResort() {
+        ControllQuality cqTest = new ControllQuality();
+        cqTest.setCurrentTime(LocalDate.of(2019, 6, 1));
+
+        cqTest.distributionByStorages(new Bread("bread", 15,
+                LocalDate.of(2019, 5, 1),
+                LocalDate.of(2019, 11, 1)));
+
+        List<Storage> resultList = cqTest.getStorages();
+        int resultSize = resultList.get(0).getRacks().size();
+        assertThat(resultSize, is(1));
+        resultSize = resultList.get(1).getRacks().size();
+        assertThat(resultSize, is(0));
+        resultSize = resultList.get(2).getRacks().size();
+        assertThat(resultSize, is(0));
+
+        cqTest.setCurrentTime(LocalDate.of(2019, 8, 1));
+        cqTest.resort();
+        resultList = cqTest.getStorages();
+        resultSize = resultList.get(0).getRacks().size();
+        assertThat(resultSize, is(0));
+        resultSize = resultList.get(1).getRacks().size();
+        assertThat(resultSize, is(1));
+        resultSize = resultList.get(2).getRacks().size();
+        assertThat(resultSize, is(0));
+
+        cqTest.setCurrentTime(LocalDate.of(2019, 11, 10));
+        cqTest.resort();
+        resultList = cqTest.getStorages();
+        resultSize = resultList.get(0).getRacks().size();
+        assertThat(resultSize, is(0));
+        resultSize = resultList.get(1).getRacks().size();
+        assertThat(resultSize, is(0));
+        resultSize = resultList.get(2).getRacks().size();
+        assertThat(resultSize, is(1));
     }
 }

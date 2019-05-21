@@ -47,7 +47,7 @@ public class ControllQuality {
     /**
      * В этом методе вычисляем, насколько израсходован срок годности в процентах.
      *
-     * @param food        - продукт, который смотрим.
+     * @param food - продукт, который смотрим.
      * @return
      */
     private double getPercents(Food food) {
@@ -61,6 +61,7 @@ public class ControllQuality {
 
     /**
      * Направляем продукт в нужное хранилище.
+     *
      * @param food
      */
     public void distributionByStorages(Food food) {
@@ -69,6 +70,20 @@ public class ControllQuality {
             if (s.addIfConditionPassed(percentLeft, food)) {
                 break;
             }
+        }
+    }
+
+    /**
+     * Перераспределяем уже хранящиеся продукты.
+     */
+    public void resort() {
+        List<Food> buffer = new ArrayList<>();
+        for (Storage s : this.storages) {
+            buffer.addAll(s.getRacks());
+            s.clearRacks();
+        }
+        for (Food f : buffer) {
+            this.distributionByStorages(f);
         }
     }
 }
