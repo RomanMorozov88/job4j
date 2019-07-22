@@ -18,7 +18,7 @@ public class RectangleMove implements Runnable {
     public void run() {
         int directionX = 1;
 
-        while (true) {
+        while (!Thread.interrupted()) {
             double positionX = this.rect.getX();
             if (positionX == limitX - 10 || positionX == 0) {
                 directionX = -directionX;
@@ -28,6 +28,7 @@ public class RectangleMove implements Runnable {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         }
     }
