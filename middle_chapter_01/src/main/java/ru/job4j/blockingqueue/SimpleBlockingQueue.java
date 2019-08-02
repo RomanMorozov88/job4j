@@ -26,28 +26,20 @@ public class SimpleBlockingQueue<T> {
         this.sizeLimit = sizeLimit;
     }
 
-    public synchronized void offer(T value) {
+    public synchronized void offer(T value) throws InterruptedException {
         while (this.queue.size() >= this.sizeLimit) {
-            try {
                 System.out.println("Awaiting for Customer");
                 wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
         System.out.println("Place in queue");
         this.queue.offer(value);
         notify();
     }
 
-    public synchronized T poll() {
+    public synchronized T poll() throws InterruptedException {
         while (this.queue.size() < 1) {
-            try {
                 System.out.println("Awaiting for Producer");
                 wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
         notify();
         System.out.println("Take from queue");
@@ -69,7 +61,11 @@ class Producer implements Runnable {
     @Override
     public void run() {
         for (int i = 0; i < 7; i++) {
-            this.queue.offer(i);
+            try {
+                this.queue.offer(i);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
@@ -93,7 +89,11 @@ class Consumer implements Runnable {
     @Override
     public void run() {
         for (int i = 0; i < 3; i++) {
-            this.value.add(this.queue.poll());
+            try {
+                this.value.add(this.queue.poll());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
