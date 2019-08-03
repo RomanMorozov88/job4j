@@ -2,39 +2,46 @@ package ru.job4j.blockingqueue;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 public class SimpleBlockingQueueTest {
 
-    /**
-     * Создаём один поток с Producer и два потока с Customer.
-     * Так же в консоль выводятся сообщения из исполняемых методов.
-     * Предел для очереди задаём равным двум для наглядности остановки\пробуждения потоков.
-     *
-     * @throws InterruptedException
-     */
     @Test
-    public void whenExecute2ThreadThen2() throws InterruptedException {
-        SimpleBlockingQueue<Integer> testQueue = new SimpleBlockingQueue<>(2);
-
-        Producer producer = new Producer(testQueue);
-        Consumer consumer01 = new Consumer(testQueue);
-        Consumer consumer02 = new Consumer(testQueue);
-        Thread first = new Thread(producer);
-        Thread second = new Thread(consumer01);
-        Thread third = new Thread(consumer02);
-
-        third.start();
-        first.start();
-        second.start();
-
-        first.join();
-        second.join();
-        third.join();
-
-        assertThat(consumer01.getValue().size(), is(3));
-        assertThat(consumer02.getValue().size(), is(3));
+    public void whenFetchAllThenGetIt() throws InterruptedException {
+        final CopyOnWriteArrayList<Integer> buffer = new CopyOnWriteArrayList<>();
+        final SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>(10);
+        Thread producer = new Thread(
+                () -> {
+                    for (int i = 0; i < 5; i++) {
+                        try {
+                            queue.offer(i);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
+        producer.start();
+        Thread consumer = new Thread(
+                () -> {
+                    while (!queue.isEmpty() || !Thread.currentThread().isInterrupted()) {
+                        try {
+                            buffer.add(queue.poll());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                            Thread.currentThread().interrupt();
+                        }
+                    }
+                }
+        );
+        consumer.start();
+        producer.join();
+        consumer.interrupt();
+        consumer.join();
+        assertThat(buffer, is(Arrays.asList(0, 1, 2, 3, 4)));
     }
-
 }
