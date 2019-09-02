@@ -25,9 +25,24 @@ import java.util.concurrent.locks.ReentrantLock;
 public class GameBoard {
 
     private final ReentrantLock[][] board;
+    private final List<MonsterThread> monsters;
 
-    public GameBoard(int x, int y) {
+    /**
+     * При создании поля зажаём его размер,
+     * сразу расставляем монстров и препятствия
+     * (здесь- просто заблокированные клетки.)
+     *
+     * @param x        - размер поля по x
+     * @param y        - размер поля по y
+     * @param monsters - список монстров
+     * @param forBlock - список препятсвий
+     */
+    public GameBoard(int x, int y, List<MonsterThread> monsters, List<Cell> forBlock) {
         this.board = new ReentrantLock[x][y];
+        this.monsters = monsters;
+        for (Cell c : forBlock) {
+            this.board[c.getX()][c.getY()].lock();
+        }
     }
 
     /**
@@ -80,54 +95,22 @@ public class GameBoard {
     public ReentrantLock getCell(int x, int y) {
         return this.board[x][y];
     }
-}
-
-/**
- * Нить игрока.
- * Герой должен каждую секунду двигаться на новую клетку. При движении надо занять новую клетку,
- * то есть tryLock() - если не получилось в течении 500 мс.,
- * то изменить движение на другую клетку.
- */
-class PlayerThread implements Runnable {
-
-    private final GameBoard board;
-    private final Cell start;
 
     /**
-     * В конструкторе инициализируется поле board, стартовая позиция
-     * и происходит блокировка стартовой позиции.
-     *
-     * @param board
-     * @param start
+     * Запускаем монстров.
      */
-    PlayerThread(GameBoard board, Cell start) {
-        this.board = board;
-        this.start = start;
+    public void setMonsters() {
+        for (MonsterThread mt : this.monsters) {
+            mt.start();
+        }
     }
 
     /**
-     * В самом начале cоздаются нужные локальные переменные и запускается цикл.
+     * Закрываем монстров.
      */
-    @Override
-    public void run() {
-        boolean check;
-        Cell current = this.start;
-        List<Cell> forMove;
-        try {
-            while (!Thread.currentThread().isInterrupted()) {
-                Thread.sleep(1000);
-                forMove = this.board.getOptionsForMove(current);
-                for (Cell c : forMove) {
-                    check = this.board.move(current, c);
-                    if (check) {
-                        current = c;
-                        break;
-                    }
-                }
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            Thread.currentThread().interrupt();
+    public void closeMonsters() {
+        for (MonsterThread mt : this.monsters) {
+            mt.interrupt();
         }
     }
 }
