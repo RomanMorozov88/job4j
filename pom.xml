@@ -21,6 +21,7 @@
         <module>puzzle</module>
         <module>juniorTasks</module>
         <module>middle_chapter_01</module>
+        <module>middle_chapter_02</module>
     </modules>
 
     <dependencies>
