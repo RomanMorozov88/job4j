@@ -12,7 +12,6 @@ import java.io.PrintWriter;
 import java.time.LocalDateTime;
 
 /**
- * doGet URL /create - Открывает форму для создания нового пользователя.
  * doPost - / - сохраняет пользователя.
  */
 public class UserCreateServlet extends HttpServlet {
@@ -20,23 +19,8 @@ public class UserCreateServlet extends HttpServlet {
     private final Validate service = ValidateService.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("text/html");
-        PrintWriter writer = new PrintWriter(resp.getOutputStream());
-        writer.println("<form action = \"/items/userscreate\" method=\"post\">"
-                + "<input type=\"text\" name=\"id\" value=\"enter id\"/>"
-                + "<input type=\"text\" name=\"name\" value=\"enter name\"/>"
-                + "<input type=\"text\" name=\"login\" value=\"enter login\"/>"
-                + "<input type=\"text\" name=\"email\" value=\"enter email\"/>"
-                + "<input type=\"submit\" value=\"add\">"
-                + "</form>");
-        writer.flush();
-    }
-
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/html");
-        PrintWriter writer = new PrintWriter(resp.getOutputStream());
         User result = null;
         Integer id = Integer.parseInt(req.getParameter("id"));
         if (id != null) {
@@ -45,14 +29,15 @@ public class UserCreateServlet extends HttpServlet {
             String email = req.getParameter("email");
             result = new User(id, name, login, email, LocalDateTime.now());
             if (this.service.add(result)) {
-                writer.println("User has been added.");
+                resp.sendRedirect(String.format("%s/index.jsp", req.getContextPath()));
             } else {
+                PrintWriter writer = new PrintWriter(resp.getOutputStream());
                 writer.println("User is already exist.");
+                writer.println("<form action = \"" + req.getContextPath() + "/index.jsp\" method=\"get\">"
+                        + "<input type=\"submit\" value=\"go back.\">"
+                        + "</form>");
+                writer.flush();
             }
         }
-        writer.println("<form action = \"/items/users\" method=\"get\">"
-                + "<input type=\"submit\" value=\"go back.\">"
-                + "</form>");
-        writer.flush();
     }
 }
