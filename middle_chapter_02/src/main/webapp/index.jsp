@@ -1,6 +1,6 @@
 <%@ page import="ru.job4j.crudservletwebapp.models.User" %>
 <%@ page import="java.util.List" %>
-<%@ page import="ru.job4j.crudservletwebapp.persistent.MemoryStore" %>
+<%@ page import="ru.job4j.crudservletwebapp.logic.ValidateService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<%List<User> list = MemoryStore.getInstance().findAll();%>
+<%List<User> list = ValidateService.getInstance().findAll();%>
 <%if (list.size() > 0) {%>
 All users:
 <table border=1>

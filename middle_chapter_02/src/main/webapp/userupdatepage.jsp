@@ -1,5 +1,5 @@
 <%@ page import="ru.job4j.crudservletwebapp.models.User" %>
-<%@ page import="ru.job4j.crudservletwebapp.persistent.MemoryStore" %>
+<%@ page import="ru.job4j.crudservletwebapp.logic.ValidateService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -7,7 +7,7 @@
 </head>
 <body>
 <%Integer id = Integer.parseInt(request.getParameter("id"));%>
-<%User bufferUser = MemoryStore.getInstance().findById(id);%>
+<%User bufferUser = ValidateService.getInstance().findById(id);%>
 <form action="<%=request.getContextPath()%>/usersupdate" method="post">
     <input type="hidden" name="id" value="<%=bufferUser.getId()%>"/><br/>
     ID: <%=bufferUser.getId()%><br/>

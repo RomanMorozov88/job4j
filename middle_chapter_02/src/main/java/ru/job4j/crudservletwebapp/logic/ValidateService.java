@@ -1,6 +1,7 @@
 package ru.job4j.crudservletwebapp.logic;
 
 import ru.job4j.crudservletwebapp.models.User;
+import ru.job4j.crudservletwebapp.persistent.DbStore;
 import ru.job4j.crudservletwebapp.persistent.MemoryStore;
 import ru.job4j.crudservletwebapp.persistent.Store;
 
@@ -9,7 +10,7 @@ import java.util.List;
 public class ValidateService implements Validate {
 
     private final static ValidateService SERVICE = new ValidateService();
-    private final Store store = MemoryStore.getInstance();
+    private final Store store = DbStore.getInstance();
 
     private ValidateService() {
     }
