@@ -4,6 +4,7 @@ import ru.job4j.crudservletwebapp.logic.Validate;
 import ru.job4j.crudservletwebapp.logic.ValidateService;
 import ru.job4j.crudservletwebapp.models.User;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +20,12 @@ public class UserCreateServlet extends HttpServlet {
     private final Validate service = ValidateService.getInstance();
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        req.getRequestDispatcher("/WEB-INF/views/usercreatepage.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.setContentType("text/html");
         User result = null;
         Integer id = Integer.parseInt(req.getParameter("id"));
@@ -29,14 +35,10 @@ public class UserCreateServlet extends HttpServlet {
             String email = req.getParameter("email");
             result = new User(id, name, login, email, LocalDateTime.now());
             if (this.service.add(result)) {
-                resp.sendRedirect(String.format("%s/index.jsp", req.getContextPath()));
+                resp.sendRedirect(String.format("%s/", req.getContextPath()));
             } else {
-                PrintWriter writer = new PrintWriter(resp.getOutputStream());
-                writer.println("User is already exist.");
-                writer.println("<form action = \"" + req.getContextPath() + "/index.jsp\" method=\"get\">"
-                        + "<input type=\"submit\" value=\"go back.\">"
-                        + "</form>");
-                writer.flush();
+                req.setAttribute("messageForBack", "User is already exist.");
+                req.getRequestDispatcher("/WEB-INF/views/wayback.jsp").forward(req, resp);
             }
         }
     }

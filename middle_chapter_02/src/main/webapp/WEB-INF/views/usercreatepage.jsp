@@ -4,7 +4,7 @@
     <title>Create page</title>
 </head>
 <body>
-<form action="<%=request.getContextPath()%>/userscreate" method="post">
+<form action="${pageContext.servletContext.contextPath}/userscreate" method="post">
     ID: <input type="text" name="id"/></br>
     Name: <input type="text" name="name"/></br>
     Login: <input type="text" name="login"/></br>
