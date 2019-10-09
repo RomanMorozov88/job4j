@@ -40,7 +40,7 @@ public class DbStore implements Store {
         try (
                 Connection connection = SOURCE.getConnection();
                 PreparedStatement statement = connection.prepareStatement(
-                        "INSERT INTO dbusers VALUES (?, ?, ?, ?, ?);"
+                        "INSERT INTO dbusers VALUES (?, ?, ?, ?, ?, ?);"
                 )
         ) {
             statement.setInt(1, model.getId());
@@ -48,6 +48,7 @@ public class DbStore implements Store {
             statement.setString(3, model.getLogin());
             statement.setString(4, model.getEmail());
             statement.setTimestamp(5, Timestamp.valueOf(model.getCreateDate()));
+            statement.setString(6, model.getPhotoId());
             result = !statement.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,6 +69,7 @@ public class DbStore implements Store {
             statement.setString(1, model.getName());
             statement.setString(2, model.getLogin());
             statement.setString(3, model.getEmail());
+//            statement.setString(4, model.getPhotoId());
             statement.setInt(4, model.getId());
             result = !statement.execute();
         } catch (Exception e) {
@@ -86,6 +88,25 @@ public class DbStore implements Store {
                 )
         ) {
             statement.setInt(1, id);
+            result = !statement.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public boolean uploadImg(User model) {
+        boolean result = false;
+        try (
+                Connection connection = SOURCE.getConnection();
+                PreparedStatement statement = connection.prepareStatement(
+                        "UPDATE dbusers SET photoId = ? WHERE user_id = ?;"
+
+                )
+        ) {
+            statement.setString(1, model.getPhotoId());
+            statement.setInt(2, model.getId());
             result = !statement.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -145,7 +166,8 @@ public class DbStore implements Store {
                     "CREATE TABLE IF NOT EXISTS dbusers"
                             + "(user_id INTEGER primary key,"
                             + "user_name VARCHAR, user_login VARCHAR,"
-                            + "user_email VARCHAR, create_date TIMESTAMP);"
+                            + "user_email VARCHAR, create_date TIMESTAMP,"
+                            + "photoId VARCHAR);"
             );
         }
     }
@@ -164,7 +186,10 @@ public class DbStore implements Store {
         String login = resultSet.getString("user_login");
         String email = resultSet.getString("user_email");
         long bufferTime = resultSet.getTimestamp("create_date").getTime();
+        String photoId = resultSet.getString("photoId");
         LocalDateTime createDate = new Timestamp(bufferTime).toLocalDateTime();
-        return new User(id, name, login, email, createDate);
+        User result = new User(id, name, login, email, createDate);
+        result.setPhotoId(photoId);
+        return result;
     }
 }

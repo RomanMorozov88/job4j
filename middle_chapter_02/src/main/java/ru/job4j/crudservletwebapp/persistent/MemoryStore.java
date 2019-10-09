@@ -59,6 +59,17 @@ public class MemoryStore implements Store {
     }
 
     @Override
+    public boolean uploadImg(User model) {
+        boolean result = false;
+        User buffer = this.innerMap.getOrDefault(model.getId(), null);
+        if (buffer != null) {
+            buffer.setPhotoId(model.getPhotoId());
+            result = true;
+        }
+        return result;
+    }
+
+    @Override
     public List<User> findAll() {
         List<User> result = new ArrayList<>();
         result.addAll(this.innerMap.values());

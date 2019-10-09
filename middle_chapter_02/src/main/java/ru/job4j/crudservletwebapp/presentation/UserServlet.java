@@ -1,5 +1,6 @@
 package ru.job4j.crudservletwebapp.presentation;
 
+import ru.job4j.crudservletwebapp.logic.Config;
 import ru.job4j.crudservletwebapp.logic.Validate;
 import ru.job4j.crudservletwebapp.logic.ValidateService;
 
@@ -7,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -18,6 +20,7 @@ import java.io.IOException;
 public class UserServlet extends HttpServlet {
 
     private final Validate service = ValidateService.getInstance();
+    private static final Config CONFIG = Config.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -28,7 +31,11 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         resp.setContentType("text/html");
-        if (this.service.delete(Integer.parseInt(req.getParameter("id")))) {
+        Integer id = Integer.parseInt(req.getParameter("id"));
+        String deletingPhoto = this.service.findById(id).getPhotoId();
+        if (this.service.delete(id)) {
+            File oldPhoto = new File(CONFIG.get("folderimg") + File.separator + deletingPhoto);
+            oldPhoto.delete();
             resp.sendRedirect(String.format("%s/", req.getContextPath()));
         } else {
             req.setAttribute("messageForBack", "Failed to delete.");

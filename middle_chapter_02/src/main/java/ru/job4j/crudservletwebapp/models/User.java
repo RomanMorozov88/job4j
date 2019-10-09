@@ -1,5 +1,6 @@
 package ru.job4j.crudservletwebapp.models;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -13,6 +14,7 @@ public class User {
     private String login;
     private String email;
     private LocalDateTime createDate;
+    private String photoId;
 
     public User(int id, String name, String login, String email, LocalDateTime createDate) {
         this.id = id;
@@ -59,6 +61,14 @@ public class User {
 
     public LocalDateTime getCreateDate() {
         return createDate;
+    }
+
+    public String getPhotoId() {
+        return photoId;
+    }
+
+    public void setPhotoId(String photoId) {
+        this.photoId = photoId;
     }
 
     @Override

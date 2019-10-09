@@ -11,6 +11,7 @@
 <p>All users:</p>
 <table border=1>
     <tr>
+        <th>photo</th>
         <th>id</th>
         <th>name</th>
         <th>login</th>
@@ -18,8 +19,20 @@
         <th>create date</th>
         <th colspan=2>actions</th>
     </tr>
-    <c:forEach items="${users}" var="user">
+        <c:forEach items="${users}" var="user">
     <tr>
+        <td>
+            <c:choose>
+            <c:when test="${not empty user.photoId}">
+            <img src="${pageContext.servletContext.contextPath}/download?name=${user.photoId}" width="100px"
+                 height="100px"/></br>
+                <a href="${pageContext.servletContext.contextPath}/download?name=${user.photoId}">Download</a>
+            </c:when>
+            <c:otherwise>
+                <h4>No image</h4>
+            </c:otherwise>
+            </c:choose>
+        </td>
         <td><c:out value="${user.id}"></c:out></td>
         <td><c:out value="${user.name}"></c:out></td>
         <td><c:out value="${user.login}"></c:out></td>

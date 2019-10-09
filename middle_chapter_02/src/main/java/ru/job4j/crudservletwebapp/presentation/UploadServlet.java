@@ -17,21 +17,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * doPost - / - сохраняет пользователя.
+ * Этот сервлет будет обрабатывать загрузку файла на сервер.
  */
-public class UserCreateServlet extends HttpServlet {
+public class UploadServlet extends HttpServlet {
 
     private final Validate service = ValidateService.getInstance();
     private static final Config CONFIG = Config.getInstance();
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        req.getRequestDispatcher("/WEB-INF/views/usercreatepage.jsp").forward(req, resp);
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -46,40 +40,35 @@ public class UserCreateServlet extends HttpServlet {
             if (!folder.exists()) {
                 folder.mkdir();
             }
-            String field = null;
-            String imgName = null;
             Integer id = null;
-            String name = null;
-            String login = null;
-            String email = null;
+            String imgName = null;
+            String idString = null;
             for (FileItem item : items) {
                 if (!item.isFormField()) {
                     imgName = item.getName();
-                    if (!imgName.equals("")) {
-                        File file = new File(folder + File.separator + imgName);
-                        try (FileOutputStream out = new FileOutputStream(file)) {
-                            out.write(item.getInputStream().readAllBytes());
-                        }
+                    File file = new File(folder + File.separator + imgName);
+                    try (FileOutputStream out = new FileOutputStream(file)) {
+                        out.write(item.getInputStream().readAllBytes());
                     }
                 } else {
-                    field = item.getFieldName();
-                    if (field.equals("id")) {
+                    idString = item.getFieldName();
+                    if (idString.equals("id")) {
                         id = Integer.parseInt(item.getString());
-                    } else if (field.equals("name")) {
-                        name = item.getString();
-                    } else if (field.equals("login")) {
-                        login = item.getString();
-                    } else if (field.equals("email")) {
-                        email = item.getString();
                     }
                 }
             }
-            User buffer = new User(id, name, login, email, LocalDateTime.now());
+            User buffer = service.findById(id);
+            String oldPhoto = buffer.getPhotoId();
+            if (oldPhoto != null) {
+                File forDeleting = new File(folder + File.separator + oldPhoto);
+                forDeleting.delete();
+            }
             buffer.setPhotoId(imgName);
-            if (service.add(buffer)) {
-                resp.sendRedirect(String.format("%s/", req.getContextPath()));
+            if (service.uploadImg(buffer)) {
+                req.setAttribute("userForUpdate", buffer);
+                req.getRequestDispatcher("/WEB-INF/views/userupdatepage.jsp").forward(req, resp);
             } else {
-                req.setAttribute("messageForBack", "Add error.");
+                req.setAttribute("messageForBack", "Upload error.");
                 req.getRequestDispatcher("/WEB-INF/views/wayback.jsp").forward(req, resp);
             }
         } catch (FileUploadException e) {

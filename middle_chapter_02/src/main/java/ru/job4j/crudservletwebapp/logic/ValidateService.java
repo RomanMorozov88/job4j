@@ -35,6 +35,11 @@ public class ValidateService implements Validate {
     }
 
     @Override
+    public boolean uploadImg(User user) {
+        return this.store.uploadImg(user);
+    }
+
+    @Override
     public List<User> findAll() {
         return this.store.findAll();
     }
