@@ -44,6 +44,10 @@ public class MemoryStore implements Store {
             if (workString != null) {
                 buffer.setLogin(workString);
             }
+            workString = user.getPassword();
+            if (workString != null) {
+                buffer.setPassword(workString);
+            }
             workString = user.getEmail();
             if (workString != null) {
                 buffer.setEmail(workString);

@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 
@@ -24,6 +25,9 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        HttpSession session = req.getSession(false);
+        Integer id = (Integer) session.getAttribute("id");
+        req.setAttribute("mainUser", service.findById(id));
         req.setAttribute("users", service.findAll());
         req.getRequestDispatcher("/WEB-INF/views/usersview.jsp").forward(req, resp);
     }

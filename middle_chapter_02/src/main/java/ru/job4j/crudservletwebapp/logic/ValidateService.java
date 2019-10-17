@@ -2,7 +2,6 @@ package ru.job4j.crudservletwebapp.logic;
 
 import ru.job4j.crudservletwebapp.models.User;
 import ru.job4j.crudservletwebapp.persistent.DbStore;
-import ru.job4j.crudservletwebapp.persistent.MemoryStore;
 import ru.job4j.crudservletwebapp.persistent.Store;
 
 import java.util.List;
@@ -47,5 +46,18 @@ public class ValidateService implements Validate {
     @Override
     public User findById(int id) {
         return this.store.findById(id);
+    }
+
+    @Override
+    public User isCredentional(String login, String password) {
+        User result = null;
+        List<User> list = this.store.findAll();
+        for (User u : list) {
+            if (u.getLogin().equals(login) && u.getPassword().equals(password)) {
+                result = u;
+                break;
+            }
+        }
+        return result;
     }
 }

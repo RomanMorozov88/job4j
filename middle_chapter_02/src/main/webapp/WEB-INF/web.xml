@@ -4,45 +4,87 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
          http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
+    <!--===============================================================================================-->
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>ru.job4j.crudservletwebapp.presentation.AuthFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+    <!--===============================================================================================-->
+    <filter>
+        <filter-name>RoleForMainPageFilter</filter-name>
+        <filter-class>ru.job4j.crudservletwebapp.presentation.RoleForMainPageFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>RoleForMainPageFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+    <!--===============================================================================================-->
+    <filter>
+        <filter-name>RoleForUpdateFilter</filter-name>
+        <filter-class>ru.job4j.crudservletwebapp.presentation.RoleForUpdateFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>RoleForUpdateFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+    <!--===============================================================================================-->
     <servlet>
         <servlet-name>EchoServlet</servlet-name>
         <servlet-class>ru.job4j.servlets.EchoServlet</servlet-class>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>EchoServlet</servlet-name>
         <url-pattern>/echo</url-pattern>
     </servlet-mapping>
 
+    <!--===============================================================================================-->
     <servlet>
         <servlet-name>UserServlet</servlet-name>
         <servlet-class>ru.job4j.crudservletwebapp.presentation.UserServlet</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <!--===============================================================================================-->
     <servlet>
         <servlet-name>UserCreateServlet</servlet-name>
         <servlet-class>ru.job4j.crudservletwebapp.presentation.UserCreateServlet</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>UserCreateServlet</servlet-name>
         <url-pattern>/userscreate</url-pattern>
     </servlet-mapping>
 
+    <!--===============================================================================================-->
     <servlet>
         <servlet-name>UserUpdateServlet</servlet-name>
         <servlet-class>ru.job4j.crudservletwebapp.presentation.UserUpdateServlet</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>UserUpdateServlet</servlet-name>
         <url-pattern>/usersupdate</url-pattern>
     </servlet-mapping>
 
+    <!--===============================================================================================-->
     <servlet>
         <servlet-name>UploadServlet</servlet-name>
         <servlet-class>ru.job4j.crudservletwebapp.presentation.UploadServlet</servlet-class>
@@ -53,6 +95,7 @@
         <url-pattern>/upload</url-pattern>
     </servlet-mapping>
 
+    <!--===============================================================================================-->
     <servlet>
         <servlet-name>DownloadServlet</servlet-name>
         <servlet-class>ru.job4j.crudservletwebapp.presentation.DownloadServlet</servlet-class>
@@ -61,6 +104,28 @@
     <servlet-mapping>
         <servlet-name>DownloadServlet</servlet-name>
         <url-pattern>/download</url-pattern>
+    </servlet-mapping>
+
+    <!--===============================================================================================-->
+    <servlet>
+        <servlet-name>SignInServlet</servlet-name>
+        <servlet-class>ru.job4j.crudservletwebapp.presentation.SignInServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SignInServlet</servlet-name>
+        <url-pattern>/signin</url-pattern>
+    </servlet-mapping>
+
+    <!--===============================================================================================-->
+    <servlet>
+        <servlet-name>ExitServlet</servlet-name>
+        <servlet-class>ru.job4j.crudservletwebapp.presentation.ExitServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ExitServlet</servlet-name>
+        <url-pattern>/exit</url-pattern>
     </servlet-mapping>
 </web-app>
 

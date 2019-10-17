@@ -1,34 +1,41 @@
 package ru.job4j.crudservletwebapp.models;
 
-import java.io.File;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
- * Модель.
+ * Модель пользователя.
  */
 public class User {
 
     private final int id;
     private String name;
     private String login;
+    private String password;
     private String email;
     private LocalDateTime createDate;
     private String photoId;
+    private String rolename;
 
-    public User(int id, String name, String login, String email, LocalDateTime createDate) {
+    public User(int id, String name, String login,
+                String password, String email,
+                LocalDateTime createDate, String rolename) {
         this.id = id;
         this.name = name;
         this.login = login;
+        this.password = password;
         this.email = email;
         this.createDate = createDate;
+        this.rolename = rolename;
     }
 
-    public User(int id, String name, String login, String email) {
+    public User(int id, String name, String login, String password, String email, String rolename) {
         this.id = id;
         this.name = name;
         this.login = login;
+        this.password = password;
         this.email = email;
+        this.rolename = rolename;
     }
 
     public int getId() {
@@ -51,6 +58,14 @@ public class User {
         this.login = login;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -69,6 +84,14 @@ public class User {
 
     public void setPhotoId(String photoId) {
         this.photoId = photoId;
+    }
+
+    public String getRolename() {
+        return rolename;
+    }
+
+    public void setRolename(String rolename) {
+        this.rolename = rolename;
     }
 
     @Override
@@ -93,13 +116,15 @@ public class User {
         return id == user.id
                 && Objects.equals(name, user.name)
                 && Objects.equals(login, user.login)
+                && Objects.equals(password, user.password)
                 && Objects.equals(email, user.email)
-                && Objects.equals(createDate, user.createDate);
+                && Objects.equals(createDate, user.createDate)
+                && Objects.equals(rolename, user.rolename);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, name, login, email, createDate);
+        return Objects.hash(id, name, login, password, email, createDate, rolename);
     }
 }

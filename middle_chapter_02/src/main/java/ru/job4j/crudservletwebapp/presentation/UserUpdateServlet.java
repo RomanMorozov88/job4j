@@ -32,7 +32,12 @@ public class UserUpdateServlet extends HttpServlet {
         if (result != null) {
             result.setName(req.getParameter("name"));
             result.setLogin(req.getParameter("login"));
+            result.setPassword(req.getParameter("password"));
             result.setEmail(req.getParameter("email"));
+            String newRole = req.getParameter("rolename");
+            if (newRole != null) {
+                result.setRolename(newRole);
+            }
             if (this.service.update(result)) {
                 resp.sendRedirect(String.format("%s/", req.getContextPath()));
             } else {
