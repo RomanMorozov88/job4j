@@ -8,6 +8,7 @@ import ru.job4j.crudservletwebapp.logic.Config;
 import ru.job4j.crudservletwebapp.logic.Validate;
 import ru.job4j.crudservletwebapp.logic.ValidateService;
 import ru.job4j.crudservletwebapp.models.User;
+import ru.job4j.crudservletwebapp.persistent.RolesVault;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -26,10 +27,12 @@ import java.util.List;
 public class UserCreateServlet extends HttpServlet {
 
     private final Validate service = ValidateService.getInstance();
+    private final RolesVault vault = RolesVault.getInstance();
     private static final Config CONFIG = Config.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        req.setAttribute("allRoles", vault.getVault().keySet());
         req.getRequestDispatcher("/WEB-INF/views/usercreatepage.jsp").forward(req, resp);
     }
 
@@ -51,7 +54,9 @@ public class UserCreateServlet extends HttpServlet {
             Integer id = null;
             String name = null;
             String login = null;
+            String password = null;
             String email = null;
+            String rolename = "guest";
             for (FileItem item : items) {
                 if (!item.isFormField()) {
                     imgName = item.getName();
@@ -69,12 +74,16 @@ public class UserCreateServlet extends HttpServlet {
                         name = item.getString();
                     } else if (field.equals("login")) {
                         login = item.getString();
+                    } else if (field.equals("password")) {
+                        password = item.getString();
                     } else if (field.equals("email")) {
                         email = item.getString();
+                    } else if (field.equals("role")) {
+                        rolename = item.getString();
                     }
                 }
             }
-            User buffer = new User(id, name, login, email, LocalDateTime.now());
+            User buffer = new User(id, name, login, password, email, LocalDateTime.now(), rolename);
             buffer.setPhotoId(imgName);
             if (service.add(buffer)) {
                 resp.sendRedirect(String.format("%s/", req.getContextPath()));

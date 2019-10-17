@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Update Page</title>
+    <title>Admin Update Page</title>
 </head>
 <body>
 <hr>
@@ -19,7 +19,7 @@
     </c:choose>
 </div>
 </br>
-<form action="<%=request.getContextPath()%>/upload" method="post" enctype="multipart/form-data">
+<form action="${pageContext.servletContext.contextPath}/upload" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value="${userForUpdate.id}"/>
     <input type="file" name="file"></br>
     <button type="submit" class="btn btn-default">upload</button>
@@ -34,6 +34,19 @@
     Password: <input type="text" name="password" value="${userForUpdate.password}"/><br/>
     Email: <input type="text" name="email" value="${userForUpdate.email}"/><br/>
     Create date: <c:out value="${userForUpdate.createDate}"></c:out><br/>
+    Role: <select name="rolename" required>
+    <c:forEach items="${allRoles}" var="role">
+        <%--<option value="${role}"><c:out value="${role}"/></option>--%>
+        <c:choose>
+            <c:when test="${role.equals(userForUpdate.rolename)}">
+                <option value="${role}" selected><c:out value="${role}"/></option>
+            </c:when>
+            <c:otherwise>
+                <option value="${role}"><c:out value="${role}"/></option>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+</select>
     <hr>
     <input type="submit" value="update">
     </br>
