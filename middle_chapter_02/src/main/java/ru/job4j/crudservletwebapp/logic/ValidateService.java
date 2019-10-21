@@ -8,13 +8,13 @@ import java.util.List;
 
 public class ValidateService implements Validate {
 
-    private final static ValidateService SERVICE = new ValidateService();
+    private final static Validate SERVICE = new ValidateService();
     private final Store store = DbStore.getInstance();
 
     private ValidateService() {
     }
 
-    public static ValidateService getInstance() {
+    public static Validate getInstance() {
         return SERVICE;
     }
 
