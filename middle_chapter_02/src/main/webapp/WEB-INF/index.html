@@ -8,6 +8,40 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
+
+        //получаем выбранный пункт из gender.
+        function getCheckedRadioValue(name) {
+            var elements = document.getElementsByName(name);
+
+            for (var i = 0, len = elements.length; i < len; ++i) {
+                if (elements[i].checked) return elements[i].value;
+            }
+        }
+
+        function addRow() {
+            if (validate()) {
+                //получаем значение полей
+                var fName = $('#firstname').val();
+                var lName = $('#lastname').val();
+                var gender = getCheckedRadioValue('gender')
+                var desc = $('#description').val();
+
+                //получаем ссылку на последний элемент в таблице.
+                //и после него добавляем html
+                $('#tableTBL tr:last').after(
+                    '<tr>'
+                    + '<td>' + fName + '</td>'
+                    + '<td>' + lName + '</td>'
+                    + '<td>' + gender + '</td>'
+                    + '<td>' + desc + '</td>'
+                    + '</tr>'
+                );
+            } else {
+                alert("Please fill in all fields");
+            }
+        }
+
+        //Проверяем- заполнены ли все необходимые поля.
         function validate() {
             var result = true;
             if ($('#firstname').val() == '') {
@@ -15,9 +49,6 @@
             }
             if ($('#lastname').val() == '') {
                 result = false;
-            }
-            if (!result) {
-                alert("Please fill in all fields");
             }
             return result;
         }
@@ -44,12 +75,12 @@
             <label for="description">Description:</label>
             <textarea class="form-control" id="description"></textarea>
         </div>
-        <button type="submit" class="btn btn-default" onclick="return validate();">Submit</button>
+        <button type="submit" class="btn btn-default" onclick="addRow();">Submit</button>
     </form>
 </div>
 <div class="container">
     <h2>Table</h2>
-    <table class="table table-bordered">
+    <table class="table table-bordered" id="tableTBL">
         <thead>
         <tr>
             <th>Firstname</th>
@@ -59,12 +90,6 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-        </tr>
         </tbody>
     </table>
 </div>
