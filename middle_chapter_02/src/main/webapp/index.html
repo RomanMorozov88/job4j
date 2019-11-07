@@ -5,9 +5,38 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script>
+
+        //Получаем данные от сервлета.
+        function loadFromServlet() {
+            $.ajax({
+                url: './json',
+                method: 'get',
+                complete: function (data) {
+                    var result = "<tr>" +
+                        "<th>Firstname</th>" +
+                        "<th>Lastname</th>" +
+                        "<th>Gender</th>" +
+                        "<th>Description</th>" +
+                        "</tr>";
+                    var users = JSON.parse(data.responseText);
+                    for (var i = 0; i < users.length; i++) {
+                        result += "<tr>"
+                            + "<td>" + users[i].fnm + "</td>"
+                            + "<td>" + users[i].lnm + "</td>"
+                            + "<td>" + users[i].gnd + "</td>"
+                            + "<td>" + users[i].dsc + "</td>"
+                            + "</tr>"
+                    }
+                    var table = document.getElementById("tableTBL");
+                    table.innerHTML = result;
+                }
+            })
+        }
+
+        $(loadFromServlet());
 
         //получаем выбранный пункт из gender.
         function getCheckedRadioValue(name) {
@@ -15,29 +44,6 @@
 
             for (var i = 0, len = elements.length; i < len; ++i) {
                 if (elements[i].checked) return elements[i].value;
-            }
-        }
-
-        function addRow() {
-            if (validate()) {
-                //получаем значение полей
-                var fName = $('#firstname').val();
-                var lName = $('#lastname').val();
-                var gender = getCheckedRadioValue('gender')
-                var desc = $('#description').val();
-
-                //получаем ссылку на последний элемент в таблице.
-                //и после него добавляем html
-                $('#tableTBL tr:last').after(
-                    '<tr>'
-                    + '<td>' + fName + '</td>'
-                    + '<td>' + lName + '</td>'
-                    + '<td>' + gender + '</td>'
-                    + '<td>' + desc + '</td>'
-                    + '</tr>'
-                );
-            } else {
-                alert("Please fill in all fields");
             }
         }
 
@@ -52,11 +58,32 @@
             }
             return result;
         }
+
+        //Отправляем JSON сервлету.
+        function sendData() {
+            if (validate()) {
+                var newUser = {
+                    "firstName": $('#firstname').val(),
+                    "lastName": $('#lastname').val(),
+                    "gender": getCheckedRadioValue('gender'),
+                    "description": $('#description').val()
+                };
+                $.ajax({
+                    url: './json',
+                    method: 'post',
+                    data: JSON.stringify(newUser),
+                    dataType: "application/json",
+                    complete: loadFromServlet()
+                });
+            } else {
+                alert("Please fill in all fields");
+            }
+        }
     </script>
 </head>
 <body>
 <div class="container">
-    <form action="#">
+    <form>
         <div class="form-group">
             <label for="firstname">Firstname:</label>
             <input type="text" class="form-control" id="firstname">
@@ -75,7 +102,7 @@
             <label for="description">Description:</label>
             <textarea class="form-control" id="description"></textarea>
         </div>
-        <button type="submit" class="btn btn-default" onclick="addRow();">Submit</button>
+        <button type="button" class="btn btn-default" onclick="sendData()">Send</button>
     </form>
 </div>
 <div class="container">
