@@ -139,5 +139,16 @@
         <url-pattern>/json</url-pattern>
     </servlet-mapping>
 
+    <!--===============================================================================================-->
+    <servlet>
+        <servlet-name>CountryServlet</servlet-name>
+        <servlet-class>ru.job4j.javaxjson.presentation.CountryServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CountryServlet</servlet-name>
+        <url-pattern>/cities</url-pattern>
+    </servlet-mapping>
+
 </web-app>
 

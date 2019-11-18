@@ -12,14 +12,18 @@ public class UserForJson {
     private String lastName;
     private String description;
     private String gender;
+    private String country;
+    private String city;
 
     public UserForJson() {
     }
 
-    public UserForJson(String firstName, String lastName, String gender) {
+    public UserForJson(String firstName, String lastName, String gender, String country, String city) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
+        this.country = country;
+        this.city = city;
     }
 
     public String getFirstName() {
@@ -54,15 +58,35 @@ public class UserForJson {
         this.gender = gender;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         UserForJson that = (UserForJson) o;
-        return Objects.equals(firstName, that.firstName) &&
-                Objects.equals(lastName, that.lastName) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(gender, that.gender);
+        return Objects.equals(firstName, that.firstName)
+                && Objects.equals(lastName, that.lastName)
+                && Objects.equals(description, that.description)
+                && Objects.equals(gender, that.gender);
     }
 
     @Override

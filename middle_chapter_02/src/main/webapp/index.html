@@ -9,39 +9,99 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script>
 
+        //Получаем варианты стран.
+        function loadCountries() {
+            $.ajax({
+                url: './cities',
+                method: 'get',
+                complete: function (data) {
+                    var countries = JSON.parse(data.responseText);
+                    var result = "<label>Country:</label></br>"
+                        + "<select size='1' id='selectCountry' onchange='loadCities(this)'>";
+                    for (var i = 0; i < countries.length; i++) {
+                        var buffer = countries[i].country;
+                        result += "<option value='" + buffer + "'>" + buffer + "</option>";
+                    }
+                    result += "</select>";
+                    var countrySelect = document.getElementById("countriesDiv");
+                    countrySelect.innerHTML = result;
+                    loadCities(document.getElementById("selectCountry"));
+                }
+            })
+        }
+
+        //Получаем варианты городов.
+        function loadCities(select) {
+            $.ajax({
+                url: './cities',
+                method: 'get',
+                complete: function (data) {
+                    var country = select.options[select.selectedIndex].value;
+                    var countries = JSON.parse(data.responseText);
+                    var result = "<label>City:</label></br>"
+                        + "<select size='1' id='selectCity'>";
+                    for (var i = 0; i < countries.length; i++) {
+                        if (country == countries[i].country) {
+                            var cities = countries[i].cities;
+                            for (var j = 0; j < cities.length; j++) {
+                                result += "<option value='" + cities[j] + "'>" + cities[j] + "</option>";
+                            }
+                            result += "</select>";
+                            var citySelect = document.getElementById("citiesDiv");
+                            citySelect.innerHTML = result;
+                        }
+                    }
+                }
+            })
+        }
+
         //Получаем данные от сервлета.
         function loadFromServlet() {
             $.ajax({
                 url: './json',
                 method: 'get',
                 complete: function (data) {
-                    var result = "<tr>" +
-                        "<th>Firstname</th>" +
-                        "<th>Lastname</th>" +
-                        "<th>Gender</th>" +
-                        "<th>Description</th>" +
-                        "</tr>";
+                    var result = "<h2>Table</h2>"
+                        + "<table class=\"table table-bordered\" id=\"tableTBL\" style='background-color: #ffffff'>"
+                        + "<thead>"
+                        + "<tr>"
+                        + "<th>Firstname</th>"
+                        + "<th>Lastname</th>"
+                        + "<th>Gender</th>"
+                        + "<th>Country</th>"
+                        + "<th>City</th>"
+                        + "<th>Description</th>"
+                        + "</tr>"
+                        + "</thead>"
+                        + "<tbody>";
                     var users = JSON.parse(data.responseText);
                     for (var i = 0; i < users.length; i++) {
                         result += "<tr>"
                             + "<td>" + users[i].fnm + "</td>"
                             + "<td>" + users[i].lnm + "</td>"
                             + "<td>" + users[i].gnd + "</td>"
+                            + "<td>" + users[i].ctr + "</td>"
+                            + "<td>" + users[i].cty + "</td>"
                             + "<td>" + users[i].dsc + "</td>"
-                            + "</tr>"
+                            + "</tr>";
                     }
-                    var table = document.getElementById("tableTBL");
+                    result += "</tbody>"
+                        + "</table>";
+                    var table = document.getElementById("fillingTheTable");
                     table.innerHTML = result;
                 }
             })
         }
 
-        $(loadFromServlet());
+        //Получаем выбранный пункт из нужного select.
+        function getSelectedLocation(fromWhichSelectId) {
+            var neededSelect = document.getElementById(fromWhichSelectId);
+            return neededSelect.options[neededSelect.selectedIndex].value;
+        }
 
         //получаем выбранный пункт из gender.
         function getCheckedRadioValue(name) {
             var elements = document.getElementsByName(name);
-
             for (var i = 0, len = elements.length; i < len; ++i) {
                 if (elements[i].checked) return elements[i].value;
             }
@@ -66,59 +126,65 @@
                     "firstName": $('#firstname').val(),
                     "lastName": $('#lastname').val(),
                     "gender": getCheckedRadioValue('gender'),
-                    "description": $('#description').val()
+                    "description": $('#description').val(),
+                    "country": getSelectedLocation('selectCountry'),
+                    "city": getSelectedLocation('selectCity')
                 };
                 $.ajax({
                     url: './json',
                     method: 'post',
                     data: JSON.stringify(newUser),
                     dataType: "application/json",
-                    complete: loadFromServlet()
+                    complete: function () {
+                        loadFromServlet();
+                    }
                 });
             } else {
                 alert("Please fill in all fields");
             }
         }
+
+        //Сразу же по загрузке страницы выполняем следующие скрипты:
+        $(loadCountries());
+        $(loadFromServlet());
+
     </script>
 </head>
-<body>
-<div class="container">
+<body style="background-color: #add8e6">
+<div class="container" style="margin-top: 50px">
     <form>
         <div class="form-group">
-            <label for="firstname">Firstname:</label>
-            <input type="text" class="form-control" id="firstname">
+            <input type="text" class="form-control" placeholder="Firstname" id="firstname">
         </div>
         <div class="form-group">
-            <label for="lastname">Lastname:</label>
-            <input type="text" class="form-control" id="lastname">
+            <input type="text" class="form-control" placeholder="Lastname" id="lastname">
         </div>
         <div class="form-group">
             <label>Gender:</label></br>
-            <input type="radio" name="gender" value="male"> Male<br>
-            <input type="radio" name="gender" value="female"> Female<br>
-            <input type="radio" name="gender" value="other" checked="checked"> Other
+            <label class="radio-inline">
+                <input type="radio" name="gender" value="male"> Male<br>
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="gender" value="female"> Female<br>
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="gender" value="other" checked="checked"> Other
+            </label>
+        </div>
+        <div class="form-group" id="countriesDiv" style="display: inline-block">
+            <!--Размещаем варианты стран-->
+        </div>
+        <div class="form-group" id="citiesDiv" style="display: inline-block">
+            <!--Размещаем варианты городов-->
         </div>
         <div class="form-group">
-            <label for="description">Description:</label>
-            <textarea class="form-control" id="description"></textarea>
+            <textarea class="form-control" placeholder="Description" id="description"></textarea>
         </div>
         <button type="button" class="btn btn-default" onclick="sendData()">Send</button>
     </form>
 </div>
-<div class="container">
-    <h2>Table</h2>
-    <table class="table table-bordered" id="tableTBL">
-        <thead>
-        <tr>
-            <th>Firstname</th>
-            <th>Lastname</th>
-            <th>Gender</th>
-            <th>Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+<div class="container" id="fillingTheTable">
+    <!--Размещаем таблицу-->
 </div>
 </body>
 </html>

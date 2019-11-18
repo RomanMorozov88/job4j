@@ -34,9 +34,12 @@ public class SimpleJsonServlet extends HttpServlet {
         writer.append("[");
         List<UserForJson> list = store.getAllUsers();
         for (int i = 0; i < list.size(); i++) {
-            writer.append(String.format("{\"fnm\":\"%s\",\"lnm\":\"%s\",\"gnd\":\"%s\",\"dsc\":\"%s\"}",
-                    list.get(i).getFirstName(), list.get(i).getLastName(),
-                    list.get(i).getGender(), list.get(i).getDescription()));
+            UserForJson forSending = list.get(i);
+            writer.append(String.format(
+                    "{\"fnm\":\"%s\",\"lnm\":\"%s\",\"gnd\":\"%s\",\"dsc\":\"%s\",\"ctr\":\"%s\",\"cty\":\"%s\"}",
+                    forSending.getFirstName(), forSending.getLastName(),
+                    forSending.getGender(), forSending.getDescription(),
+                    forSending.getCountry(), forSending.getCity()));
             //т.к. при наличии лишней запятой будет ошибка при парсинге- проверяем,
             // нужна ли она при данном шаге итерации.
             if (i + 1 != list.size()) {
@@ -69,5 +72,6 @@ public class SimpleJsonServlet extends HttpServlet {
             UserForJson user = objectMapper.readValue(sb.toString(), UserForJson.class);
             store.add(user);
         }
+        doGet(req, resp);
     }
 }

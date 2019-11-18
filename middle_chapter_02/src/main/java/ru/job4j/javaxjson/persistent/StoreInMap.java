@@ -18,9 +18,11 @@ public class StoreInMap {
      * Сразу добавляем пару объектов для наглядности.
      */
     private StoreInMap() {
-        UserForJson user = new UserForJson("FIRST", "SECOND", "male");
+        UserForJson user = new UserForJson("FIRST", "SECOND", "male",
+                "TestCountry", "TestCity");
         innerMap.put(user.getFirstName(), user);
-        user = new UserForJson("FIRST02", "SECOND02", "male");
+        user = new UserForJson("FIRST02", "SECOND02", "male",
+                "AnotherTestCountry", "AnotherTestCity");
         user.setDescription("DESC");
         innerMap.put(user.getFirstName(), user);
     }
@@ -31,6 +33,10 @@ public class StoreInMap {
 
     public void add(UserForJson user) {
         this.innerMap.put(user.getFirstName(), user);
+    }
+
+    public UserForJson getById(String id) {
+        return innerMap.getOrDefault(id, null);
     }
 
     public List<UserForJson> getAllUsers() {
