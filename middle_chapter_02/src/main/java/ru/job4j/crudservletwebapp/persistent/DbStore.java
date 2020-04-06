@@ -64,9 +64,9 @@ public class DbStore implements Store {
         try (
                 Connection connection = SOURCE.getConnection();
                 PreparedStatement statement = connection.prepareStatement(
-                        "UPDATE dbusers " +
-                                "SET user_name = ?, user_login = ?, user_password = ?, user_email = ?, user_role = ? " +
-                                "WHERE user_id = ?;"
+                        "UPDATE dbusers "
+                                + "SET user_name = ?, user_login = ?, user_password = ?, user_email = ?, user_role = ? "
+                                + "WHERE user_id = ?;"
 
                 )
         ) {

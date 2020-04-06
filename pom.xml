@@ -22,6 +22,7 @@
         <module>juniorTasks</module>
         <module>middle_chapter_01</module>
         <module>middle_chapter_02</module>
+        <module>middle_chapter_03</module>
     </modules>
 
     <dependencies>
