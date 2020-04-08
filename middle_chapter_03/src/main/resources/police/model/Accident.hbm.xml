@@ -1,0 +1,10 @@
+<hibernate-mapping>
+    <class name="police.model.Accident" table="accidents">
+        <id name="id" column="accident_id">
+            <generator class="assigned"/>
+        </id>
+        <property name="name" column="accident_name"/>
+        <property name="text" column="accident_text"/>
+        <property name="address" column="accident_address"/>
+    </class>
+</hibernate-mapping>
