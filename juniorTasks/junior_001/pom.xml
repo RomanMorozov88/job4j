@@ -12,6 +12,13 @@
     <artifactId>junior_001</artifactId>
 
     <dependencies>
+
+        <dependency>
+            <groupId>ru.job4j</groupId>
+            <artifactId>chapter_002</artifactId>
+            <version>2.0</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
         <dependency>
             <groupId>postgresql</groupId>
@@ -40,17 +47,16 @@
             <version>3.21.0.1</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/log4j/log4j -->
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.3</version>
         </dependency>
 
         <dependency>
-            <groupId>ru.job4j</groupId>
-            <artifactId>chapter_002</artifactId>
-            <version>2.0</version>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.3</version>
         </dependency>
 
     </dependencies>

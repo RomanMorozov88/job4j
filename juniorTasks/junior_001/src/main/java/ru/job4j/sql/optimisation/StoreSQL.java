@@ -4,13 +4,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Рвбота с базой данных.
  */
 public class StoreSQL implements AutoCloseable {
-    private static final Logger LOGGER = Logger.getLogger(StoreSQL.class);
+    private static final Logger LOGGER = LogManager.getLogger(StoreSQL.class.getName());
     private final Config config;
     private Connection connect;
 
