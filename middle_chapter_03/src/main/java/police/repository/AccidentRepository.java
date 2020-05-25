@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Класс для работы с базой данных
  */
-public class AccidentRepository {
+public class AccidentRepository implements RepoInterface {
 
     private static final AccidentRepository INSTANCE = new AccidentRepository();
     private static final SessionFactory FACTORY = new Configuration()
@@ -25,6 +25,7 @@ public class AccidentRepository {
         return INSTANCE;
     }
 
+    @Override
     public List<Accident> getAccidents() {
         Session session = FACTORY.openSession();
         Transaction transaction = session.beginTransaction();

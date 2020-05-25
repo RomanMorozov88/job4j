@@ -7,6 +7,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import police.model.Accident;
+import police.repository.AccidentHibernate;
 import police.repository.AccidentRepository;
 
 import java.util.List;
@@ -19,7 +20,12 @@ public class IndexController {
 
     private static final Logger LOG = LoggerFactory.getLogger(IndexController.class.getName());
 
-    private final AccidentRepository repository = AccidentRepository.getInstance();
+    //    private final AccidentRepository repository = AccidentRepository.getInstance();
+    private final AccidentHibernate repository;
+
+    public IndexController(AccidentHibernate repository) {
+        this.repository = repository;
+    }
 
     @RequestMapping(value = "/police", method = RequestMethod.GET)
     public String getAccidents(ModelMap modelMap) {

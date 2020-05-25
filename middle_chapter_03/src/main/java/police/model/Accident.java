@@ -1,12 +1,21 @@
 package police.model;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "accidents")
 public class Accident {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "accident_id")
     private int id;
+    @Column(name = "accident_name")
     private String name;
+    @Column(name = "accident_text")
     private String text;
+    @Column(name = "accident_address")
     private String address;
 
     public Accident() {
