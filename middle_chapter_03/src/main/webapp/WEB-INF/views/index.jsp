@@ -16,7 +16,7 @@
         <tr>
             <td>имя</td>
             <td>текст</td>
-            <td>адресс</td>
+            <td>адрес</td>
         </tr>
         <c:forEach items="${accidentsList}" var="accident">
             <tr>
